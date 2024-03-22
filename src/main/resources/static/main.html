@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINE - Movie Reservation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        /* Additional styles if necessary */
+    </style>
+</head>
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+<nav class="bg-gray-800 p-2 mt-0 w-full">
+    <div class="container mx-auto flex justify-between">
+        <div class="text-white font-bold text-2xl">
+            CINE
+        </div>
+        <div class="flex mt-2">
+            <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+            <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+            <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+            <a href="#" class="text-gray-200 text-sm hover:text-white">회원가입</a>
+        </div>
+    </div>
+</nav>
+<section class="bg-white py-8">
+    <div class="container mx-auto">
+        <!-- Horizon movie image -->
+        <img src="https://placehold.co/1024x300" alt="Wide horizon image for featured movie" class="w-full object-cover">
+    </div>
+</section>
+
+
+<header class="bg-white border-b py-8">
+    <div class="container mx-auto flex justify-between">
+        <div class="text-3xl text-gray-800 font-bold">영화 차트</div>
+        <button onclick="viewAllMovies()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            전체보기
+        </button>
+    </div>
+</header>
+
+<section class="container mx-auto mt-8">
+    <div class="flex flex-wrap -mx-2">
+        <!-- Movies will be loaded here by JavaScript -->
+    </div>
+</section>
+
+<footer class="bg-gray-800">
+    <div class="container mx-auto text-center py-6">
+        <div class="text-sm text-gray-200 font-bold mb-2">
+            <!-- Team members' names -->
+            <div class="mb-2">
+                TEAM
+                오건 | 정주현 | 고민석
+            </div>
+            <!-- GitHub address -->
+            <div class="mb-2">
+                <a href="https://github.com/yourteam" class="text-blue-400 hover:text-blue-200">https://github.com/minsuk-ko/Movie_Ticketing</a>
+            </div>
+            <!-- Physical address -->
+            <div>
+                서울특별시 서대문구 가좌로 134
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script>
+    // JavaScript to handle movie chart and interactions
+    document.addEventListener('DOMContentLoaded', function() {
+        loadMovies();
+    });
+
+    function loadMovies() {
+        const moviesSection = document.querySelector('.flex.flex-wrap.-mx-2');
+        // Replace this with actual movie data
+        const movies = [
+            { title: '영화 1', image: 'https://placehold.co/200x300', alt: 'Placeholder image for Movie 1' },
+            { title: '영화 2', image: 'https://placehold.co/200x300', alt: 'Placeholder image for Movie 2' },
+            { title: '영화 3', image: 'https://placehold.co/200x300', alt: 'Placeholder image for Movie 3' },
+            { title: '영화 4', image: 'https://placehold.co/200x300', alt: 'Placeholder image for Movie 4' }
+            // Add more movies as needed
+        ];
+
+        movies.forEach(movie => {
+            const movieElement = document.createElement('div');
+            movieElement.className = 'w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4';
+            movieElement.innerHTML = `
+                    <div class="bg-white rounded shadow-lg overflow-hidden">
+                        <img src="${movie.image}" alt="${movie.alt}" class="w-full">
+                        <div class="p-4">
+                            <div class="font-bold text-xl mb-2">${movie.title}</div>
+                            <button onclick="reserveMovie('${movie.title}')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
+                                Reserve
+                            </button>
+                        </div>
+                    </div>
+                `;
+            moviesSection.appendChild(movieElement);
+        });
+    }
+
+    function viewAllMovies() {
+        alert('View all movies clicked!');
+    }
+
+    function reserveMovie(title) {
+        alert('Reserve clicked for ' + title);
+    }
+</script>
+
+</body>
+</html>
