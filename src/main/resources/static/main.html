@@ -8,11 +8,21 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         /* Additional styles if necessary */
+        #navbar a{
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: padding 0.3s;
+        }
     </style>
 </head>
 <body class="bg-gray-100 font-sans leading-normal tracking-normal">
 
-<nav class="bg-gray-800 p-2 mt-0 w-full">
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
     <div class="container mx-auto flex justify-between">
         <div class="text-white font-bold text-2xl">
             CINE
@@ -20,11 +30,12 @@
         <div class="flex mt-2">
             <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
             <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-            <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
-            <a href="#" class="text-gray-200 text-sm hover:text-white">회원가입</a>
+            <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+            <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
         </div>
     </div>
 </nav>
+
 <section class="bg-white py-8">
     <div class="container mx-auto">
         <!-- Horizon movie image -->
@@ -110,6 +121,15 @@
 
     function reserveMovie(title) {
         alert('Reserve clicked for ' + title);
+    }
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+            document.getElementById("navbar").style.padding = "1rem 0";
+        } else {
+            document.getElementById("navbar").style.padding = "2rem 0";
+        }
     }
 </script>
 

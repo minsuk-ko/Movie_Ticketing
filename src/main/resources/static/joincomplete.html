@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membership Registration Completed</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #navbar a {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #1f2937; /* Added background-color to ensure text is readable when navbar overlaps content */
+      transition: padding 0.3s;
+    }
+    .registration-completed-container {
+      text-align: center; /* Center the content */
+      padding: 20px;
+      background-color: #fff; /* Background color for the content */
+      border-radius: 10px; /* Rounded corners for the container */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    }
+    .registration-image {
+      max-width: 100%; /* Ensure the image is responsive and doesn't overflow its container */
+      height: auto; /* Maintain aspect ratio */
+      border-radius: 10px; /* Rounded corners for the image */
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      <a href="main.html">CINE</a>
+    </div>
+    <div class="flex mt-2">
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+      <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+    </div>
+  </div>
+</nav>
+
+<div class="flex items-center justify-center h-screen">
+  <div class="registration-completed-container">
+    <!-- Placeholder for your image -->
+    <img src="accept_image.jpg" alt="Registration Completed" class="registration-image">
+    <h1 class="text-xl font-bold mt-4 mb-2">회원가입 완료</h1>
+    <p class="mb-4">member.name님의 회원가입이 완료되었습니다.</p>
+    <button onclick="goToMain()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <a href="main.html">메인페이지로</a>
+    </button>
+  </div>
+</div>
+
+<script>
+  function goToMain() {
+    // This function would redirect the user to the main page. For now, it just logs to the console.
+    console.log('메인페이지로');
+    // In a live environment, you would likely use something like:
+    // window.location.href = 'your-main-page-url';
+  }
+  function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById("navbar").style.padding = "1rem 0";
+    } else {
+      document.getElementById("navbar").style.padding = "2rem 0";
+    }
+  }
+</script>
+</body>
+
+</html>

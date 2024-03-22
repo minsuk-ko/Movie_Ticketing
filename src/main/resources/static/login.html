@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    #navbar a{
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: padding 0.3s;
+    }
+  </style>
+</head>
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      <a href="main.html">CINE</a>
+    </div>
+    <div class="flex mt-2">
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+    </div>
+  </div>
+</nav>
+<body class="bg-gray-200">
+<div class="min-h-screen grid grid-cols-2 gap-4 items-center justify-center">
+
+  <!-- Image container -->
+  <div class="p-4">
+    <img src="img/loginpage_image.jpg" alt="Placeholder image representing the left side content" class="w-full h-auto rounded shadow">
+  </div>
+
+  <!-- Login container -->
+  <div class="flex-1 flex flex-col justify-between bg-white p-8 m-4">
+    <div>
+      <h1 class="text-xl mb-4 font-bold">LOGIN</h1>
+      <form id="loginForm" class="space-y-4">
+        <div>
+          <input type="text" id="userID" class="w-full p-2 border border-gray-300 rounded" placeholder="ID">
+        </div>
+        <div>
+          <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="Password">
+        </div>
+        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">로그인</button>
+      </form>
+    </div>
+    <div class="flex justify-center space-x-4 text-sm mt-4">
+      <a href="findpw.html" class="text-blue-500 hover:underline">비밀번호 찾기</a>
+      <p>|</p>
+      <a href="join.html" class="text-blue-500 hover:underline">회원가입</a>
+    </div>
+  </div>
+</div>
+
+
+</div>
+
+<script>
+  document.getElementById('loginForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    // Here you can add the logic for the login functionality
+    alert('로그인 기능이 구현되지 않음.');
+  });
+  function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById("navbar").style.padding = "1rem 0";
+    } else {
+      document.getElementById("navbar").style.padding = "2rem 0";
+    }
+  }
+</script>
+</body>
+
+</html>
