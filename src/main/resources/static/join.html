@@ -51,7 +51,7 @@
         <div>
           <input type="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
         </div>
-        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
+        <button type="submit" id="send-code" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
         <div>
           <input type="text" id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
         </div>
@@ -62,7 +62,7 @@
           <input type="password" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인"> <!--how to check password check -->
         </div>
 
-        <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
+        <button type="submit" id="joinbutton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
       </form>
     </div>
     <div class="flex justify-center space-x-4 text-sm mt-4">
@@ -76,24 +76,28 @@
 </div>
 
 <script>
-  document.getElementById('loginForm').addEventListener('submit', function(event){
-    event.preventDefault(); // Prevent the default form submission
+  document.getElementById('send-code').addEventListener('click', function(event){
+  event.preventDefault(); // Prevent form submission when '코드전송' is clicked
+  alert("코드가 전송되었습니다."); // Correctly shows only when '코드전송' is clicked
+});
 
-    // Get the values from the password fields
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('check-password').value;
+document.getElementById('loginForm').addEventListener('submit', function(event){
+  event.preventDefault(); // Prevent the default form submission
 
-    // Check if passwords match
-    if(password === confirmPassword) {
-      // If they match, you can proceed with the form submission or further processing
-      alert("회원가입 성공")
-      // Submit the form data using XHR or Fetch API, or redirect the user
-    } else {
-      // If passwords do not match, alert the user
-      alert('비밀번호가 서로 맞지 않습니다');
-      return false; // Stop the form from submitting
-    }
-  });
+  // Correctly get the values from the password fields
+  var password = document.getElementById('password').value;
+  var confirmPassword = document.getElementById('check-password').value;
+
+  // Correctly check if passwords match
+  if(password === confirmPassword) {
+    // If they match, show success alert
+    alert("회원가입 성공"); // Now only shows when '회원가입' is attempted and passwords match
+  } else {
+    // If passwords do not match, alert the user
+    alert('비밀번호가 서로 맞지 않습니다');
+  }
+});
+
   function scrollFunction() {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
       document.getElementById("navbar").style.padding = "1rem 0";
@@ -102,6 +106,7 @@
     }
   }
 </script>
+
 </body>
 
 </html>
