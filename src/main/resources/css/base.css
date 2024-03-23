@@ -1,0 +1,8 @@
+.banner_text{
+    color: #ffffff;
+    font-size: 0.875rem;
+    margin-right: 1rem;
+    &:hover {
+        color: #ff0000;
+    }
+}
