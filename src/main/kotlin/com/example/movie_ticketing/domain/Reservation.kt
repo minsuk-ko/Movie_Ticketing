@@ -15,7 +15,11 @@ import java.time.LocalDate
 @Entity
 class Reservation{
 
+    // 예약 날짜
+    val res_date : LocalDate? = null
+    // 상영 날짜
     val date : LocalDate? = null
+
     val price : Int? = null
 
     @ManyToOne(fetch = FetchType.LAZY)

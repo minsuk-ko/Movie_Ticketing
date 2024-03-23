@@ -10,7 +10,7 @@ class Schedule {
 
     val start : String? = null
     val end : String? = null
-    val date : LocalDate? = null
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
