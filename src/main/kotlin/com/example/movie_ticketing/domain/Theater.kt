@@ -10,10 +10,19 @@ import jakarta.persistence.Id
 @Entity
 class Theater {
 
-    val name : String? = null
+    var name : String? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "theater_id")
     val id : Long = 0L
+
+    protected constructor() {
+    }
+
+    constructor(name: String?) {
+        this.name = name
+    }
+
+
 }

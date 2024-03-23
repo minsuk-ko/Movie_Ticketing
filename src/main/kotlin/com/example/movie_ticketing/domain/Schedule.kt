@@ -8,20 +8,30 @@ import java.time.LocalTime
 @Entity
 class Schedule {
 
-    val start : String? = null
-    val end : String? = null
+    var start : String? = null
+    var end : String? = null
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    val movie : Movie? = null
+    var movie : Movie? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
-    val theater : Theater? = null
+    var theater : Theater? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "schedule_id")
     val id : Long = 0L
+
+    protected constructor() {
+    }
+
+    constructor(start: String?, end: String?, movie: Movie?, theater: Theater?) {
+        this.start = start
+        this.end = end
+        this.movie = movie
+        this.theater = theater
+    }
 }

@@ -6,19 +6,29 @@ import jakarta.persistence.*
 @Entity
 class Seat {
 
-    val row : String? = null
-    val column : Int? = null
+    var row : String? = null
+    var column : Int? = null
     //좌석 선택
 
     @Enumerated(EnumType.STRING)
-    val selectStatus : SelectStatus? = null // POSSIBLE, IMPOSSIBLE
+    var selectStatus : SelectStatus? = null // POSSIBLE, IMPOSSIBLE
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
-    val theater : Theater? = null
+    var theater : Theater? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
     val id : Long = 0L
+
+    protected constructor() {
+    }
+
+    constructor(row: String?, column: Int?, selectStatus: SelectStatus?, theater: Theater?) {
+        this.row = row
+        this.column = column
+        this.selectStatus = selectStatus
+        this.theater = theater
+    }
 }
