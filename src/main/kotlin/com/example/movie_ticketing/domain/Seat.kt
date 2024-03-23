@@ -6,12 +6,12 @@ import jakarta.persistence.*
 @Entity
 class Seat {
 
-    //좌석 선택
-    @Enumerated(EnumType.STRING)
-    val SelectStatus : String? = null // POSSIBLE, IMPOSSIBLE
-
     val row : String? = null
     val column : Int? = null
+    //좌석 선택
+
+    @Enumerated(EnumType.STRING)
+    val selectStatus : SelectStatus? = null // POSSIBLE, IMPOSSIBLE
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")

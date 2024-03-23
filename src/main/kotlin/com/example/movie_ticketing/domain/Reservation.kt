@@ -20,15 +20,15 @@ class Reservation{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    var member: Member? = null
+    val member: Member? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
-    var seat : Seat? = null
+    val seat : Seat? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
-    var schedule : Schedule? = null
+    val schedule : Schedule? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

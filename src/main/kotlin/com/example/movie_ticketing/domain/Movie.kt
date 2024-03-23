@@ -16,7 +16,7 @@ class Movie {
     val runtime : Int? = null
 
     @Enumerated(EnumType.STRING)
-    val Rating : String? = null // G, PG12, PG15, PG18
+    val rating : Rating? = null // G, PG12, PG15, PG18
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
