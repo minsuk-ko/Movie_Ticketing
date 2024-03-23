@@ -15,5 +15,5 @@ class Theater {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "theater_id")
-    val id : Long? = null
+    val id : Long = 0L
 }

@@ -26,7 +26,6 @@ class Reservation{
     @JoinColumn(name = "schedule_id")
     val schedule : Schedule? = null
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
     val seat : Seat? = null
