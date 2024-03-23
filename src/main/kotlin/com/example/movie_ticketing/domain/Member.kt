@@ -6,6 +6,7 @@ import jakarta.persistence.*
 class Member {
     val email: String? = null
     val password: String? = null
+    val age : Int? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
