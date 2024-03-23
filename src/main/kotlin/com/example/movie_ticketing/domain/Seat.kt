@@ -1,24 +1,19 @@
 package com.example.movie_ticketing.domain
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.JoinColumn
-import jakarta.persistence.ManyToOne
+import jakarta.persistence.*
 
 
 @Entity
 class Seat {
 
-//    초기설정값 false
-    val isSelected : Boolean = false
+    //좌석 선택
+    @Enumerated(EnumType.STRING)
+    val SelectStatus : String? = null // POSSIBLE, IMPOSSIBLE
 
     val row : String? = null
     val column : Int? = null
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
     val theater : Theater? = null
 
