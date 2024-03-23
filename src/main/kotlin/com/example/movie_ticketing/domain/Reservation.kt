@@ -23,12 +23,13 @@ class Reservation{
     val member: Member? = null
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
-    val seat : Seat? = null
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     val schedule : Schedule? = null
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seat_id")
+    val seat : Seat? = null
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

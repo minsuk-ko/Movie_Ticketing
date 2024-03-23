@@ -20,5 +20,5 @@ class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "seat_id")
-    val id : Long? = null
+    val id : Long = 0L
 }
