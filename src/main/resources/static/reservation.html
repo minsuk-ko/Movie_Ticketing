@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Movie Schedule</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .checkbox:checked + .checkbox-label {
+      background-color: #4ade80;
+    }
+    #navbar a{
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: padding 0.3s;
+    }
+    .clickable {
+      cursor:pointer;
+    }
+  </style>
+</head>
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      <a href="main.html">CINE</a>
+    </div>
+    <div class="flex mt-2">
+      <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+      <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+    </div>
+  </div>
+</nav>
+<body class="bg-gray-100 text-gray-900">
+<div class="container mx-auto p-4">
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white">
+      <thead>
+      <tr>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="first-column">Movie Name</th>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="second-column">Date</th>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="third-column">Time</th>
+      </tr>
+      </thead>
+      <tbody id="moviesTableBody" class="bg-white divide-y divide-gray-200">
+      <!-- Dynamic rows will be inserted here -->
+      </tbody>
+    </table>
+    <div class="flex justify-end p-4">
+      <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
+        Confirm Time
+      </button>
+    </div>
+  </div>
+  <p class="text-sm p-4">
+    First, select this row and select the movie name.
+    <br>
+    Second, select the date can be release.
+    <br>
+    Finally, check the time of the time button.
+    <br>
+    <span class="italic">If you check the time button...</span>
+  </p>
+</div>
+<script>
+  function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById("navbar").style.padding = "1rem 0";
+    } else {
+      document.getElementById("navbar").style.padding = "2rem 0";
+    }
+  }
+
+
+  // Function to generate table rows
+  const movies = [
+    { name: 'Movie 1', date: 'Date 1', time: 'Time 1' },
+    { name: 'Movie 2', date: 'Date 2', time: 'Time 2' },
+    { name: 'Movie 3', date: 'Date 3', time: 'Time 3' },
+    // 나머지 영화 데이터...
+  ];
+
+  // 표에 행을 생성하는 함수
+  function generateTableRows(movies) {
+    const tableBody = document.getElementById('moviesTableBody');
+    movies.forEach(movie => {
+      let row = tableBody.insertRow();
+      let cellName = row.insertCell(0);
+      let cellDate = row.insertCell(1);
+      let cellTime = row.insertCell(2);
+      cellName.textContent = movie.name;
+      cellDate.textContent = movie.date;
+      cellTime.textContent = movie.time;
+    });
+  }
+
+  // 페이지 로드 시 행 생성
+  document.addEventListener('DOMContentLoaded', () => {
+    generateTableRows(movies);
+  });
+</script>
+</body>
+</html>
