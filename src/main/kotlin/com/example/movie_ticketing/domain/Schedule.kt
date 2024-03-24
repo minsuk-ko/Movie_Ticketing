@@ -1,8 +1,6 @@
 package com.example.movie_ticketing.domain
 
 import jakarta.persistence.*
-import java.time.LocalDate
-import java.time.LocalTime
 
 
 @Entity
