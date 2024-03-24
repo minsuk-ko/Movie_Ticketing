@@ -1,0 +1,11 @@
+#navbar a {
+    font-weight: bold;
+    font-size: 18px;
+}
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: padding 0.3s;
+    background-color: #1f2937; /* Added for visibility on scroll */
+}

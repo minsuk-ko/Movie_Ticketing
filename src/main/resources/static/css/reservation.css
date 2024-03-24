@@ -1,0 +1,17 @@
+body { font-family: 'Roboto', sans-serif; }
+.checkbox:checked + .checkbox-label {
+    background-color: #4ade80;
+}
+#navbar a{
+    font-weight: bold;
+    font-size: 18px;
+}
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: padding 0.3s;
+}
+.clickable {
+    cursor:pointer;
+}

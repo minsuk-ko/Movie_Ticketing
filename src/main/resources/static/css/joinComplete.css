@@ -1,0 +1,23 @@
+#navbar a {
+    font-weight: bold;
+    font-size: 18px;
+}
+#navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background-color: #1f2937; /* Added background-color to ensure text is readable when navbar overlaps content */
+    transition: padding 0.3s;
+}
+.registration-completed-container {
+    text-align: center; /* Center the content */
+    padding: 20px;
+    background-color: #fff; /* Background color for the content */
+    border-radius: 10px; /* Rounded corners for the container */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+}
+.registration-image {
+    max-width: 100%; /* Ensure the image is responsive and doesn't overflow its container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 10px; /* Rounded corners for the image */
+}
