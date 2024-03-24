@@ -5,75 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Chart</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .active {
-            background-color: #007bff; /* Blue background for the active button */
-            color: white;
-        }
-        .active-button {
-            background-color: #007bff; /* Green background for the active button */
-            color: white; /* White text color */
-        }
-
-        .poster:hover .reserve-button {
-            display: block; /* Show reserve button on hover */
-        }
-        .reserve-button {
-            display: none; /* Hide reserve button by default */
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #ff0000;
-            color: white;
-            padding: 5px 12.5px;
-            border-radius: 5px;
-        }
-        .poster {
-            position: relative;
-            width: 200px; /* Set a specific width for the poster */
-            height: 300px; /* Set a specific height for the poster */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden; /* Prevent content from spilling out */
-        }
-        .poster img {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border-radius: 5px; /* Optional: for rounded corners on images */
-            position: absolute;
-            z-index: 1; /* Ensure the image is below the reserve button */
-        }
-        .reserve-button {
-            display: none; /* Hide reserve button by default */
-            position: absolute;
-            z-index: 2; /* Ensure the button is above the image */
-            background-color: #ff0000;
-            color: white;
-            padding: 10px 10px; /* Increased padding for a bigger size */
-            font-size: 18px; /* Increased font size for bigger text */
-            border-radius: 10px; /* Slightly larger border-radius for more pronounced rounded corners */
-
-        }
-        .poster:hover .reserve-button {
-            display: flex; /* Use flex to center the button */
-            align-items: center;
-            justify-content: center;
-        }
-        #navbar a {
-            font-weight: bold;
-            font-size: 18px;
-        }
-        #navbar {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            transition: padding 0.3s;
-            background-color: #1f2937; /* Added for visibility on scroll */
-        }
-    </style>
+    <link href="css/movie.css" rel="stylesheet">
 </head>
 <body class="bg-gray-200">
 <nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
