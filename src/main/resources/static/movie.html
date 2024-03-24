@@ -52,9 +52,10 @@
             z-index: 2; /* Ensure the button is above the image */
             background-color: #ff0000;
             color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            /* No need for bottom and left properties */
+            padding: 10px 10px; /* Increased padding for a bigger size */
+            font-size: 18px; /* Increased font size for bigger text */
+            border-radius: 10px; /* Slightly larger border-radius for more pronounced rounded corners */
+
         }
         .poster:hover .reserve-button {
             display: flex; /* Use flex to center the button */
@@ -137,7 +138,8 @@
             poster.innerHTML = `
                     <img src="https://placehold.co/200x300" alt="Movie Poster ${i}">
                     <div class="movie-name mt-2">Movie Name ${i}</div>
-                    <button class="reserve-button">Reserve</button>
+                    <button class="reserve-button">예매
+                    </button>
                 `;
             grid.appendChild(poster);
         }
@@ -150,6 +152,17 @@
         // Add active class to the clicked button
         element.classList.add('active');
     }
+    // Correctly selecting the element by ID
+    const poster = document.getElementById('movie-grid');
+
+    // The click handler function
+    const clickHandler = () => {
+        window.location.href = "movieinfo.html"; // Use 'window.location.href' for redirection
+    };
+
+    // Attach the event listener to the 'poster' element
+    poster.addEventListener('click', clickHandler);
+
 
     function handleShiftClick(direction) {
         const buttons = Array.from(document.querySelectorAll('.pagination button:not(:first-child):not(:last-child)'));

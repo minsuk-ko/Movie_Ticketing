@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reservation Details</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    #navbar a{
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: padding 0.3s;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body class="bg-gray-200 text-white font-sans">
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      <a href="main.html">CINE</a>
+    </div>
+    <div class="flex mt-2">
+      <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+      <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+    </div>
+  </div>
+</nav>
+<div class="bg-gray-800 px-4 py-2">
+  <h2 class="text-xl">예약내역조회</h2>
+  <h1>만약 영화 상영 후라면, 취소가 불가능합니다.</h1>
+</div>
+
+<!-- Table -->
+<div class="overflow-x-auto">
+  <table class="table-auto w-full">
+    <thead>
+    <tr class="bg-black">
+      <th class="px-4 py-2">예약번호</th>
+      <th class="px-4 py-2">상영시간</th>
+      <th class="px-4 py-2">영화명</th>
+      <th class="px-4 py-2">좌석번호</th>
+      <th class="px-4 py-2">취소</th>
+    </tr>
+    </thead>
+    <tbody class="bg-white text-black">
+    <tr>
+      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
+      <td class="border px-4 py-2">시간</td>
+      <td class="border px-4 py-2">영화명</td>
+      <td class="border px-4 py-2">좌석번호</td>
+      <td class="border px-4 py-2 text-center">
+        <i class="fas fa-edit">취소</i>
+      </td>
+    </tr>
+    <tr>
+      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
+      <td class="border px-4 py-2">시간</td>
+      <td class="border px-4 py-2">영화명</td>
+      <td class="border px-4 py-2">좌석번호</td>
+      <td class="border px-4 py-2 text-center">
+        <i class="fas fa-edit">취소불가</i>
+      </td>
+    </tr>
+    <!-- Repeat for each row based on data -->
+    </tbody>
+  </table>
+</div>
+
+<!-- Pagination -->
+<div class="flex justify-center space-x-2 my-4">
+  <button class="px-4 py-2 bg-gray-600"><</button>
+  <button class="px-4 py-2 bg-gray-600">1</button>
+  <button class="px-4 py-2 bg-gray-600">2</button>
+  <button class="px-4 py-2 bg-gray-600">3</button>
+  <button class="px-4 py-2 bg-gray-600">></button>
+</div>
+<script>
+  function scrollFunction() {
+    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+      document.getElementById("navbar").style.padding = "1rem 0";
+    } else {
+      document.getElementById("navbar").style.padding = "2rem 0";
+    }
+  }
+</script>
+</body>
+</html>
