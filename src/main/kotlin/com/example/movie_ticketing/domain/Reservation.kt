@@ -58,16 +58,16 @@ class Reservation{
         this.seat = seat
     }
 
-    //== 생성 메서드 ==//
-    fun createReservation(member: Member, schedule: Schedule, seat: Seat): Reservation {
-        val reservation = Reservation()
-        reservation.member = member
-        reservation.schedule = schedule
-        reservation.seat = seat
-        reservation.reservationDate = LocalDate.now()
-        // 영화 상영 날짜와 예매 가격을 어떻게 써야되지
-//        reservation.date =
+//    //== 생성 메서드 ==// 폐기
+//    fun createReservation(member: Member, schedule: Schedule, seat: Seat): Reservation {
+//        val reservation = Reservation()
+//        reservation.member = member
+//        reservation.schedule = schedule
+//        reservation.seat = seat
+//        reservation.reservationDate = LocalDate.now()
+//        // 영화 상영 날짜와 예매 가격을 어떻게 써야되지
+//        reservation.date = Movie.
 //        reservation.price =
-        return Reservation()
-    }
+//        return Reservation()
+//    }
 }
