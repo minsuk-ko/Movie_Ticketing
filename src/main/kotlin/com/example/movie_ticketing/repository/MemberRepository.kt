@@ -1,7 +1,6 @@
 package com.example.movie_ticketing.repository
 
 import com.example.movie_ticketing.domain.Member
-import org.hibernate.grammars.hql.HqlLexer.*
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 
