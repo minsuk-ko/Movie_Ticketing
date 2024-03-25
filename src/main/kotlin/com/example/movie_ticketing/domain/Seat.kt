@@ -11,7 +11,8 @@ class Seat {
     //좌석 선택
 
     @Enumerated(EnumType.STRING)
-    var selectStatus : SelectStatus? = null // POSSIBLE, IMPOSSIBLE
+    // default : POSSIBLE
+    var selectStatus : SelectStatus = SelectStatus.POSSIBLE // POSSIBLE, IMPOSSIBLE
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
@@ -25,7 +26,7 @@ class Seat {
     protected constructor() {
     }
 
-    constructor(row: String?, column: Int?, selectStatus: SelectStatus?, theater: Theater?) {
+    constructor(row: String?, column: Int?, selectStatus: SelectStatus, theater: Theater?) {
         this.row = row
         this.column = column
         this.selectStatus = selectStatus
