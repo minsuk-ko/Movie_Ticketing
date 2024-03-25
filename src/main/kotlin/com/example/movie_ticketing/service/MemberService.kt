@@ -22,8 +22,8 @@ class MemberService(var memberRepository : MemberRepository ) {
      * 중복 이메일 방지 (임시)
      */
     private fun validateDuplicateEmail(member: Member) {
-        val findEmail = memberRepository.findById(member.id)
-        if (!findEmail.isEmpty){
+        val findEmail = memberRepository.findByEmail(member.email)
+        if (findEmail.isNotEmpty()){
             throw IllegalStateException("이미 가입된 이메일입니다 :(")
         }
     }

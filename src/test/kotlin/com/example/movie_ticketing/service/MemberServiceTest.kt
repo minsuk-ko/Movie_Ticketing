@@ -22,6 +22,6 @@ class MemberServiceTest{
 
         val savedId = memberService.join(member)
 
-        assertEquals(member, memberRepository.findById(savedId).get())
+        assertEquals(member, memberRepository.findOne(savedId))
     }
 }

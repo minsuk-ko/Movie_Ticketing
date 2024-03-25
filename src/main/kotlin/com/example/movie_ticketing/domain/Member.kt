@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 class Member {
-    var email: String? = null
+    lateinit var email: String
         private set
 
     var age : Int? = null
@@ -22,7 +22,7 @@ class Member {
         // this one is protected since it should not be used directly
     }
 
-    constructor(email : String?, password : String?, age : Int?){
+    constructor(email : String, password : String?, age : Int?){
         this.email = email
         this.password = password
         this.age = age
