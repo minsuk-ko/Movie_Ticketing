@@ -15,7 +15,7 @@ import java.time.LocalDate
 class Reservation{
 
     // 예약 날짜
-    var res_date : LocalDate? = null
+    var reservationDate : LocalDate? = null
 
     // 상영 날짜
     var date : LocalDate? = null
@@ -36,25 +36,38 @@ class Reservation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "res_id")
+    @Column(name = "reservation_id")
     val id : Long = 0L
 
     protected constructor() {
     }
 
     constructor(
-        res_date: LocalDate?,
+        reservationDate: LocalDate?,
         date: LocalDate?,
         price: Int?,
         member: Member?,
         schedule: Schedule?,
         seat: Seat?
     ) {
-        this.res_date = res_date
+        this.reservationDate = reservationDate
         this.date = date
         this.price = price
         this.member = member
         this.schedule = schedule
         this.seat = seat
+    }
+
+    //== 생성 메서드 ==//
+    fun createReservation(member: Member, schedule: Schedule, seat: Seat): Reservation {
+        val reservation = Reservation()
+        reservation.member = member
+        reservation.schedule = schedule
+        reservation.seat = seat
+        reservation.reservationDate = LocalDate.now()
+        // 영화 상영 날짜와 예매 가격을 어떻게 써야되지
+//        reservation.date =
+//        reservation.price =
+        return Reservation()
     }
 }
