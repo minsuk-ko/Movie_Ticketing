@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin_Mainpage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #navbar a {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: padding 0.3s;
+      background-color: #1f2937; /* Added for visibility on scroll */
+    }
+    nav ul li{display: inline-block;list-style-type: none;}
+    nav ul ul{display: none; background: #1f2937}
+    nav ul li:hover ul{display:block; position:absolute;}
+    nav ul ul li{width:100px; height:30px;}
+
+    .tabs {
+      margin-bottom: 20px;
+    }
+
+    .tab-button {
+      background-color: white; /* 기본 배경색 */
+      border: 1px solid black; /* 검은색 경계선 */
+      padding: 10px 15px; /* 버튼 내부의 여백 */
+      cursor: pointer; /* 마우스 오버 시 커서 모양 변경 */
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    #selected{
+      background: #007bff;
+    }
+    #cinema_main {
+      margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
+      display: flex;
+      width: 1100px;
+      height: 800px;
+      flex-direction: row;
+
+      overflow: hidden; /* 내용이 테두리를 넘어갈 경우를 방지합니다. */
+    }
+
+    .sidebar,
+    .main-content {
+      border: 2px solid black; /* 테두리 스타일과 색상 설정 */
+      width: 700px;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+
+
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 225px;
+      text-align: center;
+      background: #444444;
+      color: white;
+
+    }
+    tr,td{
+      white-space: nowrap;
+    }
+
+    .link {
+      padding: 20px;
+      border-bottom: 1px solid #444;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+    }
+  </style>
+</head>
+
+<body>
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      CINE
+    </div>
+    <div class="flex mt-2">
+      <ul>
+        <li>
+          <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+        </li>
+        <li>
+          <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+        </li>
+        <li>
+          <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
+        </li>
+        <li>
+          <a href="admin_Main.html" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div id="cinema_main">
+
+  <div class="sidebar">
+
+    <a href="admin_Member.html" class="link">회원 관리</a>
+    <a href="admin_Movie.html" class="link">영화 관리</a>
+    <a id="selected" href="#" class="link">상영관 관리</a>
+
+  </div>
+  <div class = main-content>
+    <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+      상영관 관리
+    </div>
+
+    <div id="date-picker" class="text-right">
+      <label for="calendar">날짜: </label>
+      <input type="date" id="calendar" name="calendar" value="2024" />
+    </div>
+    <div class="tabs">
+      <button class="tab-button" onclick="changeTab(1)">1관</button>
+      <button class="tab-button" onclick="changeTab(2)">2관</button>
+      <button class="tab-button" onclick="changeTab(3)">3관</button>
+      <button class="tab-button" onclick="changeTab(4)">4관</button>
+      <button class="tab-button" onclick="changeTab(5)">5관</button>
+      <button class="tab-button" onclick="changeTab(6)">6관</button>
+      <button class="tab-button" onclick="changeTab(7)">7관</button>
+    </div>
+
+    <div id="tab-content-1" class="tab-content">
+      <!-- 여기에 첫 번째 탭의 내용과 테이블 구조를 추가합니다. -->
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="py-3 px-6">시간표id</th>
+          <th scope="col" class="py-3 px-6">영화 제목</th>
+          <th scope="col" class="py-3 px-6">영화 시작시간</th>
+          <th scope="col" class="py-3 px-6">영화 종료시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Repeat for each row -->
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">1</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">08:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">2</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">12:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">3</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">16:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">4</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">20:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+
+
+        <!-- Repeat above tr for the number of rows you need -->
+        </tbody>
+      </table>
+    </div>
+
+    <div id="tab-content-2" class="tab-content">
+      <!-- 여기에 두 번째 탭의 내용과 테이블 구조를 추가합니다. -->
+      <table class="w-full text-sm text-left text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <tr>
+          <th scope="col" class="py-3 px-6">시간표id</th>
+          <th scope="col" class="py-3 px-6">영화 제목</th>
+          <th scope="col" class="py-3 px-6">영화 시작시간</th>
+          <th scope="col" class="py-3 px-6">영화 종료시간</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Repeat for each row -->
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">5</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">08:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">6</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">11:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">7</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">14:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">8</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">17:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+        <tr class="bg-white border-b">
+          <td class="py-4 px-6">9</td>
+          <td class="py-4 px-6"></td>
+          <td class="py-4 px-6">20:00</td>
+          <td class="py-4 px-6"></td>
+        </tr>
+
+
+        <!-- Repeat above tr for the number of rows you need -->
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>
+<footer class="bg-gray-800">
+  <div class="container mx-auto text-center py-6">
+    <div class="text-sm text-gray-200 font-bold mb-2">
+      <!-- Team members' names -->
+      <div class="mb-2">
+        TEAM
+        오건 | 정주현 | 고민석
+      </div>
+
+    </div>
+  </div>
+</footer>
+<script>
+  function changeTab(tabNumber) {
+    // 모든 탭 컨텐츠를 숨깁니다.
+    var tabs = document.getElementsByClassName('tab-content');
+    for (var i = 0; i < tabs.length; i++) {
+      tabs[i].style.display = 'none';
+    }
+
+    // 모든 버튼에서 'active' 클래스를 제거합니다.
+    var tabButtons = document.getElementsByClassName('tab-button');
+    for (var i = 0; i < tabButtons.length; i++) {
+      tabButtons[i].classList.remove('active');
+    }
+
+    // 선택한 탭의 내용을 보여주고, 해당 탭 버튼에 'active' 클래스를 추가합니다.
+    document.getElementById('tab-content-' + tabNumber).style.display = 'block';}
+
+</script>
+</body>
+</html>

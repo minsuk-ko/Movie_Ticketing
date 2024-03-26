@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin_Mainpage</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #navbar a {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    #navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: padding 0.3s;
+      background-color: #1f2937; /* Added for visibility on scroll */
+    }
+    nav ul li{display: inline-block;list-style-type: none;}
+    nav ul ul{display: none; background: #1f2937}
+    nav ul li:hover ul{display:block; position:absolute;}
+    nav ul ul li{width:100px; height:30px;}
+
+
+    #cinema_main {
+      margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
+      display: flex;
+      width: 1100px;
+      height: 800px;
+      flex-direction: row;
+
+      overflow: hidden; /* 내용이 테두리를 넘어갈 경우를 방지합니다. */
+    }
+
+    .sidebar,
+    .main-content {
+      border: 2px solid black; /* 테두리 스타일과 색상 설정 */
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+
+
+    }
+
+    .sidebar {
+      width: 200px;
+      height: 225px;
+      text-align: center;
+      background: #333;
+      color: white;
+
+    }
+    .content-list{
+      display: flex;
+      margin-bottom: 100px;
+    }
+
+    .main-content {
+      width:1000px;
+      flex-direction: column; /* Change to row to place items side by side */
+      display: inline-block;
+      justify-content: space-around; /* Distribute space around content blocks */
+      /* Make the main content full width */
+      background: white;
+    }
+    .content-block{
+      border: 2px solid white; /* 테두리 스타일과 색상 설정 */
+      width: 100px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 12px;
+    }
+
+    .link {
+      padding: 20px;
+      border-bottom: 1px solid #444;
+      text-decoration: none;
+      color: white;
+      transition: background 0.3s;
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+  <div class="container mx-auto flex justify-between">
+    <div class="text-white font-bold text-2xl">
+      CINE
+    </div>
+    <div class="flex mt-2">
+      <ul>
+        <li>
+          <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+        </li>
+        <li>
+          <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+        </li>
+        <li>
+          <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
+        </li>
+        <li>
+          <a href="admin_Main.html" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
+
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div id="cinema_main">
+  <div class="sidebar">
+
+    <a href="adminMember.html" class="link">회원 관리</a>
+    <a href="#" class="link">영화 관리</a>
+    <a href="#" class="link">상영관 관리</a>
+
+  </div>
+
+  <div class="main-content">
+    <!-- 총회원수 block on the left -->
+    <div class = "content-list">
+      <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+        총 회원수
+      </div>
+      <div class="content-block bg-gray-200">N명</div>
+    </div>
+    <div class = "content-list">
+      <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+        상영중인 영화 수
+      </div>
+
+      <div class="content-block bg-gray-200">N개</div>
+    </div>
+  </div>
+
+
+</div>
+</body>
+</html>
