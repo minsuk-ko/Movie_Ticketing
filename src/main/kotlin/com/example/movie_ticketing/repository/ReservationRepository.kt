@@ -8,4 +8,4 @@
 //
 //    @Query("select m from Reservation m where m.id = :id")
 //    fun findOne(id : Long) : Reservation
-//}ㅍㄱ
+//} 폐기

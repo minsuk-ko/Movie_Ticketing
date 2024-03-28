@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Movie Schedule</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .disabled {
+      pointer-events: none;
+      color: #d1d5db; /* Light gray */
+    }
+
+    .enabled {
+      cursor: pointer;
+      color: #000; /* Black, or any color indicating it's active */
+    }
+
+  </style>
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
   <link href="css/reservation.css" rel="stylesheet">
 </head>
@@ -27,9 +39,9 @@
     <table class="min-w-full bg-white">
       <thead>
       <tr>
-        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="first-column">Movie Name</th>
-        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="second-column">Date</th>
-        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="third-column">Time</th>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="first-column">영화명</th>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="second-column">날짜</th>
+        <th class="text-left font-medium uppercase tracking-wider p-4 bg-black text-white" id ="third-column">시간</th>
       </tr>
       </thead>
       <tbody id="moviesTableBody" class="bg-white divide-y divide-gray-200">
@@ -37,20 +49,12 @@
       </tbody>
     </table>
     <div class="flex justify-end p-4">
-      <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700">
-        Confirm Time
+      <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700" onclick="openPopup()">
+        좌석선택
       </button>
     </div>
   </div>
-  <p class="text-sm p-4">
-    First, select this row and select the movie name.
-    <br>
-    Second, select the date can be release.
-    <br>
-    Finally, check the time of the time button.
-    <br>
-    <span class="italic">If you check the time button...</span>
-  </p>
+
 </div>
 <script>
   function scrollFunction() {
@@ -71,23 +75,59 @@
   ];
 
   // 표에 행을 생성하는 함수
+  let lastColumnClicked = 0; // 0: none, 1: name, 2: date
+
   function generateTableRows(movies) {
     const tableBody = document.getElementById('moviesTableBody');
-    movies.forEach(movie => {
+    movies.forEach((movie, index) => {
       let row = tableBody.insertRow();
       let cellName = row.insertCell(0);
       let cellDate = row.insertCell(1);
       let cellTime = row.insertCell(2);
+
       cellName.textContent = movie.name;
       cellDate.textContent = movie.date;
       cellTime.textContent = movie.time;
+
+      // Initially, disable date and time cells
+      cellDate.classList.add('disabled');
+      cellTime.classList.add('disabled');
+
+      // Click event for name cell
+      cellName.classList.add('enabled');
+      cellName.addEventListener('click', function() {
+        if (lastColumnClicked === 0) {
+          // Enable all date cells
+          document.querySelectorAll('#moviesTableBody td:nth-child(2)').forEach(cell => {
+            cell.classList.remove('disabled');
+            cell.classList.add('enabled');
+          });
+          lastColumnClicked = 1;
+        }
+      });
+
+      // Click event for date cell
+      cellDate.addEventListener('click', function() {
+        if (lastColumnClicked === 1) {
+          // Enable all time cells
+          document.querySelectorAll('#moviesTableBody td:nth-child(3)').forEach(cell => {
+            cell.classList.remove('disabled');
+            cell.classList.add('enabled');
+          });
+          lastColumnClicked = 2;
+        }
+      });
     });
   }
 
-  // 페이지 로드 시 행 생성
   document.addEventListener('DOMContentLoaded', () => {
     generateTableRows(movies);
   });
+ function openPopup(){
+   window.open("seatPopup.html",'seatPopup','width=800,height=1000')
+ }
+
 </script>
 </body>
 </html>
+

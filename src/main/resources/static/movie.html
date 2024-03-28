@@ -15,7 +15,7 @@
         </div>
         <div class="flex mt-2">
             <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
-            <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+            <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
             <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
             <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
         </div>
@@ -70,7 +70,8 @@
             poster.innerHTML = `
                     <img src="https://placehold.co/200x300" alt="Movie Poster ${i}">
                     <div class="movie-name mt-2">Movie Name ${i}</div>
-                    <button class="reserve-button">예매
+                    <button class="reserve-button">
+                    <a href="movieInfo.html">상세정보</a>
                     </button>
                 `;
             grid.appendChild(poster);
@@ -87,13 +88,7 @@
     // Correctly selecting the element by ID
     const poster = document.getElementById('movie-grid');
 
-    // The click handler function
-    const clickHandler = () => {
-        window.location.href = "movieinfo.html"; // Use 'window.location.href' for redirection
-    };
 
-    // Attach the event listener to the 'poster' element
-    poster.addEventListener('click', clickHandler);
 
 
     function handleShiftClick(direction) {

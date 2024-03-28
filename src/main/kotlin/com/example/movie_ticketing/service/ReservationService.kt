@@ -21,4 +21,4 @@
 //    fun findOne(reservationId : Long): Reservation {
 //        return reservationRepository.findOne(reservationId)
 //    }
-//} ㅍㄱ
+//} //폐기
