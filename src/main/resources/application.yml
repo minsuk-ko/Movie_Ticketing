@@ -18,9 +18,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         globally_quoted_identifiers: true
 
-    hibernate:
-      ddl-auto: create
-
 logging:
   level:
     org.hibernate:

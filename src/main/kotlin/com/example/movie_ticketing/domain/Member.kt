@@ -1,30 +1,13 @@
 package com.example.movie_ticketing.domain
 
-import jakarta.persistence.*
+import org.springframework.data.annotation.Id
 
-@Entity
-class Member {
-    lateinit var email: String
-        private set
 
-    var age : Int? = null
-        private set
+data class Member (
+    @Id var id : Int =0,
+    var name : String ="",
+    var email: String ="",
+    var age: Int =0,
+    var password : String =""){
 
-    var password: String? = null
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
-    val id: Long = 0L
-
-    protected constructor() {
-        // no-args constructor required by JPA spec
-        // this one is protected since it should not be used directly
-    }
-
-    constructor(email : String, password : String?, age : Int?){
-        this.email = email
-        this.password = password
-        this.age = age
-    }
 }

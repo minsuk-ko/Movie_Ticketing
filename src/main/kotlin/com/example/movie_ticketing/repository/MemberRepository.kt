@@ -2,13 +2,30 @@ package com.example.movie_ticketing.repository
 
 import com.example.movie_ticketing.domain.Member
 import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Query
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations
+import org.springframework.stereotype.Repository
 
-interface MemberRepository : JpaRepository<Member?, Long?> {
+@Repository
+interface MemberRepository : JpaRepository<Member, Long?> {
 
-    @Query("select m from Member m where m.email = :email")
     fun findByEmail(email : String) : MutableList<Member>
 
-    @Query("select m from Member m where m.id = :id")
-    fun findOne(id : Long) : Member
+    fun findOne(id : Int) : Member
+}
+
+// 비밀번호 변경
+interface CustomMemberRepository {
+    fun changePassword(id: Int, password: String)
+}
+
+class CustomUserRepositoryImpl(private val npjo: NamedParameterJdbcOperations) : CustomMemberRepository {
+
+    companion object {
+        private const val CHANGE_PASSWORD =
+            "update member set password=:password where id=:id"
+    }
+
+    override fun changePassword(id: Int, password: String) {
+        npjo.update(CHANGE_PASSWORD, mapOf("id" to id, "password" to password))
+    }
 }

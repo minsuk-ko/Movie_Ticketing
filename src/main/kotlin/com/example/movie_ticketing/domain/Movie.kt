@@ -1,48 +1,25 @@
 package com.example.movie_ticketing.domain
 
-import jakarta.persistence.*
-import java.util.Date
+import org.springframework.data.annotation.Id
 
-
-@Entity
-class Movie {
-
-    var title : String? = null
-    var story : String? = null
-    var director : String? =null
-    var actor : String? = null
-    var poster : String? = null
-    var openDate : Date? = null
-    var runtime : Int? = null
-
-    @Enumerated(EnumType.STRING)
-    var rating : Rating? = null // G, PG12, PG15, PG18
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "movie_id")
-    val id : Long = 0L
-
-    protected constructor() {
-    }
-
-    constructor(
-        title: String?,
-        story: String?,
-        director: String?,
-        actor: String?,
-        poster: String?,
-        openDate: Date?,
-        runtime: Int?,
-        rating: Rating?
-    ) {
-        this.title = title
-        this.story = story
-        this.director = director
-        this.actor = actor
-        this.poster = poster
-        this.openDate = openDate
-        this.runtime = runtime
-        this.rating = rating
-    }
+data class Movie(
+    @Id var id : Int = 0,
+    var title : String = "",
+    var story : String = "",
+    var director : String = "",
+    var actor : String = "",
+    var posterURL : String = "",
+    var openDate : String="",
+    var runtime : Int =0,
+    var rating : Rating,
+    var state : Boolean){
 }
+
+enum class Rating {
+    G,      // 전체관람가
+    PG12,   // 12세관람가
+    PG15,   // 15세관람가
+    PG18;   // 청소년관람불가
+}
+
+
