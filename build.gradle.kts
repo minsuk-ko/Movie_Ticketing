@@ -27,6 +27,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-data-rest")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -35,7 +36,9 @@ dependencies {
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    implementation("de.svenkubiak:jBCrypt:+")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    implementation("org.mariadb.jdbc:mariadb-java-client:3.+")
 }
 
 allOpen {

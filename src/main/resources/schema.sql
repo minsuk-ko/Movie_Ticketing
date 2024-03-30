@@ -111,4 +111,7 @@ FOREIGN KEY (Seat_id)
 REFERENCES Seat (Seat_id),
 CONSTRAINT fk_Ticket_Reservation1
 FOREIGN KEY (Reservation_id)
-REFERENCES Reservation (Reservation_id));
+REFERENCES Reservation (Reservation_id)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION)
+ENGINE = InnoDB;
