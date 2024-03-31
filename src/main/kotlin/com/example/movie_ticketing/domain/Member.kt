@@ -1,17 +1,35 @@
 package com.example.movie_ticketing.domain
 
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import org.springframework.data.annotation.Id
+import jakarta.persistence.*
 
 
-data class Member (
+@Entity
+class Member{
+
+    var name : String = ""
+
+    lateinit var email: String
+        private set
+
+    var age: Int =0
+        private set
+
+    var password : String = ""
+        private set
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Int =0,
-    var name : String ="",
-    var email: String ="",
-    var age: Int =0,
-    var password : String =""){
+    @Column(name = "member_id")
+    var id : Int = 0
 
+    protected constructor() {
+    }
+
+    private constructor(name: String, email: String, age: Int, password: String) {
+        this.name = name
+        this.email = email
+        this.age = age
+        this.password = password
+    }
 }
+

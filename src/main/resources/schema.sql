@@ -1,117 +1,117 @@
 -- -----------------------------------------------------
 -- Table `movie`.`Theater`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Theater (
-Theater_id     INT         NOT NULL,
-Theater_name   VARCHAR(5)  NOT NULL,
-PRIMARY KEY (`Theater_id`));
+CREATE TABLE IF NOT EXISTS theater (
+theater_id     INT         NOT NULL,
+theater_name   VARCHAR(5)  NOT NULL,
+PRIMARY KEY (`theater_id`));
 
 -- -----------------------------------------------------
--- Table `movie`.`Seat`
+-- Table `movie`.`seat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Seat (
-Seat_id     INT         NOT NULL,
-Seat_row    VARCHAR(10) NOT NULL,
-Seat_col    INT         NOT NULL,
-Theater_id  INT         NOT NULL,
-IsSelected  BOOLEAN,
-PRIMARY KEY (Seat_id),
-INDEX fk_Seat_Theater1_idx (Theater_id ASC) VISIBLE,
-CONSTRAINT fk_Seat_Theater1
-FOREIGN KEY (Theater_id)
-REFERENCES Theater (Theater_id));
-
-
--- -----------------------------------------------------
--- Table `movie`.`Movie`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Movie (
-Movie_id             INT         NOT NULL,
-Movie_title          VARCHAR(45) NOT NULL,
-Movie_story          VARCHAR(500)NOT NULL,
-Movie_director       VARCHAR(10) NOT NULL,
-Movie_actor          VARCHAR(100)NOT NULL,
-Movie_rating         VARCHAR(5)  NOT NULL,
-Movie_poster_url     TEXT        NOT NULL,
-Movie_openDate       DATE        NOT NULL,
-Movie_runtime        VARCHAR(15) NOT NULL,
-Movie_state          BOOLEAN,
-PRIMARY KEY (Movie_id),
-UNIQUE KEY Movie_title (Movie_title));
+CREATE TABLE IF NOT EXISTS seat (
+seat_id     INT         NOT NULL,
+seat_row    VARCHAR(10) NOT NULL,
+seat_col    INT         NOT NULL,
+theater_id  INT         NOT NULL,
+isSelected  BOOLEAN,
+PRIMARY KEY (seat_id),
+INDEX fk_seat_theater1_idx (theater_id ASC) VISIBLE,
+CONSTRAINT fk_seat_theater1
+FOREIGN KEY (theater_id)
+REFERENCES theater (theater_id));
 
 
 -- -----------------------------------------------------
--- Table `movie`.`Schedule`
+-- Table `movie`.`movie`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Schedule (
-Schedule_id         INT         NOT NULL,
-Schedule_start      VARCHAR(15) NOT NULL,
-Schedule_end        VARCHAR(15) NOT NULL,
-Schedule_date       VARCHAR(20) NOT NULL,
-Movie_id            INT         NOT NULL,
-Theater_id          INT         NOT NULL,
-PRIMARY KEY (Schedule_id),
-INDEX fk_Schedule_Movie_idx (Movie_id ASC) VISIBLE,
-INDEX fk_Schedule_Theater1_idx (Theater_id ASC) VISIBLE,
-CONSTRAINT fk_Schedule_Movie
-FOREIGN KEY (Movie_id)
-REFERENCES Movie (Movie_id),
-CONSTRAINT fk_Schedule_Theater1
-FOREIGN KEY (Theater_id)
-REFERENCES Theater (Theater_id));
+CREATE TABLE IF NOT EXISTS movie (
+movie_id             INT         NOT NULL,
+movie_title          VARCHAR(45) NOT NULL,
+movie_story          VARCHAR(500)NOT NULL,
+movie_director       VARCHAR(10) NOT NULL,
+movie_actor          VARCHAR(100)NOT NULL,
+movie_rating         VARCHAR(5)  NOT NULL,
+movie_poster_url     TEXT        NOT NULL,
+movie_openDate       DATE        NOT NULL,
+movie_runtime        VARCHAR(15) NOT NULL,
+movie_state          BOOLEAN,
+PRIMARY KEY (movie_id),
+UNIQUE KEY movie_title (movie_title));
 
 
 -- -----------------------------------------------------
--- Table `movie`.`Member`
+-- Table `movie`.`schedule`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Member (
-Member_id        INT         NOT NULL,
-Member_password  VARCHAR(25) NOT NULL,
-Member_email     VARCHAR(25) NOT NULL,
-Member_name      VARCHAR(10) NOT NULL,
-Member_age       INT         NOT NULL,
-PRIMARY KEY (Member_id),
-UNIQUE KEY Member_email (Member_email));
+CREATE TABLE IF NOT EXISTS schedule (
+schedule_id         INT         NOT NULL,
+schedule_start      VARCHAR(15) NOT NULL,
+schedule_end        VARCHAR(15) NOT NULL,
+schedule_date       VARCHAR(20) NOT NULL,
+movie_id            INT         NOT NULL,
+theater_id          INT         NOT NULL,
+PRIMARY KEY (schedule_id),
+INDEX fk_schedule_movie_idx (movie_id ASC) VISIBLE,
+INDEX fk_schedule_theater1_idx (theater_id ASC) VISIBLE,
+CONSTRAINT fk_schedule_movie
+FOREIGN KEY (movie_id)
+REFERENCES movie (movie_id),
+CONSTRAINT fk_schedule_theater1
+FOREIGN KEY (theater_id)
+REFERENCES theater (theater_id));
 
 
 -- -----------------------------------------------------
--- Table `movie`.`Reservation`
+-- Table `movie`.`member`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Reservation (
-Reservation_id           INT         NOT NULL,
-Reservation_date         DATE        NOT NULL,
-Reservation_price        VARCHAR(10) NOT NULL,
-Reservation_ticket_num   VARCHAR(20) NOT NULL,
-Member_id                INT         NOT NULL,
-PRIMARY KEY (Reservation_id),
-INDEX fk_Reservation_Member1_idx (Member_id ASC) VISIBLE,
-CONSTRAINT fk_Reservation_Member1
-FOREIGN KEY (Member_id)
-REFERENCES Member (Member_id));
+CREATE TABLE IF NOT EXISTS member (
+member_id        INT         NOT NULL,
+member_password  VARCHAR(25) NOT NULL,
+member_email     VARCHAR(25) NOT NULL,
+member_name      VARCHAR(10) NOT NULL,
+member_age       INT         NOT NULL,
+PRIMARY KEY (member_id),
+UNIQUE KEY member_email (member_email));
 
 
 -- -----------------------------------------------------
--- Table `movie`.`Ticket`
+-- Table `movie`.`reservation`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS Ticket (
-Ticket_id           INT         NOT NULL,
-Ticket_price        INT         NOT NULL,
-Schedule_id         INT         NOT NULL,
-Seat_id             INT         NOT NULL,
-Reservation_id      INT         NOT NULL,
-PRIMARY KEY (Ticket_id),
-INDEX fk_Ticket_Schedule1_idx (Schedule_id ASC) VISIBLE,
-INDEX fk_Ticket_Seat1_idx (Seat_id ASC) VISIBLE,
-INDEX fk_Ticket_Reservation1_idx (Reservation_id ASC) VISIBLE,
-CONSTRAINT fk_Ticket_Schedule1
-FOREIGN KEY (Schedule_id)
-REFERENCES Schedule (Schedule_id),
-CONSTRAINT fk_Ticket_Seat1
-FOREIGN KEY (Seat_id)
-REFERENCES Seat (Seat_id),
-CONSTRAINT fk_Ticket_Reservation1
-FOREIGN KEY (Reservation_id)
-REFERENCES Reservation (Reservation_id)
+CREATE TABLE IF NOT EXISTS reservation (
+reservation_id           INT         NOT NULL,
+reservation_date         VARCHAR(10) NOT NULL,
+reservation_price        INT         NOT NULL,
+reservation_ticket_num   INT         NOT NULL,
+member_id                INT         NOT NULL,
+PRIMARY KEY (reservation_id),
+INDEX fk_reservation_member1_idx (member_id ASC) VISIBLE,
+CONSTRAINT fk_reservation_member1
+FOREIGN KEY (member_id)
+REFERENCES member (member_id));
+
+
+-- -----------------------------------------------------
+-- Table `movie`.`ticket`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS ticket (
+ticket_id           INT         NOT NULL,
+ticket_price        INT         NOT NULL,
+schedule_id         INT         NOT NULL,
+seat_id             INT         NOT NULL,
+reservation_id      INT         NOT NULL,
+PRIMARY KEY (ticket_id),
+INDEX fk_ticket_schedule1_idx (schedule_id ASC) VISIBLE,
+INDEX fk_ticket_seat1_idx (seat_id ASC) VISIBLE,
+INDEX fk_ticket_reservation1_idx (reservation_id ASC) VISIBLE,
+CONSTRAINT fk_ticket_schedule1
+FOREIGN KEY (schedule_id)
+REFERENCES schedule (schedule_id),
+CONSTRAINT fk_ticket_seat1
+FOREIGN KEY (seat_id)
+REFERENCES seat (seat_id),
+CONSTRAINT fk_ticket_reservation1
+FOREIGN KEY (reservation_id)
+REFERENCES reservation (reservation_id)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION)
 ENGINE = InnoDB;

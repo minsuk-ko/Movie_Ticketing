@@ -1,18 +1,26 @@
 package com.example.movie_ticketing.domain
 
-import org.springframework.data.annotation.Id
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
 
-data class Movie(
-    @Id var id : Int = 0,
-    var title : String = "",
-    var story : String = "",
-    var director : String = "",
-    var actor : String = "",
-    var posterURL : String = "",
-    var openDate : String="",
-    var runtime : Int =0,
-    var rating : Rating,
-    var state : Boolean){
+@Entity
+class Movie{
+    var title : String = ""
+    var story : String = ""
+    var director : String = ""
+    var actor : String = ""
+    var posterURL : String = ""
+    var openDate : String=""
+    var runtime : Int =0
+    var rating : Rating = Rating.G
+    var state : Boolean = true
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id : Int = 0
 }
 
 enum class Rating {

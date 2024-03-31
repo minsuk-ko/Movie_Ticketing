@@ -1,6 +1,6 @@
 package com.example.movie_ticketing.controller
 
-import com.example.movie_ticketing.logger
+import logger
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
 
