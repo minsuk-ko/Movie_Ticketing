@@ -8,7 +8,7 @@ class Member{
 
     var name : String = ""
 
-    lateinit var email: String
+    var email: String? = null
         private set
 
     var age: Int =0
