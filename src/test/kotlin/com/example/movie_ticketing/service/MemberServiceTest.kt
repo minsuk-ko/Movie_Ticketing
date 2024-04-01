@@ -4,8 +4,8 @@ package com.example.movie_ticketing.service
 //@Transactional
 //class MemberServiceTest{
 
-//    @Autowired lateinit var memberService : MemberService
-//    @Autowired lateinit var memberRepository: MemberRepository
+//    @Autowired lateinit var memberService : com.example.movie_ticketing.service.MemberService
+//    @Autowired lateinit var memberRepository: com.example.movie_ticketing.repository.MemberRepository
 //
 //    @Test
 //    fun join(){
