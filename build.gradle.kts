@@ -40,6 +40,11 @@ dependencies {
     implementation("de.svenkubiak:jBCrypt:+")
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.+")
+    implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
+
+    // mail support
+    implementation("org.springframework:spring-context-support:5.3.24")
+    implementation("jakarta:javax.mail:1.6.2")
 }
 
 allOpen {

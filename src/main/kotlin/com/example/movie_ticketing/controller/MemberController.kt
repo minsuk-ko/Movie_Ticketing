@@ -3,16 +3,15 @@ package com.example.movie_ticketing.controller
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.service.MemberService
 import jakarta.validation.Valid
+import logger
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 
-
 @Controller
 class MemberController(private val memberService: MemberService) {
-
 
     /**
      * 회원가입 페이지로 이동
@@ -28,14 +27,21 @@ class MemberController(private val memberService: MemberService) {
         if(result.hasErrors()){
             return "createMemberForm"
         }
-        // 이름 나이 이메일 비번
-        val member = Member().apply {
-            name = form.name
-            age = form.age
-            email = form.email
-            password = form.password
+
+        if(form.password != form.confirmPassword){
+            result.rejectValue("confirmPassword","passwordInCorrect",
+                "패스워드가 일치하지 않습니다.")
+            return "createMemberForm"
         }
-        memberService.join(member)
+
+            // member 객체 생성
+            val member = Member().apply {
+                name = form.name
+                age = form.age
+                email = form.email
+                password = form.password
+            }
+            memberService.join(member)
 
         return "redirect:/"
     }

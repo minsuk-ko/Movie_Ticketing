@@ -73,16 +73,12 @@
 document.getElementById('loginForm').addEventListener('submit', function(event){
   event.preventDefault(); // Prevent the default form submission
 
-  // Correctly get the values from the password fields
   var password = document.getElementById('password').value;
   var confirmPassword = document.getElementById('check-password').value;
 
-  // Correctly check if passwords match
   if(password === confirmPassword) {
-    // If they match, show success alert
-    alert("회원가입 성공"); // Now only shows when '회원가입' is attempted and passwords match
+    alert("회원가입 성공");
   } else {
-    // If passwords do not match, alert the user
     alert('비밀번호가 서로 맞지 않습니다');
   }
 });

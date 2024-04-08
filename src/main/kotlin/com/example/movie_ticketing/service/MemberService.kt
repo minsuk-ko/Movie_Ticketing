@@ -2,7 +2,6 @@ package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.domain.Member
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.Optional
@@ -31,6 +30,7 @@ class MemberService(var memberRepository: MemberRepository){
             throw IllegalStateException("이미 가입된 이메일입니다 :(")
         }
     }
+
 
     fun findOne(memberId :Int) : Optional<Member?> {
         return memberRepository.findById(memberId)

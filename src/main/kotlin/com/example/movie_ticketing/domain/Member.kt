@@ -8,6 +8,7 @@ class Member{
 
     var name : String = ""
 
+    @Column(unique = true)
     var email: String? = null
 
     var age: Int? = null

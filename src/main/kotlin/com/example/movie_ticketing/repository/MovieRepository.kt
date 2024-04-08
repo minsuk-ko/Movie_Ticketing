@@ -1,16 +1,14 @@
 package com.example.movie_ticketing.repository
 
-import com.example.movie_ticketing.domain.Member
+import com.example.movie_ticketing.domain.Movie
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
+
 @Repository
-interface MemberRepository : JpaRepository<Member?, Int?> {
-    // todo
-//    fun findAll(pageable: Pageable): Page<Member?>
+interface MovieRepository : JpaRepository<Movie?, Int?> {
 
-    fun findByEmail(member: Member) : MutableList<Member>
-
+    fun findByTitleContaining(searchKeyword: String?, pageable: Pageable?): Page<Movie?>?
 }

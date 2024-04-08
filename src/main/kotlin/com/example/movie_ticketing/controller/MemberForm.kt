@@ -17,4 +17,6 @@ class MemberForm {
     @NotEmpty(message = "비밀번호를 입력해주세요")
     var password : String = ""
 
+    @NotEmpty(message = "비밀번호 확인은 필수입니다")
+    var confirmPassword : String = ""
 }
