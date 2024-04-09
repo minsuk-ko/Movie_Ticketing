@@ -29,5 +29,10 @@ class Member{
         this.age = age
         this.password = password
     }
+
+    override fun toString(): String {
+        return "Member(name='$name', email=$email, age=$age, password='$password', id=$id)"
+    }
+
 }
 

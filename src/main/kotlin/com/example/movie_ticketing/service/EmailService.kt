@@ -1,14 +1,20 @@
 package com.example.movie_ticketing.service
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Configurable
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
 import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 import java.security.SecureRandom
 
 @Service
-interface EmailService {
+class EmailService {
 
-    val javaMailSender: JavaMailSender
+    lateinit var javaMailSender: JavaMailSender
+
+
 
     fun sendVerificationCode(recipient : String) : String{
         val verificationCode : String = generateEmailCode()

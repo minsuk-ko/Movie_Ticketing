@@ -16,8 +16,6 @@ col    INT         NOT NULL,
 theater_id  INT         NOT NULL,
 isSelected  BOOLEAN,
 PRIMARY KEY (id),
-INDEX fk_seat_theater1_idx (theater_id ASC) VISIBLE,
-CONSTRAINT fk_seat_theater1
 FOREIGN KEY (theater_id)
 REFERENCES theater (id));
 
@@ -51,12 +49,8 @@ date       VARCHAR(20) NOT NULL,
 movie_id            INT         NOT NULL,
 theater_id          INT         NOT NULL,
 PRIMARY KEY (id),
-INDEX fk_schedule_movie_idx (movie_id ASC) VISIBLE,
-INDEX fk_schedule_theater1_idx (theater_id ASC) VISIBLE,
-CONSTRAINT fk_schedule_movie
 FOREIGN KEY (movie_id)
 REFERENCES movie (id),
-CONSTRAINT fk_schedule_theater1
 FOREIGN KEY (theater_id)
 REFERENCES theater (id));
 
@@ -82,10 +76,8 @@ id           INT         NOT NULL,
 date         VARCHAR(10) NOT NULL,
 price        INT         NOT NULL,
 ticket_num   INT         NOT NULL,
-member_id                INT         NOT NULL,
+member_id    INT         NOT NULL,
 PRIMARY KEY (id),
-INDEX fk_reservation_member1_idx (member_id ASC) VISIBLE,
-CONSTRAINT fk_reservation_member1
 FOREIGN KEY (member_id)
 REFERENCES member (id));
 
@@ -100,16 +92,11 @@ schedule_id         INT         NOT NULL,
 seat_id             INT         NOT NULL,
 reservation_id      INT         NOT NULL,
 PRIMARY KEY (id),
-INDEX fk_ticket_schedule1_idx (schedule_id ASC) VISIBLE,
-INDEX fk_ticket_seat1_idx (seat_id ASC) VISIBLE,
-INDEX fk_ticket_reservation1_idx (reservation_id ASC) VISIBLE,
-CONSTRAINT fk_ticket_schedule1
 FOREIGN KEY (schedule_id)
 REFERENCES schedule (id),
 CONSTRAINT fk_ticket_seat1
 FOREIGN KEY (seat_id)
 REFERENCES seat (id),
-CONSTRAINT fk_ticket_reservation1
 FOREIGN KEY (reservation_id)
 REFERENCES reservation (id)
 ON DELETE NO ACTION

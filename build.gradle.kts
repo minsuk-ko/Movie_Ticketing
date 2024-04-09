@@ -44,7 +44,7 @@ dependencies {
 
     // mail support
     implementation("org.springframework:spring-context-support:5.3.24")
-    implementation("jakarta:javax.mail:1.6.2")
+    implementation("com.sun.mail:javax.mail:1.6.2")
 }
 
 allOpen {
