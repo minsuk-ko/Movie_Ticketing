@@ -3,6 +3,7 @@ package com.example.movie_ticketing.service
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
 import logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Configurable
 import org.springframework.context.annotation.Bean
@@ -14,82 +15,69 @@ import java.security.SecureRandom
 import kotlin.random.Random
 
 @Service
-class EmailService(val javaMailSender: JavaMailSender, val memberRepository: MemberRepository) {
+class EmailService @Autowired constructor(
+    private val javaMailSender: JavaMailSender,
+    private val memberRepository: MemberRepository
+) {
+    private val logger = LoggerFactory.getLogger(EmailService::class.java)
 
-    /**
-     * 회원가입 이메일 인증
-     */
-    fun sendVerificationCode(recipient : String) : String{
-        val verificationCode : String = generateEmailCode()
+    fun sendVerificationCode(recipient: String): String {
+        val verificationCode = generateEmailCode()
         val subject = "회원가입 인증 이메일 입니다."
         val message = "인증번호는 $verificationCode 입니다."
 
         sendEmail(recipient, subject, message)
-        return verificationCode // 세션에 저장
+        return verificationCode
     }
 
-    /**
-     * 비밀번호 찾기 이메일
-     * todo 여기 하는중인데 뭔가 이상함
-     */
-    fun sendTemporaryPassword(recipient : String, member : Member) : String {
-        val temporaryPassword : String = generatePassword()
+    fun sendTemporaryPassword(recipient: String, member: Member): String {
+        val temporaryPassword = generatePassword()
         val subject = "임시 비밀번호 안내 이메일입니다."
         val message = "임시 비밀번호는 $temporaryPassword 입니다."
 
         sendEmail(recipient, subject, message)
-        updatePassword(temporaryPassword,member)
-        return temporaryPassword // 세션에 저장
+        updatePassword(temporaryPassword, member)
+        return temporaryPassword
     }
 
-    fun sendEmail(recipient : String, subject : String, text : String){
-        val message = SimpleMailMessage().apply {
-            setTo(recipient)
-            setSubject(subject)
-            setText(text)
+    fun sendEmail(recipient: String, subject: String, text: String) {
+        try {
+            val message = SimpleMailMessage().apply {
+                setTo(recipient)
+                setSubject(subject)
+                setText(text)
+            }
+            javaMailSender.send(message)
+            logger.info("이메일 전송 완료!")
+        } catch (e: Exception) {
+            logger.error("이메일 전송 실패: ", e)
         }
-        javaMailSender.send(message)
-        logger().info("이메일 전송 완료!")
     }
 
-    /**
-     * 인증번호 생성
-     * @return 6자리 random alphabet
-     */
-    fun generateEmailCode() : String{
-
-        val codeLength : Int = 6
+    fun generateEmailCode(): String = SecureRandom().let { random ->
+        val codeLength = 6
         val alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-        val sb = StringBuilder(codeLength)
-        val random = SecureRandom()
-
-        for(i in 0 until codeLength){
-            val index = random.nextInt(alphabet.length)
-            val randomChar = alphabet[index]
-            sb.append(randomChar)
-        }
-        return sb.toString()
+        (0 until codeLength)
+            .map { random.nextInt(alphabet.length) }
+            .map(alphabet::get)
+            .joinToString("")
     }
 
-    /**
-     * 비밀번호 변경
-     */
-    fun updatePassword(str : String, member : Member){
-        memberRepository.updatePassword(member.id, str)
+    fun updatePassword(newPassword: String, member: Member) {
+        // Ideally, hash the password before storing it
+        memberRepository.updatePassword(member.id, hashPassword(newPassword))
     }
 
-    /**
-     * 비밀번호 생성
-     * @return 10자리 랜덤난수
-     */
-    fun generatePassword() : String {
-        val charSet = charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-            'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z')
-
-        return(0 until 10)
-            .map { Random.nextInt(charSet.size) }
-            .map { charSet[it] }
-            .joinToString { "" }
+    fun generatePassword(): String = SecureRandom().let { random ->
+        val charSet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray()
+        (0 until 10)
+            .map { random.nextInt(charSet.size) }
+            .map(charSet::get)
+            .joinToString("")
     }
 
+    private fun hashPassword(password: String): String {
+        // Implement password hashing here
+        return password // Placeholder for hashing logic
+    }
 }
