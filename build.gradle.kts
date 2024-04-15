@@ -42,6 +42,10 @@ dependencies {
     implementation("org.mariadb.jdbc:mariadb-java-client:3.+")
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 
+    //spring security (로그인 로그아웃 설정)
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
+
     // mail support
     implementation("org.springframework:spring-context-support:5.3.24")
     implementation("com.sun.mail:javax.mail:1.6.2")
