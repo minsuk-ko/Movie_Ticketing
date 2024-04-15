@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping
 @Controller
 class MovieController(private val movieService: MovieService) {
 
+    // todo pass(영화목록)
     @GetMapping("/movie/list")
     fun movieList(model: Model,
                   @PageableDefault(page = 0, size = 10, sort = ["id"], direction = Sort.Direction.DESC )
@@ -31,9 +32,6 @@ class MovieController(private val movieService: MovieService) {
             list = movieService.movieSearchList(searchKeyword, pageable)
         }
     }
-
-
-//    @PostMapping("/movie/list")
 
 
 }

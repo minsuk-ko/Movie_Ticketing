@@ -65,4 +65,25 @@ fun logout(): String {
 
         return "redirect:/"
     }
+
+    /**
+     * 비밀번호 찾기
+     * 해당 이메일이 DB에 있는지 확인 후 임시 비밀번호 전송
+     * 임시 비밀번호를 현재 비밀번호로 변경
+     */
+    @GetMapping("/findPw")
+    fun findPwForm(model : Model) : String {
+        model.addAttribute("findPasswordForm", FindPasswordForm())
+        return "createFindPasswordForm"
+    }
+
+    @PostMapping("/findPw")
+    fun findPw(@Valid form : FindPasswordForm, result: BindingResult) : String{
+        if(result.hasErrors()){
+            return "createFindPasswordForm"
+        }
+
+        // todo 일단 pass...
+        return ""
+    }
 }

@@ -5,7 +5,9 @@ import jakarta.servlet.http.HttpSession
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
+import java.lang.reflect.Member
 
 
 @Controller
@@ -32,5 +34,15 @@ class EmailController(private val emailService: EmailService) {
             return ResponseEntity.ok(false)
         }
     }
+
+    /**
+     * 비밀번호 찾기 이메일 보내기
+     * 막힘
+     */
+    @PostMapping("/findPw")
+    fun sendPasswordEmail(@RequestBody member : Member){
+        emailService
+    }
+
 
 }

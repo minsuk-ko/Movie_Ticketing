@@ -27,16 +27,16 @@ spring:
     init:
       mode: always
 
-      # email 인증 properties
-#  mail:
-#    host: smtp.naver.com
-#    port : 465
-#    username : email@naver.com
-#    password : pw
-#    properties:
-#      mail.smtp.auth : true
-#      mail.smtp.ssl.enable : true
-#      mail.smtp.ssl.trust : smtp.naver.com
+  #       email 인증 properties
+  mail:
+    host: smtp.gmail.com
+    port : 587
+    username : email@naver.com
+    password : pw
+    properties:
+      mail.smtp.auth : true
+      mail.smtp.ssl.enable : true
+      mail.smtp.ssl.trust : smtp.naver.com
 
 logging:
   level:
