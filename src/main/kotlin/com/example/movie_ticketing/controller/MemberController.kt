@@ -23,47 +23,55 @@ class MemberController(
      * 멤버 로그인
      * 조금 더 수정해야함
      */
+    //Springsecurity 기본 로그인/로그아웃 경로
+    //
+    @GetMapping("/login")
+    fun login(): String = "login.html"
+
+    @GetMapping("/logout")  //get요청시 자동 로그아웃 +메인페이지로
+    fun logout(): String {
+        return "redirect:/"
+    }
+
     @PreAuthorize("isAuthenticated()") //로그인 했을때
     @GetMapping("/mypage1")
-    fun mypage(auth: Authentication):String{
+    fun mypage(auth: Authentication): String {
         return "mypage.html"
     }
-@GetMapping("/logout")
-fun logout(): String {
-    return "redirect:/"
-}
 
     /**
      * 회원가입 페이지로 이동
      */
     @GetMapping("/join")
     fun createForm(model: Model): String {
-        model.addAttribute("memberForm",MemberForm())
-        return "createMemberForm"
+        model.addAttribute("memberForm", MemberForm())
+        return "join"
     }
 
-    @PostMapping("/join")
-    fun create(@Valid form: MemberForm, result : BindingResult) : String{
-        if(result.hasErrors()){
-            return "createMemberForm"
+    @PostMapping("/addmember") //따로 페이지 안만들어도 됨.
+    fun create(@Valid form: MemberForm, result: BindingResult): String {
+        if (result.hasErrors()) {
+            return "redirect:/join";
         }
 
-        if(form.password != form.confirmPassword){
-            result.rejectValue("confirmPassword","passwordInCorrect",
-                "패스워드가 일치하지 않습니다.")
-            return "createMemberForm"
+        if (form.password != form.confirmPassword) {
+            result.rejectValue(
+                "confirmPassword", "passwordInCorrect",
+                "패스워드가 일치하지 않습니다."
+            )
+            return "redirect:/join";
         }
+        val hashpassword = passwordEncoder.encode(form.password)
+        // member 객체 생성
+        val member = Member().apply {
+            name = form.name
+            age = form.age
+            email = form.email
+            password = hashpassword
+        }
+        memberService.join(member)
 
-            // member 객체 생성
-            val member = Member().apply {
-                name = form.name
-                age = form.age
-                email = form.email
-                password = form.password
-            }
-            memberService.join(member)
-
-        return "redirect:/"
+        return "redirect:/joinComplete"
     }
 
     /**

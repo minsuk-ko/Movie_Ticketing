@@ -30,22 +30,22 @@
   <div class="bg-white p-8 m-4 rounded shadow-md max-w-md w-full">
     <div class="bg-white p-8 m-4 rounded shadow-md max-w-md w-full">
       <h1 class="text-xl mb-4 font-bold">회원가입</h1>
-      <form id="loginForm" class="space-y-4">
+      <form action="/addmember" method="POST" id="loginForm" class="space-y-4">
         <div>
-          <input type="text" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="이름">
+          <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="이름">
         </div>
         <div>
-          <input type="number" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
+          <input type="number" name="age" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
         </div>
         <div>
-          <input type="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
+          <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
         </div>
         <button type="submit" id="send-code" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
         <div>
           <input type="text" id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
         </div>
         <div>
-          <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
+          <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
         </div>
         <div>
           <input type="password" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인"> <!--how to check password check -->

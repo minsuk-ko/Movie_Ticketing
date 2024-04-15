@@ -39,10 +39,13 @@ class EmailController(private val emailService: EmailService) {
      * 비밀번호 찾기 이메일 보내기
      * 막힘
      */
+    /*
     @PostMapping("/findPw")
     fun sendPasswordEmail(@RequestBody member : Member){
         emailService
     }
 
+
+     */
 
 }

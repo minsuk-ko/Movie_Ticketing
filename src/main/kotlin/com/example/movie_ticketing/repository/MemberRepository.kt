@@ -20,6 +20,8 @@ interface MemberRepository : JpaRepository<Member?, Int?> {
 
     fun findByNameAndEmail(name: String, email: String)
 
+    fun existsByEmail(email: String); //email 존재여부(Db에 있으면 참)
+
     @Modifying
     @Transactional
     @Query("update Member set password=:password where id=:id")
