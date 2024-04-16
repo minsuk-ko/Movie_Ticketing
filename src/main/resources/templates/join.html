@@ -48,7 +48,7 @@
           <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
         </div>
         <div>
-          <input type="password" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인"> <!--how to check password check -->
+          <input type="password" name="confirmPassword" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인"> <!--how to check password check -->
         </div>
 
         <button type="submit" id="joinbutton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
@@ -65,23 +65,19 @@
 </div>
 
 <script>
-  document.getElementById('send-code').addEventListener('click', function(event){
-  event.preventDefault(); // Prevent form submission when '코드전송' is clicked
-  alert("코드가 전송되었습니다."); // Correctly shows only when '코드전송' is clicked
-});
 
-document.getElementById('loginForm').addEventListener('submit', function(event){
-  event.preventDefault(); // Prevent the default form submission
+  document.getElementById('joinbutton').addEventListener('submit', function(event){
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('check-password').value;
 
-  var password = document.getElementById('password').value;
-  var confirmPassword = document.getElementById('check-password').value;
-
-  if(password === confirmPassword) {
-    alert("회원가입 성공");
-  } else {
-    alert('비밀번호가 서로 맞지 않습니다');
-  }
-});
+    if(password !== confirmPassword) {
+      alert('비밀번호가 서로 맞지 않습니다');
+      event.preventDefault(); // Prevent form submission if passwords do not match
+    } else {
+// If passwords match, allow the form to submit
+      alert("회원가입 성공");
+    }
+  });
 
   function scrollFunction() {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -91,6 +87,7 @@ document.getElementById('loginForm').addEventListener('submit', function(event){
     }
   }
 </script>
+
 
 </body>
 

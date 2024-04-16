@@ -14,7 +14,7 @@ interface MemberRepository : JpaRepository<Member?, Int?> {
     // todo
 //    fun findAll(pageable: Pageable): Page<Member?>
 
-    fun findByEmail(member: Member) : MutableList<Member>
+    fun findByEmail(email: String) : MutableList<Member>
 
     fun findByName(member: Member)
 

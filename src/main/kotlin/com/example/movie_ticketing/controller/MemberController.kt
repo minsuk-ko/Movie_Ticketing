@@ -44,16 +44,18 @@ class MemberController(
      */
     @GetMapping("/join")
     fun createForm(model: Model): String {
-        model.addAttribute("memberForm", MemberForm())
+
         return "join"
     }
 
     @PostMapping("/addmember") //따로 페이지 안만들어도 됨.
     fun create(@Valid form: MemberForm, result: BindingResult): String {
+        println(form)
+
         if (result.hasErrors()) {
             return "redirect:/join";
         }
-
+        println(form)
         if (form.password != form.confirmPassword) {
             result.rejectValue(
                 "confirmPassword", "passwordInCorrect",
@@ -61,6 +63,7 @@ class MemberController(
             )
             return "redirect:/join";
         }
+
         val hashpassword = passwordEncoder.encode(form.password)
         // member 객체 생성
         val member = Member().apply {

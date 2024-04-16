@@ -11,7 +11,7 @@ class Member{
     @Column(unique = true)
     var email: String? = null
 
-    var age: Int? = null
+    var age: Int? = 0
 
     var password : String = ""
 
