@@ -29,7 +29,8 @@
     <!-- Placeholder for your image -->
     <img src="accept_image.jpg" alt="Registration Completed" class="registration-image">
     <h1 class="text-xl font-bold mt-4 mb-2">회원가입 완료</h1>
-    <p class="mb-4">member.name님의 회원가입이 완료되었습니다.</p>
+    <p class="mb-4" th:text ="${member.name} + '님의 회원가입이 완료되었습니다.'"></p>
+
     <button onclick="goToMain()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
       <a href="home.html">메인페이지로</a>
     </button>

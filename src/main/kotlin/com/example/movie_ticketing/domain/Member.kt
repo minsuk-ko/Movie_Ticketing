@@ -17,7 +17,7 @@ class Member{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+
     var id : Int = 0
 
     constructor() {
