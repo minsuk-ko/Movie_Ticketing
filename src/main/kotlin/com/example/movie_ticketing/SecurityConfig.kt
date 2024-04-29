@@ -25,6 +25,7 @@ class SecurityConfig {
         }
         http.formLogin { formLogin ->
             formLogin.loginPage("/login") //로그인 페이지
+                .usernameParameter("email") //username이 원래 로그인 그건데
                 .defaultSuccessUrl("/") //로그인 성공시 메인페이지
         }
         http.logout { logout ->

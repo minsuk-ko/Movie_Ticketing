@@ -9,7 +9,7 @@ class Member{
     var name : String = ""
 
     @Column(unique = true)
-    var email: String? = null
+    var email: String? = ""
 
     var age: Int? = 0
 

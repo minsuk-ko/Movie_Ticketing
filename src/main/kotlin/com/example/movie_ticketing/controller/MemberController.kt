@@ -4,7 +4,6 @@ import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.service.MemberService
 import jakarta.validation.Valid
-import logger
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -37,7 +36,7 @@ class MemberController(
     @PreAuthorize("isAuthenticated()") //로그인 했을때
     @GetMapping("/mypage1")
     fun mypage(auth: Authentication): String {
-        return "mypage.html"
+        return "mypage1.html"
     }
 
     /**
