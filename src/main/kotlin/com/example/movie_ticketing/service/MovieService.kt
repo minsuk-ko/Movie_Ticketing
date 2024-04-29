@@ -21,10 +21,8 @@ class MovieService(var movieRepository: MovieRepository) {
         return movieRepository.findByTitleContaining(searchKeyword,pageable)
     }
 
-    /**
-     *  list
-     */
-
-
+    fun findAvailableMovies(): List<Movie> {
+        return movieRepository.findTitles()
+    }
 
 }

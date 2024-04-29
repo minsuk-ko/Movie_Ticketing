@@ -28,10 +28,10 @@ class MemberController(
     fun mypage(auth: Authentication):String{
         return "mypage.html"
     }
-@GetMapping("/logout")
-fun logout(): String {
-    return "redirect:/"
-}
+    @GetMapping("/logout")
+    fun logout(): String {
+        return "redirect:/"
+    }
 
     /**
      * 회원가입 페이지로 이동
