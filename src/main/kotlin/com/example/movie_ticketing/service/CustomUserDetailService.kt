@@ -20,7 +20,8 @@ class CustomUserDetailsService(val memberRepository: MemberRepository, val passw
         return User.builder()
             .username(member.email)
             .password(member.password)
-            .authorities("ROLE_USER")
+            .authorities("ROLE_USER") //spring Security관례 기본적인 메소드가 ROLE_ 이렇게 설정
+            // 그냥 USER해도 되나 hasAuthority 같은 메소드로 권한 검사해야함
             .build()
     }
 }

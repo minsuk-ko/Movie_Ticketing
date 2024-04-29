@@ -13,7 +13,7 @@
 <nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
   <div class="container mx-auto flex justify-between">
     <div class="text-white font-bold text-2xl">
-      <a href="home">CINE</a>
+      <a href="/">CINE</a>
     </div>
     <div class="flex mt-2">
       <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
@@ -29,7 +29,7 @@
 <div class="flex items-center justify-center h-screen">
   <div class="registration-completed-container">
     <!-- Placeholder for your image -->
-    <img src="accept_image.jpg" alt="Registration Completed" class="registration-image">
+    <img src="/static/img/accept_image.jpg" alt="Registration Completed" class="registration-image">
     <h1 class="text-xl font-bold mt-4 mb-2">회원가입 완료</h1>
     <p class="mb-4" th:text ="${member.name} + '님의 회원가입이 완료되었습니다.'"></p>
 
