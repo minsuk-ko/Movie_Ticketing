@@ -6,16 +6,21 @@ import com.example.movie_ticketing.service.MemberService
 import jakarta.validation.Valid
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.security.Principal
 
 @Controller
 class MemberController(
+
     private val memberService: MemberService,
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder) {
@@ -32,12 +37,81 @@ class MemberController(
     fun logout(): String {
         return "redirect:/"
     }
-
+    /**
+     * 마이페이지 (내정보 / 비밀번호 변경 / 탈퇴)
+     */
     @PreAuthorize("isAuthenticated()") //로그인 했을때
     @GetMapping("/mypage1")
-    fun mypage(auth: Authentication): String {
+    fun mypage(auth: Authentication,model: Model): String {
+        // Authentication 객체에서 UserDetails를 추출하고
+        // 이를 통해 username (이메일)을 얻음 기본적으로 Spring security
+        val userDetails = auth.principal as UserDetails
+        //Authentication객체는 스프링 시큐리티에서 인증된(로그인된)사용자 상세정보 포함됨
+        // Authentication은 UserDetails를 구현한 객체인데
+        //UserDetails는 사용자 정보를 캡슐화한 인터페이스
+        val email = userDetails.username
+        val member = memberRepository.findByEmail(email)//  Optional은 따로 wrapper 클래스 => findbyemail로 꺼내갔을 때는 optional타입이므로
+            // .orElseThrow로 타입검증?그렇게 생각하면 될듯
+            .orElseThrow { IllegalArgumentException("No member found with email: $email") }
+        // member객체가 Optional타입이라서 orElseThrow를 통해 실제 값에 접근해야한다고함
+        //  null일 가능성이 있어서 member객체를 추출하지 못했어
+
+        model.addAttribute("member",member)
+
+
         return "mypage1.html"
     }
+
+    @PostMapping("/update-password")
+    fun changePw(auth: Authentication,@RequestParam password:String) :String{
+        //RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
+        //패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
+        // UserDetails를 바로 파라미터로 받고 하려고했는데 UserDetails는 인터페이스여서 불가
+        // principal은 userdetails를 구현한 객체!!
+        val newPw=passwordEncoder.encode(password)
+        val userDetails = auth.principal as UserDetails
+        val email = userDetails.username
+        val member = memberRepository.findByEmail(email)
+            .orElseThrow()
+        println("이메일로 멤버 찾기")
+        memberRepository.updatePassword(member.id,newPw)
+        println("비밀번호 업데이트 완료")
+
+        //return "mypage1"
+    //return으로 할 경우 뷰를 직접 반환하는데 폼 제출이 재실행 될 수도 있음
+        //즉 동일한 데이터로 여러번 비밀번호 고침이나 그런게  실행될 수 있음
+        //redirect로 할 경우 폼제출과 관련된 데이터는 리디렉션 과정에서 사라지므로
+        // 사용자가 새로고침해도 폼 제출이 다시 발생하지 않음
+        //그래서 데이터 변경이나 그런걸 처리한 후에는 redirect로
+
+        return "redirect:/mypage1"
+
+
+    }
+
+    @PostMapping("delete-member")
+    fun delete(@RequestParam password: String, auth: Authentication):String{
+        val userDetails =auth.principal as UserDetails
+        val email = userDetails.username
+        val member = memberRepository.findByEmail(email)
+            .orElseThrow()
+        // 비밀번호 확인
+        if (!passwordEncoder.matches(password, member.password)) {
+            // 비밀번호가 일치하지 않는 경우
+           // 다시 본래페이지로
+            return "redirect:/mypage1"
+        }
+
+
+        memberRepository.deleteById(member.id)
+        // Spring Security 세션 정보 클리어
+        // 세션이 로그인한 사용자의 상세정보,권한등등을 지워서 로그아웃
+        SecurityContextHolder.clearContext()
+
+        return "redirect:/logout"
+    }
+
+
 
     /**
      * 회원가입 페이지로 이동

@@ -70,6 +70,20 @@
       document.getElementById("navbar").style.padding = "2rem 0";
     }
   }
+
+  //로그인 실행중 url매개변수 error의 값을 가져옴
+  //window.onload  모든 리소스가 로드 완료되었을 때 실행되는 함수
+  //즉 로그인까지 다 실행됐을 때 실행되는 함수라 생각하면 될듯
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    //url쿼리문자열을 파싱하는 것 (window 뭐시깽이는 url 파라미터?의  ?이후부분을 반환)
+    //"/login?error=true" 실패시 url이므로 error=true를 반환하는 거겠지
+    const loginError = urlParams.get('error'); //error의 대한 값을 반환 =true
+    if (loginError) { //true일경우 알람뜨게함
+      alert('아이디나 비밀번호가 잘못되었습니다.');
+    }
+  }
+
 </script>
 </body>
 

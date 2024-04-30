@@ -22,6 +22,7 @@ interface MemberRepository : JpaRepository<Member?, Int?> {
     //Mutable이라 List로 반환되기에 직접 접근을 못함
     fun findByEmail(email: String) : Optional<Member>
 
+
     fun findByName(member: Member)
 
     fun findByNameAndEmail(name: String, email: String)

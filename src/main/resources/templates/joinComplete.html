@@ -19,9 +19,7 @@
       <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
       <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
       <a href="login" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
-    <!-- 이거 어차피 회원가입이라 주석
-      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
-    -->
+
     </div>
   </div>
 </nav>
@@ -29,12 +27,12 @@
 <div class="flex items-center justify-center h-screen">
   <div class="registration-completed-container">
     <!-- Placeholder for your image -->
-    <img src="/static/img/accept_image.jpg" alt="Registration Completed" class="registration-image">
+    <img src="/img/accept_image.jpg" alt="Registration Completed" class="registration-image">
     <h1 class="text-xl font-bold mt-4 mb-2">회원가입 완료</h1>
     <p class="mb-4" th:text ="${member.name} + '님의 회원가입이 완료되었습니다.'"></p>
 
     <button onclick="goToMain()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      <a href="home.html">메인페이지로</a>
+      <a href="/">메인페이지로</a>
     </button>
   </div>
 </div>

@@ -60,8 +60,8 @@ REFERENCES theater (id));
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS member (
 id        INT         NOT NULL AUTO_INCREMENT,
-password  VARCHAR(25) NOT NULL,
-email     VARCHAR(25) NOT NULL,
+password  VARCHAR(255) NOT NULL,
+email     VARCHAR(200) NOT NULL,
 name      VARCHAR(10) NOT NULL,
 age       INT         NOT NULL,
 PRIMARY KEY (id),
@@ -74,7 +74,7 @@ UNIQUE KEY member_email (email));
 CREATE TABLE IF NOT EXISTS reservation (
 id           INT         NOT NULL AUTO_INCREMENT,
 date         VARCHAR(10) NOT NULL,
-price        INT         NOT NULL,
+--price        INT         NOT NULL,
 ticket_num   INT         NOT NULL,
 member_id    INT         NOT NULL,
 PRIMARY KEY (id),
