@@ -9,15 +9,15 @@ class Member{
     var name : String = ""
 
     @Column(unique = true)
-    var email: String? = null
+    var email: String? = ""
 
-    var age: Int? = null
+    var age: Int? = 0
 
     var password : String = ""
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
+
     var id : Int = 0
 
     constructor() {

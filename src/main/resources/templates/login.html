@@ -12,13 +12,12 @@
 <nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
   <div class="container mx-auto flex justify-between">
     <div class="text-white font-bold text-2xl">
-      <a href="home.html">CINE</a>
+      <a href="/">CINE</a>
     </div>
     <div class="flex mt-2">
-      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
-      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-      <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
-      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+      <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+      <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+      <a href="login" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
     </div>
   </div>
 </nav>
@@ -27,19 +26,19 @@
 
   <!-- Image container -->
   <div class="p-4">
-    <img src="../static/img/loginpage_image.jpg" alt="Placeholder image representing the left side content" class="w-full h-auto rounded shadow">
+    <img src="/img/loginpage_image.jpg" alt="Placeholder image representing the left side content" class="w-full h-auto rounded shadow">
   </div>
 
   <!-- Login container -->
   <div class="flex-1 flex flex-col justify-between bg-white p-8 m-4">
     <div>
       <h1 class="text-xl mb-4 font-bold">LOGIN</h1>
-      <form id="loginForm" class="space-y-4">
+      <form action="/login"  method="POST"  class="space-y-4">
         <div>
-          <input type="text" id="userID" class="w-full p-2 border border-gray-300 rounded" placeholder="ID">
+          <input type="text" name="email" class="w-full p-2 border border-gray-300 rounded" placeholder="ID">
         </div>
         <div>
-          <input type="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="Password">
+          <input type="password" name="password" class="w-full p-2 border border-gray-300 rounded" placeholder="Password">
         </div>
         <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">로그인</button>
       </form>
@@ -47,7 +46,7 @@
     <div class="flex justify-center space-x-4 text-sm mt-4">
       <a href="findPassword.html" class="text-blue-500 hover:underline">비밀번호 찾기</a>
       <p>|</p>
-      <a href="join.html" class="text-blue-500 hover:underline">회원가입</a>
+      <a href="join" class="text-blue-500 hover:underline">회원가입</a>
     </div>
   </div>
 </div>
@@ -56,11 +55,14 @@
 </div>
 
 <script>
+  /*
   document.getElementById('loginForm').addEventListener('submit', function(event){
     event.preventDefault();
     // Here you can add the logic for the login functionality
     alert('로그인 기능이 구현되지 않음.');
   });
+
+   */
   function scrollFunction() {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
       document.getElementById("navbar").style.padding = "1rem 0";

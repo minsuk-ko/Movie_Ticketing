@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableWebSecurity
 class SecurityConfig {
     @Bean  //비밀번호 암호화 메소드 정의
-    fun pass(): PasswordEncoder {
+    fun passwordEncoder(): PasswordEncoder {
         return BCryptPasswordEncoder()
     }
 
@@ -25,6 +25,7 @@ class SecurityConfig {
         }
         http.formLogin { formLogin ->
             formLogin.loginPage("/login") //로그인 페이지
+                .usernameParameter("email") //username이 원래 로그인 그건데
                 .defaultSuccessUrl("/") //로그인 성공시 메인페이지
         }
         http.logout { logout ->
