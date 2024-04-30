@@ -1,12 +1,13 @@
 package com.example.movie_ticketing.domain
 
 import jakarta.persistence.*
+import java.time.LocalDate
 
 @Entity
 class Reservation{
 
     // 예약 날짜
-    var date : String = ""
+    lateinit var date : String
 
     var price : Int = 0
 
@@ -22,7 +23,7 @@ class Reservation{
     @Column(name = "reservation_id")
     val id : Int = 0
 
-    protected constructor() {
+    constructor() {
     }
 
     constructor(date: String, price: Int, num: Int, member: Member?) {

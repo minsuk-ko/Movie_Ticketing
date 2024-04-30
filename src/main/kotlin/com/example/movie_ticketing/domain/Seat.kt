@@ -5,8 +5,7 @@ import jakarta.persistence.*
 @Entity
 class Seat {
 
-    var row: String? = null
-    var col: Int? = null
+    val seatNumber : Int = 0
 
     var isSelected : Boolean = true
 
@@ -19,13 +18,7 @@ class Seat {
     @Column(name = "seat_id")
     val id: Int = 0
 
-    protected constructor() {
-    }
-
-    constructor(row: String?, col: Int?, isSelected: Boolean, theater: Theater?) {
-        this.row = row
-        this.col = col
-        this.isSelected = isSelected
-        this.theater = theater
+    override fun toString(): String {
+        return "Seat(seatNumber=$seatNumber, isSelected=$isSelected, theater=$theater, id=$id)"
     }
 }
