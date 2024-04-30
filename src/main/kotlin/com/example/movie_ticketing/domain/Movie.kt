@@ -23,6 +23,7 @@ class Movie{
     var id : Int = 0
 }
 
+
 enum class Rating {
     G,      // 전체관람가
     PG12,   // 12세관람가

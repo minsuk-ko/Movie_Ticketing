@@ -38,13 +38,15 @@ class ReservationController(
 
         return "reservationForm" // 예약 페이지 이동
     }
-
+    // 물어볼때는 ,,, 뭐가 문제여서 내가 이걸 여기까지 했는데 이부분이 뭔지 모르겠따.
+    // 티켓을 어떻게 처리할건지가 엮여있어서 그럼
     // !! selectMovieAndDateAndTime, getAllSeats, selectSeat 다시 봐야됨
     @PostMapping("/selectReservation")
     fun selectReservation(member: Member, movie: Movie, reservation: Reservation, model : Model) : String {
         try {
-            val reserve = reservationService.selectMovieAndDateAndTime(movie, reservation)
-            model.addAttribute("selectMovieAndDateAndTime", reserve)
+           // val reserve = reservationService.selectMovieAndDateAndTime(movie, reservation)
+//
+//            model.addAttribute("selectMovieAndDateAndTime", reserve)
             return "GoToSeatSelectionPage"
         } catch (e: Exception) {
             model.addAttribute("errorMessage", "예약 과정에서 에러가 발생했습니다.")

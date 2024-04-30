@@ -1,10 +1,14 @@
 package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.domain.Movie
+
 import com.example.movie_ticketing.repository.MovieRepository
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import java.nio.file.Files
+import java.nio.file.Paths
 
 
 @Service
@@ -24,5 +28,6 @@ class MovieService(var movieRepository: MovieRepository) {
     fun findAvailableMovies(): List<Movie> {
         return movieRepository.findTitles()
     }
+
 
 }

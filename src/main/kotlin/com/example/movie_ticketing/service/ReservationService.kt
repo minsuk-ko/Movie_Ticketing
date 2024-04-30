@@ -23,14 +23,14 @@ class ReservationService(
 ) {
 
     // 영화 날짜 시간 선택까지만
-    @Transactional
-    fun selectMovieAndDateAndTime(movie : Movie , reservation: Reservation) : Reservation {
-        val movieTitle = movieRepository.findById(movie.id)
-        val reservationMovie = reservationRepository.findById(reservation.id)
-
-        movieRepository.save(movieTitle)
-        reservationRepository.save(reservationMovie)
-
-        return reservation
-    }
+   // @Transactional
+    //fun selectMovieAndDateAndTime(movie : Movie , date : LocalDate) : Reservation {
+      //  val movieTitle = movieRepository.findById(movie.id)
+//        val reservationMovie = reservationRepository.findById(reservation.id)
+//
+//        movieRepository.save(movieTitle)
+//        reservationRepository.save(reservationMovie)
+//
+//        return reservation
+  //  }
 }
