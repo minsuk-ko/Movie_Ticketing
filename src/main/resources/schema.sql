@@ -60,7 +60,7 @@ REFERENCES theater (id));
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS member (
 id        INT         NOT NULL AUTO_INCREMENT,
-password  LONGTEXT    NOT NULL,
+password  VARCHAR(25) NOT NULL,
 email     VARCHAR(25) NOT NULL,
 name      VARCHAR(10) NOT NULL,
 age       INT         NOT NULL,
