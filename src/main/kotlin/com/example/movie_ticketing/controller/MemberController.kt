@@ -64,8 +64,8 @@ class MemberController(
 
     @PostMapping("/update-password")
     fun changePw(auth: Authentication,@RequestParam password:String) :String{
-        //RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
-        //패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
+        // RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
+        // 패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
         // UserDetails를 바로 파라미터로 받고 하려고했는데 UserDetails는 인터페이스여서 불가
         // principal은 userdetails를 구현한 객체!!
         val newPw=passwordEncoder.encode(password)
@@ -78,7 +78,7 @@ class MemberController(
         println("비밀번호 업데이트 완료")
 
         //return "mypage1"
-    //return으로 할 경우 뷰를 직접 반환하는데 폼 제출이 재실행 될 수도 있음
+        //return으로 할 경우 뷰를 직접 반환하는데 폼 제출이 재실행 될 수도 있음
         //즉 동일한 데이터로 여러번 비밀번호 고침이나 그런게  실행될 수 있음
         //redirect로 할 경우 폼제출과 관련된 데이터는 리디렉션 과정에서 사라지므로
         // 사용자가 새로고침해도 폼 제출이 다시 발생하지 않음
