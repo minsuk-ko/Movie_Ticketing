@@ -18,7 +18,13 @@
     <div class="flex mt-2">
       <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
       <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-      <a href="login" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+      <div th:if="${#authorization.expression('isAnonymous()')}">
+        <a class="text-gray-200 text-sm hover:text-white" href="login">로그인</a>
+      </div>
+      <div class="text-gray-200 text-sm hover:text-white " th:if="${#authorization.expression('isAuthenticated()')}">
+        <a href="mypage1">마이페이지</a>
+        <a href="logout">로그아웃</a>
+      </div>
 
     </div>
   </div>
@@ -32,7 +38,7 @@
     <p class="mb-4" th:text ="${member.name} + '님의 회원가입이 완료되었습니다.'"></p>
 
     <button onclick="goToMain()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      <a href="/">메인페이지로</a>
+      메인페이지로
     </button>
   </div>
 </div>
@@ -41,6 +47,12 @@
   function goToMain() {
     // This function would redirect the user to the main page. For now, it just logs to the console.
     console.log('메인페이지로');
+
+    window.location.href = '/'; // 메인 페이지 URL로 변경
+
+
+
+
     // In a live environment, you would likely use something like:
     // window.location.href = 'your-main-page-url';
   }

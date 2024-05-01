@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 // 이 객체로 로그인 시도하려고 하는 거임
 
 @Service
-class CustomUserDetailsService(val memberRepository: MemberRepository, val passwordEncoder: PasswordEncoder) : UserDetailsService {
+class CustomUserDetailsService(val memberRepository: MemberRepository) : UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails {
         val member = memberRepository.findByEmail(email)
             .orElseThrow{ UsernameNotFoundException("User not found with email: $email")}

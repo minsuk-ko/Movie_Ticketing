@@ -1,7 +1,12 @@
 package com.example.movie_ticketing.service
 
+import com.example.movie_ticketing.controller.MemberForm
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.domain.Member
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.Optional
@@ -32,7 +37,6 @@ class MemberService(var memberRepository: MemberRepository){
     }
 
 
-    fun findOne(memberId :Int) : Optional<Member?> {
-        return memberRepository.findById(memberId)
-    }
+
+
 }
