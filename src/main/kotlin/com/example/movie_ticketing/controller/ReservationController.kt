@@ -69,13 +69,13 @@ class ReservationController(
     }
 
     // (임시) 날짜의 범위를 현재부터 10일 후까지로 설정
-    private fun generateDateRange(): List<String> {
+    fun generateDateRange(): List<String> {
         return (0 until 10).map { LocalDate.now().plusDays(it.toLong()).format(DateTimeFormatter.ISO_DATE) }
     }
 
     // 시간대 예시
     // 추후 api 에서 상영시간에 대한 정보를 찾거나 시간대를 바꿀 수 있으면 바꿀 것
-    private fun generateTimeSlots(): List<String> {
+    fun generateTimeSlots(): List<String> {
         return listOf("10:00", "12:30", "15:00", "17:30", "20:00", "22:30")
     }
 }

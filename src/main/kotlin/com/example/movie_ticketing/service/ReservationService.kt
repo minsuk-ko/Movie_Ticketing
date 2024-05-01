@@ -12,6 +12,7 @@ import org.hibernate.id.enhanced.Optimizer
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Optional
 
 @Service
@@ -25,6 +26,11 @@ class ReservationService(
     // 영화 날짜 시간 선택까지만
     @Transactional
     fun selectMovieAndDateAndTime(movie : Movie , reservation: Reservation) : Reservation {
+
+        val selectedMovie = movieRepository.findByTitle(movie.title)
+
+        reservation.date = 
+
         val movieTitle = movieRepository.findById(movie.id)
         val reservationMovie = reservationRepository.findById(reservation.id)
 
@@ -33,4 +39,5 @@ class ReservationService(
 
         return reservation
     }
+
 }
