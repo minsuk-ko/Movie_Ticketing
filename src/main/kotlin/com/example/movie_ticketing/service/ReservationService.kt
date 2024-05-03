@@ -1,13 +1,7 @@
 package com.example.movie_ticketing.service
 
-import com.example.movie_ticketing.domain.Member
-import com.example.movie_ticketing.domain.Movie
-import com.example.movie_ticketing.domain.Reservation
-import com.example.movie_ticketing.domain.Seat
-import com.example.movie_ticketing.repository.MemberRepository
-import com.example.movie_ticketing.repository.MovieRepository
-import com.example.movie_ticketing.repository.ReservationRepository
-import com.example.movie_ticketing.repository.SeatRepository
+import com.example.movie_ticketing.domain.*
+import com.example.movie_ticketing.repository.*
 import org.hibernate.id.enhanced.Optimizer
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -16,28 +10,12 @@ import java.time.format.DateTimeFormatter
 import java.util.Optional
 
 @Service
-class ReservationService(
-    private val reservationRepository : ReservationRepository,
-    private val seatRepository: SeatRepository,
-    private val memberRepository: MemberRepository,
-    private val movieRepository: MovieRepository
-) {
+class ReservationService(private val ticketRepository: TicketRepository) {
 
-    // 영화 날짜 시간 선택까지만
-    @Transactional
-    fun selectMovieAndDateAndTime(movie : Movie , reservation: Reservation) : Reservation {
-
-        val selectedMovie = movieRepository.findByTitle(movie.title)
-
-        reservation.date = 
-
-        val movieTitle = movieRepository.findById(movie.id)
-        val reservationMovie = reservationRepository.findById(reservation.id)
-
-        movieRepository.save(movieTitle)
-        reservationRepository.save(reservationMovie)
-
-        return reservation
+    /**
+     *  나중에 비즈니스 로직이 변경되거나 추가될 때 해당 로직을 Service 에서 관리할 수 있음.(유지보수 ↑)
+     */
+    fun saveTicket(ticket: Ticket): Ticket {
+        return ticketRepository.save(ticket)
     }
-
 }

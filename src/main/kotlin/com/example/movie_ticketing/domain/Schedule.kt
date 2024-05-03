@@ -24,14 +24,7 @@ class Schedule {
     @Column(name = "schedule_id")
     val id : Int = 0
 
-    protected constructor() {
-    }
-
-    constructor(start: String?, end: String?, date: String?, movie: Movie?, theater: Theater?) {
-        this.start = start
-        this.end = end
-        this.date = date
-        this.movie = movie
-        this.theater = theater
+    override fun toString(): String {
+        return "Schedule(start=$start, end=$end, date=$date, movie=$movie, theater=$theater, id=$id)"
     }
 }

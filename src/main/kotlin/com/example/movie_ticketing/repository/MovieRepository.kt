@@ -19,4 +19,5 @@ interface MovieRepository : JpaRepository<Movie?, Int?> {
     fun save(movieTitle: Optional<Movie?>)
 
     fun findByTitle(title : String)
+
 }
