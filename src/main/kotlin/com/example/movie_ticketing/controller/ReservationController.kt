@@ -1,8 +1,6 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.*
-import com.example.movie_ticketing.repository.MemberRepository
-import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.service.MovieService
 import com.example.movie_ticketing.service.ReservationService
 import com.example.movie_ticketing.service.SeatService
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -26,18 +23,18 @@ class ReservationController(
     /**
      * 영화, 날짜, 시간 선택
      */
-    @GetMapping("/reservation")
-    fun createForm(model : Model): String {
-        val titles = movieService.findAvailableMovies()
-        val dates = generateDateRange()
-        val times = generateTimeSlots()
-
-        model.addAttribute("titles", titles)
-        model.addAttribute("dates", dates)
-        model.addAttribute("times", times)
-
-        return "reservationForm" // 예약 페이지 이동
-    }
+//    @GetMapping("/reservation")
+//    fun createForm(model : Model): String {
+//        val titles = movieService.findAvailableMovies()
+//        val dates = generateDateRange()
+//        val times = generateTimeSlots()
+//
+//        model.addAttribute("titles", titles)
+//        model.addAttribute("dates", dates)
+//        model.addAttribute("times", times)
+//
+//        return "reservationForm" // 예약 페이지 이동
+//    }
     // 물어볼때는 ,,, 뭐가 문제여서 내가 이걸 여기까지 했는데 이부분이 뭔지 모르겠따.
     // 티켓을 어떻게 처리할건지가 엮여있어서 그럼
     // !! selectMovieAndDateAndTime, getAllSeats, selectSeat 다시 봐야됨

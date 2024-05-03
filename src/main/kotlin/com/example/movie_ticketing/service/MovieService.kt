@@ -1,33 +1,20 @@
 package com.example.movie_ticketing.service
 
-import com.example.movie_ticketing.domain.Movie
-
-import com.example.movie_ticketing.repository.MovieRepository
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
+import com.example.movie_ticketing.config.ApiConfiguration
+import com.example.movie_ticketing.dto.MovieDetails
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
-import java.nio.file.Files
-import java.nio.file.Paths
-
+import org.springframework.web.client.RestTemplate
 
 @Service
-class MovieService(var movieRepository: MovieRepository) {
+class MovieService(private val restTemplate: RestTemplate) {
+    @Value("\${tmdb.api.key}")
+    private lateinit var apiKey: String
 
-    /**
-     * 검색
-     */
-    fun movieList(pageable: Pageable): Page<Movie?> {
-        return movieRepository.findAll(pageable)
+    private val baseUrl = "https://api.themoviedb.org/3/movie"
+
+    fun retrieveMovieDetails(movieId: Int): MovieDetails {
+        val url = "$baseUrl/$movieId?api_key=$apiKey"
+        return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
-
-    fun movieSearchList(searchKeyword : String, pageable: Pageable) : Page<Movie?>? {
-        return movieRepository.findByTitleContaining(searchKeyword,pageable)
-    }
-
-    fun findAvailableMovies(): List<Movie> {
-        return movieRepository.findTitles()
-    }
-
-
 }

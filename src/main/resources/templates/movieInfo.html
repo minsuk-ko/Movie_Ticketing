@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Movie Details</title>
+  <title th:text="${movieDetails.id}">Movie Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="../static/css/movieInfo.css" rel="stylesheet">
 </head>
@@ -24,45 +24,31 @@
 <div class="container mx-auto mt-4">
   <div class="flex">
     <!-- Poster -->
-    <img src="path_to_movie_poster.jpg" alt="Movie Poster" class="rounded shadow-lg w-1/4" />
+    <img th:src="@{${movieDetails.posterPath}}" alt="Movie Poster" class="rounded shadow-lg w-1/4" />
 
     <!-- Movie Info Next to Poster -->
     <div class="ml-4 flex flex-col justify-between">
-      <!-- Movie Name and Small Rectangle (For Rating, etc.) -->
       <div>
-        <h2 class="text-xl font-bold">영화명</h2>
-        <h class="text-xl font">moviename</h>
-          <div class="info-box p-2 mt-2">
-            <!-- Smaller details like rating -->
-            예매율 : n% | 평점 : N/10
-          </div>
+        <h2 class="text-xl font-bold" th:text="${movieDetails.id}">영화명</h2>
+        <div class="info-box p-2 mt-2">
+          | 평점 : <span th:text="${movieDetails.rating}"></span>
+        </div>
       </div>
 
-      <p>
-        <br>
-      </p>
       <div class="info-box rounded p-4">
-        감독 : director  /  장르  :  genre  /  개봉일자 : realeaseTime /
-        주연배우 : ~~~
-
+        장르 : <span th:each="genre : ${movieDetails.genres}"></span> / 개봉일자 : <span th:text="${movieDetails.releaseDate}"></span>
       </div>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         예매하기
-
       </button>
-
-
     </div>
-  </div>
-  <h1>----------------------------------------------------------------------------------------------------------------------</h1>
 
-  <!-- Box for Simple Movie Information Underneath -->
-  <div class="info-box p-4 mt-4">
-    <h3 class="text-lg font-semibold">영화에 대해서</h3>
-    <p>
-    <h1 th:text="${movieDetails}"></h1>
-    </p>
+
   </div>
+  <div class="mt-4"> <!-- 새 요소: 기존 데이터 아래에 위치 -->
+    <h1 th:text="${movieDetails.overview}"></h1>
+  </div>
+
 </div>
 
 <script>
