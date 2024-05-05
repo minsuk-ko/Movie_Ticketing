@@ -2,8 +2,10 @@ package com.example.movie_ticketing
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
@@ -16,6 +18,8 @@ class SecurityConfig {
         return BCryptPasswordEncoder()
     }
 
+
+
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() } //csrf토큰 비활성화
@@ -25,6 +29,8 @@ class SecurityConfig {
         }
         http.formLogin { formLogin ->
             formLogin.loginPage("/login") //로그인 페이지
+                .usernameParameter("email") //username이 원래 로그인할때 쓰는 필드?
+                .failureUrl("/login?error=true") //로그인 실패시 url
                 .defaultSuccessUrl("/") //로그인 성공시 메인페이지
         }
         http.logout { logout ->
