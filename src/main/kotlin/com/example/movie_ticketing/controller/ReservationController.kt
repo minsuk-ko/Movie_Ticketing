@@ -24,18 +24,18 @@ class ReservationController(
     private val reservationService: ReservationService,
     private val scheduleRepository: ScheduleRepository) {
 
-    @GetMapping("/reservation")
-    fun createForm(model : Model): String {
-        val titles = movieService.findAvailableMovies()
-        val dates = generateDateRange()
-        val times = generateTimeSlots()
-
-        model.addAttribute("titles", titles)
-        model.addAttribute("dates", dates)
-        model.addAttribute("times", times)
-
-        return "reservationForm" // 예약 페이지 이동
-    }
+//    @GetMapping("/reservation")
+//    fun createForm(model : Model): String {
+//        val titles = movieService.findAvailableMovies()
+//        val dates = generateDateRange()
+//        val times = generateTimeSlots()
+//
+//        model.addAttribute("titles", titles)
+//        model.addAttribute("dates", dates)
+//        model.addAttribute("times", times)
+//
+//        return "reservationForm" // 예약 페이지 이동
+//    }
 
     /**
      * 영화, 날짜, 시간, 좌석 선택이 한 페이지에 구성되어 있음
