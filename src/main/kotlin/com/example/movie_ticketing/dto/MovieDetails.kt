@@ -13,6 +13,7 @@ data class MovieDetails(
     @JsonProperty("id") val id: Int,
     @JsonProperty("original_title") val title: String,
     @JsonProperty("poster_path") val posterPath: String?,
+    @JsonProperty("backdrop_path") val backdropPath: String?,
     @JsonProperty("genres") val genres: List<Genre>,
     @JsonProperty("overview") val overview: String,
     @JsonProperty("vote_average") val rating: Float,

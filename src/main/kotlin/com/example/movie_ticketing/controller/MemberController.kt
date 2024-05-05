@@ -58,15 +58,16 @@ class MemberController(
         // Authentication 객체에서 UserDetails를 추출하고
         // 이를 통해 username (이메일)을 얻음 기본적으로 Spring security
         val userDetails = auth.principal as UserDetails
-        //Authentication객체는 스프링 시큐리티에서 인증된(로그인된)사용자 상세정보 포함됨
+        // Authentication객체는 스프링 시큐리티에서 인증된(로그인된)사용자 상세정보 포함됨
         // Authentication은 UserDetails를 구현한 객체인데
-        //UserDetails는 사용자 정보를 캡슐화한 인터페이스
+        // UserDetails는 사용자 정보를 캡슐화한 인터페이스
         val email = userDetails.username
-        val member = memberRepository.findByEmail(email)//  Optional은 따로 wrapper 클래스 => findbyemail로 꺼내갔을 때는 optional타입이므로
+        // Optional 은 따로 wrapper 클래스 => findByEmail로 꺼내갔을 때는 Optional타입이므로
+        val member = memberRepository.findByEmail(email)
             // .orElseThrow로 타입검증?그렇게 생각하면 될듯
             .orElseThrow { IllegalArgumentException("No member found with email: $email") }
         // member객체가 Optional타입이라서 orElseThrow를 통해 실제 값에 접근해야한다고함
-        //  null일 가능성이 있어서 member객체를 추출하지 못했어
+        // null일 가능성이 있어서 member객체를 추출하지 못했어
 
         model.addAttribute("member",member)
 
@@ -80,7 +81,7 @@ class MemberController(
         // 패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
         // UserDetails를 바로 파라미터로 받고 하려고했는데 UserDetails는 인터페이스여서 불가
         // principal은 userdetails를 구현한 객체!!
-        val newPw=passwordEncoder.encode(password)
+        val newPw = passwordEncoder.encode(password)
         val userDetails = auth.principal as UserDetails
         val email = userDetails.username
         val member = memberRepository.findByEmail(email)
@@ -89,12 +90,14 @@ class MemberController(
         memberRepository.updatePassword(member.id,newPw)
         println("비밀번호 업데이트 완료")
 
-        //return "mypage1"
-        //return으로 할 경우 뷰를 직접 반환하는데 폼 제출이 재실행 될 수도 있음
-        //즉 동일한 데이터로 여러번 비밀번호 고침이나 그런게  실행될 수 있음
-        //redirect로 할 경우 폼제출과 관련된 데이터는 리디렉션 과정에서 사라지므로
-        // 사용자가 새로고침해도 폼 제출이 다시 발생하지 않음
-        //그래서 데이터 변경이나 그런걸 처리한 후에는 redirect로
+        /**
+         * return "mypage1"
+         * return으로 할 경우 뷰를 직접 반환하는데 폼 제출이 재실행 될 수도 있음
+         * 즉 동일한 데이터로 여러번 비밀번호 고침이나 그런게  실행될 수 있음
+         * redirect로 할 경우 폼제출과 관련된 데이터는 리디렉션 과정에서 사라지므로
+         * 사용자가 새로고침해도 폼 제출이 다시 발생하지 않음
+         * 그래서 데이터 변경이나 그런걸 처리한 후에는 redirect로
+         */
 
         return "redirect:/mypage1"
 
@@ -164,7 +167,7 @@ class MemberController(
         // 현재 요청의 모델 객체에 데이터 추가 => 현재 진행중인 요청에서 데이터를 뷰에 전달할때
         // 사용: 리다이렉트 없이 뷰를 직접 반환하는 경우에 사용됨 (즉, 입력 받아서 처리후 에러메시지를 표시하고 동일페이지 보여줄때)
         // 리다이렉트를 실행할 경우 이거로 추가된 데이터는 새페이지로 전달 안됨
-      //  model.addAttribute("member", member)
+        //  model.addAttribute("member", member)
 
 
        redirectAttributes.addFlashAttribute("member", member)  // Redirect 후에도 데이터 유지
@@ -229,28 +232,6 @@ class MemberController(
     }
     @GetMapping("/joinComplete")
     fun joinCom(model: Model):String{
-        // 리다이렉트에서 전달된 'member' 객체를 모델에 추가하지 않아도 됨
-        // Flash attribute로 추가된 'member'는 한 번만 사용될 수 있음
         return "joinComplete"
-    }
-    /**
-     * 비밀번호 찾기
-     * 해당 이메일이 DB에 있는지 확인 후 임시 비밀번호 전송
-     * 임시 비밀번호를 현재 비밀번호로 변경
-     */
-    @GetMapping("/findPw")
-    fun findPwForm(model : Model) : String {
-        model.addAttribute("findPasswordForm", FindPasswordForm())
-        return "createFindPasswordForm"
-    }
-
-    @PostMapping("/findPw")
-    fun findPw(@Valid form : FindPasswordForm, result: BindingResult) : String{
-        if(result.hasErrors()){
-            return "createFindPasswordForm"
-        }
-
-        // todo 일단 pass...
-        return ""
     }
 }

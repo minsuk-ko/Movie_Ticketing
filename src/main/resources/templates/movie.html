@@ -34,7 +34,8 @@
 <!-- Movie Grid -->
 <div id="movie-grid" class="movie-grid mt-4 mx-auto w-3/4 grid grid-cols-4 gap-4">
     <div th:each="movie : ${movies}" class="poster">
-        <img th:src="@{${movie.posterPath}}" alt="Movie Poster" class="w-full">
+        <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="w-full">
+        // |https://image.tmdb.org/t/p/w500${movieDetails.posterPath}|
         <div class="movie-name mt-2" th:text="${movie.title}"></div>
         <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
 

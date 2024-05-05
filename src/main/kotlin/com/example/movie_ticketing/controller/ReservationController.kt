@@ -74,6 +74,7 @@ class ReservationController(
             reservationService.saveTicket(ticket)
         }
 
+
         return "redirect:/reservationComplete"
     }
 
@@ -102,7 +103,6 @@ class ReservationController(
     }
 
     // 시간대 예시
-    // 추후 api 에서 상영시간에 대한 정보를 찾거나 시간대를 바꿀 수 있으면 바꿀 것
     fun generateTimeSlots(): List<String> {
         return listOf("10:00", "12:30", "15:00", "17:30", "20:00", "22:30")
     }

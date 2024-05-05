@@ -24,7 +24,7 @@
 <div class="container mx-auto mt-4">
   <div class="flex">
     <!-- Poster -->
-    <!-- |...| 구문 : Thymeleaf 에서 문자열 리터럴을 결합할 때 사용하는 문법 w500 : 중간크기 -->
+    <!-- |...| 구문 : Thymeleaf 에서 문자열 리터럴을 결합할 때 사용하는 문법 -->
     <!-- TMDB API에서 영화 상세 정보를 불러올 때, 응답에는 포스터 이미지의 완전한 URL 경로를 적어줘야 한다. -->
     <img th:src="|https://image.tmdb.org/t/p/w500${movieDetails.posterPath}|" alt="Movie Poster" class="rounded shadow-lg w-1/4" />
 
