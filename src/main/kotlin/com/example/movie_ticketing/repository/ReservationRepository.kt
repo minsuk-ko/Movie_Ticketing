@@ -6,6 +6,5 @@ import java.time.LocalDateTime
 import java.util.*
 
 interface ReservationRepository : JpaRepository<Reservation, Int> {
-    fun findByUserIdAndDateTime(userId: Int, date: LocalDateTime): List<Reservation>
     fun save(reservation : Optional<Reservation>)
 }
