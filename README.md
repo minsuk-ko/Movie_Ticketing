@@ -18,8 +18,6 @@
 - Thymeleaf
 
 ## 📌: 주요기능
-__회원가입__
-  - DB값 검증
 
 __로그인__  -  [__상세보기__](https://github.com/minsuk-ko/Movie_Ticketing/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C-(Login))
   - DB값 검증
