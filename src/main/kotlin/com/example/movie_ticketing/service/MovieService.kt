@@ -34,7 +34,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
                     .queryParam("query", query)
                     .build()
             }
-            .retrieve()  // API 호출을 수행하고 응답을 가져옵니다.
-            .bodyToFlux(MovieDetails::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환합니다.
+            .retrieve()  // API 호출을 수행하고 응답을 가져옴
+            .bodyToFlux(MovieDetails::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환
     }
 }
