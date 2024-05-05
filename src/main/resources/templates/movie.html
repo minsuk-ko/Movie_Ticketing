@@ -1,119 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movie Chart</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="../static/css/movie.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/movie.css">
 </head>
 <body class="bg-gray-200">
+<!-- Navigation Bar -->
 <nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
     <div class="container mx-auto flex justify-between">
         <div class="text-white font-bold text-2xl">
-            <a href="home">CINE</a>
+            <a href="/" th:href="@{/}">CINE</a>
         </div>
         <div class="flex mt-2">
-            <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+            <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
             <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-            <a href="login" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
-            <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+            <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
+            <a href="" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
         </div>
     </div>
 </nav>
+
+<!-- Search Form -->
 <div class="search-sorting mt-4 mx-auto w-3/4 flex justify-between items-center">
-    <input type="text" placeholder="영화검색" class="px-4 py-2 border rounded">
-    <select class="px-4 py-2 border rounded">
-        <option>예매순별</option>
-        <option>별점순</option>
-        <option>관람객순</option>
-    </select>
+    <form th:action="@{/search}" method="get">
+        <input type="text" name="query" placeholder="Search Movies" class="px-4 py-2 border rounded"> <!-- 이 쿼리에서 값을 참조-->
+        <button type="submit" class="px-4 py-2 border rounded">Search</button>
+    </form>
 </div>
 
 <!-- Movie Grid -->
 <div id="movie-grid" class="movie-grid mt-4 mx-auto w-3/4 grid grid-cols-4 gap-4">
-    <!-- Movie grid will be populated by JavaScript -->
+    <div th:each="movie : ${movies}" class="poster">
+        <img th:src="@{${movie.posterPath}}" alt="Movie Poster" class="w-full">
+        <div class="movie-name mt-2" th:text="${movie.title}"></div>
+        <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
+
+    </div>
 </div>
 
-<div class="pagination mt-4 mx-auto w-3/4 flex justify-center">
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handleShiftClick(-2)">&lt;&lt;</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handleShiftClick(-1)">&lt;</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">1</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">2</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">3</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">4</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">5</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">6</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">7</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">8</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handlePaginationClick(this)">9</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handleShiftClick(1)">&gt;</button>
-    <button class="mx-1 px-3 py-2 border rounded" onclick="handleShiftClick(2)">&gt;&gt;</button>
-</div>
+<!-- Pagination -->
 
 
 <script>
-    function scrollFunction() {
-        if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-            document.getElementById("navbar").style.padding = "1rem 0";
-        } else {
-            document.getElementById("navbar").style.padding = "2rem 0";
-        }
+    function handlePaginationClick(page) {
+        // Implement the logic to handle pagination.
     }
-    // JavaScript to dynamically create the movie posters
-    document.addEventListener('DOMContentLoaded', () => {
-        const grid = document.getElementById('movie-grid');
-
-        for(let i = 1; i <= 16; i++) {
-            const poster = document.createElement('div');
-            poster.className = 'poster';
-            poster.innerHTML = `
-                    <img src="https://placehold.co/200x300" alt="Movie Poster ${i}">
-                    <div class="movie-name mt-2">Movie Name ${i}</div>
-                    <button class="reserve-button">
-                    <a href="movieInfo.html">상세정보</a>
-                    </button>
-                `;
-            grid.appendChild(poster);
-        }
-    });
-    function handlePaginationClick(element) {
-        // Remove active class from all buttons
-        document.querySelectorAll('.pagination button').forEach(button => {
-            button.classList.remove('active');
-        });
-        // Add active class to the clicked button
-        element.classList.add('active');
+    function handleShiftClick(shift) {
+        // Implement the logic for shifting pages left or right.
     }
-    // Correctly selecting the element by ID
-    const poster = document.getElementById('movie-grid');
-
-
-
-
-    function handleShiftClick(direction) {
-        const buttons = Array.from(document.querySelectorAll('.pagination button:not(:first-child):not(:last-child)'));
-        const activeButton = document.querySelector('.pagination .active');
-        let activeIndex = buttons.indexOf(activeButton);
-
-        if (direction === -1 && activeIndex > 0) { // Move left
-            handlePaginationClick(buttons[activeIndex - 1]);
-        } else if (direction === 1 && activeIndex < buttons.length - 1) { // Move right
-            handlePaginationClick(buttons[activeIndex + 1]);
-        } else if (direction === -2) { // Move to first
-            handlePaginationClick(buttons[1]);
-        } else if (direction === 2) { // Move to last
-            handlePaginationClick(buttons[buttons.length-2]);
-        }
-    }
-
-    // Set the first page number button as active by default
-    // Ensure only the first numbered button is active on DOM load
-    document.addEventListener('DOMContentLoaded', () => {
-        const firstPageButton = document.querySelector('.pagination button:nth-child(3)');
-        handlePaginationClick(firstPageButton); // This will set the first page button as active
-    });
-
 </script>
 </body>
 </html>

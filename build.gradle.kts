@@ -41,6 +41,11 @@ dependencies {
     runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
     implementation("org.mariadb.jdbc:mariadb-java-client:3.+")
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // Thymeleaf에서 Java 8 날짜/시간 API 지원을 위해
+
+
 
     //spring security (로그인 로그아웃 설정)
     implementation("org.springframework.boot:spring-boot-starter-security")

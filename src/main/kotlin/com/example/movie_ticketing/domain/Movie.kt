@@ -1,27 +1,28 @@
 package com.example.movie_ticketing.domain
 
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+import jakarta.persistence.*
+import java.util.Date
 
 @Entity
-class Movie{
-    var title : String = ""
-    var story : String = ""
-    var director : String = ""
-    var actor : String = ""
-    var posterURL : String = ""
-    var openDate : String=""
-    var runtime : Int =0
-    var rating : Rating = Rating.G
-    var state : Boolean = true
-
-
+@Table(name = "movie")
+data class Movie(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Int = 0
-}
+    val id: Long,
+
+    val actor: String,
+    val director: String,
+
+    @Column(name = "open_date")
+    val openDate: Date,
+
+    val posterUrl: String,
+    val rating: Double,
+    val runtime: Int,
+    val state: String,
+    val story: String,
+    val title: String
+)
 
 enum class Rating {
     G,      // 전체관람가

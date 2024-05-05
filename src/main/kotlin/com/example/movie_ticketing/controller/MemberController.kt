@@ -129,7 +129,7 @@ class MemberController(
      * 회원가입 페이지로 이동
      */
     @GetMapping("/join")
-    fun createForm(model: Model): String {
+    fun createForm(): String {
 
         return "join"
     }
