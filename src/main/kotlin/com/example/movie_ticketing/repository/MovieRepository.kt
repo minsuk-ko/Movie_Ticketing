@@ -12,7 +12,7 @@ import java.util.*
 @Repository
 interface MovieRepository : JpaRepository<Movie?, Int?> {
 
-    fun findByTitleContaining(searchKeyword: String?, pageable: Pageable?): Page<Movie?>?
+    fun findByTitleContaining(title: String): List<Movie>
 
     @Query("SELECT m.title FROM Movie m")
     fun findTitles() : List<Movie>
