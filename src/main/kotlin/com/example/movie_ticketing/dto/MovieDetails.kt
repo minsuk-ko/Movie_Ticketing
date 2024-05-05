@@ -3,7 +3,6 @@ package com.example.movie_ticketing.dto
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.Date
 
-
 data class Genre(
     @JsonProperty("id") val id: Int,
     @JsonProperty("name") val name: String
