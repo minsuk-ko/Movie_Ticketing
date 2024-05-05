@@ -72,12 +72,5 @@ class MovieController(private val movieService: MovieService) {
             model.addAttribute("movies", results)
             return "movie" // Thymeleaf 뷰 템플릿의 이름
         }
-
-
-
     }
-
-
-
-
 }
