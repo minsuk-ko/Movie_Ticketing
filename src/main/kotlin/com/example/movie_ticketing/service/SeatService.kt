@@ -12,17 +12,34 @@ import java.util.*
 @Service
 class SeatService(private val seatRepository: SeatRepository) {
 
-    // 전체 좌석 가져오기
-    fun getAllSeats(theater: Theater): List<Seat> {
-        return seatRepository.findByTheater(theater)
+//    // 전체 좌석 가져오기
+//    fun getAllSeats(theater: Theater): List<Seat> {
+//        return seatRepository.findByTheater(theater)
+//    }
+//
+//    @Transactional
+//    fun selectSeat(seat : Seat) : Optional<Seat> {
+//        val seatNum = seatRepository.findById(seat.id)
+//
+//        seatRepository.save(seatNum)
+//
+//        return seatNum
+//    }
+
+    /**
+     * 주어진 좌석 ID 목록에 해당하는 Seat 엔티티들을 조회하여 반환
+     * 예약할 때 선택한 좌석 정보를 가져옴
+     */
+    fun findSeatsByIds(seatIds: List<Int>): List<Seat> {
+        return seatRepository.findByIdIn(seatIds)
     }
 
-    @Transactional
-    fun selectSeat(seat : Seat) : Optional<Seat> {
-        val seatNum = seatRepository.findById(seat.id)
 
-        seatRepository.save(seatNum)
-
-        return seatNum
+    /**
+     *  나중에 비즈니스 로직이 변경되거나 추가될 때 해당 로직을 Service 에서 관리할 수 있음.(유지보수 ↑)
+     */
+    fun save(seat: Seat): Seat {
+        return seatRepository.save(seat)
     }
+
 }

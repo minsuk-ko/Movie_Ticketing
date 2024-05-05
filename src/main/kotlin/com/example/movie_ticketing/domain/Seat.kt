@@ -7,7 +7,8 @@ class Seat {
 
     val seatNumber : Int = 0
 
-    var isSelected : Boolean = true
+    // 처음에는 예약된 좌석이 없으므로 false
+    var isSelected : Boolean = false
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")

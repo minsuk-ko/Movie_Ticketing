@@ -4,9 +4,6 @@ import jakarta.persistence.*
 
 @Entity
 class Ticket {
-
-    var price : Int = 0
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
     var schedule: Schedule? = null
@@ -23,13 +20,8 @@ class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id : Int = 0
 
-    protected constructor() {
-    }
-
-    constructor(price: Int, schedule: Schedule?, seat: Seat?, reservation: Reservation?) {
-        this.price = price
-        this.schedule = schedule
-        this.seat = seat
-        this.reservation = reservation
+    // ReservationController 의 오류 해결을 위해 constructor 가 아닌 toString 으로 바꾸었음
+    override fun toString(): String {
+        return "Ticket(schedule=$schedule, seat=$seat, reservation=$reservation, id=$id)"
     }
 }
