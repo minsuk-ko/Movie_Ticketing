@@ -8,22 +8,20 @@ import java.util.Date
 data class Movie(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Long,
+    val id: Int,
 
     val actor: String,
     val director: String,
 
-    @Column(name = "open_date")
     val openDate: Date,
 
     val posterUrl: String,
-    val rating: Double,
-    val runtime: Int,
-    val state: String,
+    val rating: String,
+    val runtime: String,
+    val state: Boolean,
     val story: String,
     val title: String
 )
-
 enum class Rating {
     G,      // 전체관람가
     PG12,   // 12세관람가

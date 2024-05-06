@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 
@@ -56,8 +57,7 @@ class MovieController(private val movieService: MovieService) {
         }
         @GetMapping("/movie")
         fun search(@RequestParam(value = "query", required = false) query: String?, model: Model): String {
-
-            if (query != null && query.isNotEmpty()) {
+            if (!query.isNullOrEmpty()) {
                 val movies = movieService.searchMovies(query)
                 model.addAttribute("movies", movies)
             } else {
@@ -69,6 +69,9 @@ class MovieController(private val movieService: MovieService) {
         @GetMapping("/search")
         fun searchMovie(@RequestParam("query") query: String, model: Model): String {
             val results = movieService.searchByQuery(query)
+
+            println("Results: $results")  //  <-- 추가
+
             model.addAttribute("movies", results)
             return "movie" // Thymeleaf 뷰 템플릿의 이름
         }
