@@ -191,13 +191,13 @@ class MemberController(
          자동 로그인은 수동으로 실행 시켜야함
          */
         //(폐기 원래는 인증객체 생성후 검사해주는 매니저 생성 그리고 검사한 결과를 컨텍스트에 저장이었음)
-       // 즉 원래는 값을 넣은 객체생성후 이 값들을 검증해주는 매니저를 생성후 유효하면 인증된 객체로 변환하는 과정
+        // 즉 원래는 값을 넣은 객체생성후 이 값들을 검증해주는 매니저를 생성후 유효하면 인증된 객체로 변환하는 과정
         //인증객체 생성 UsernamePasswordAuthenticationToken은 Authentication의 구현체
         //아직 이 객체가 유효한지 모름 (로그인 실행전)
-       // val authentication = authenticationManager.authenticate(auth) //인증시도
+        // val authentication = authenticationManager.authenticate(auth) //인증시도
         //인증 과정을 시도하여 인증이 성공할시 Authentication 객체를 반환하고 그걸 변수에 저장
         //인증 안되면  AuthenticationException 예외 발생
-       // SecurityContextHolder.getContext().authentication =authentication //인증된 정보 저장
+        // SecurityContextHolder.getContext().authentication =authentication //인증된 정보 저장
         // SecurityContextHolder이거를 통해서
         // SecurityContext에 사용자의 정보 저장함
         //여기에 정보를 저장하면 시큐리티가 사용자가 인증 되었다는 거로 판단되어서
