@@ -29,11 +29,11 @@ title          VARCHAR(45) NOT NULL,
 story          VARCHAR(500)NOT NULL,
 director       VARCHAR(10) NOT NULL,
 actor          VARCHAR(100)NOT NULL,
-rating         VARCHAR(5)  NOT NULL,
-poster_url     TEXT        NOT NULL,
+posterUrl      TEXT        NOT NULL,
 openDate       DATE        NOT NULL,
 runtime        VARCHAR(15) NOT NULL,
 state          BOOLEAN,
+isAdult        BOOLEAN,
 PRIMARY KEY (id),
 UNIQUE KEY movie_title (title));
 
