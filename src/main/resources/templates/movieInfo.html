@@ -5,19 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="${movieDetails.id}">Movie Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="../static/css/movieInfo.css" rel="stylesheet">
+  <link href="/css/movieInfo.css" rel="stylesheet">
 </head>
 <body class="bg-gray-200">
 <nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
   <div class="container mx-auto flex justify-between">
     <div class="text-white font-bold text-2xl">
-      <a href="home.html">CINE</a>
+      <a href="/">CINE</a>
     </div>
     <div class="flex mt-2">
-      <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
-      <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-      <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그인</a>
-      <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
+      <div class="flex mt-2">
+        <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+        <a href="reservation" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+        <div class="text-gray-200 text-sm hover:text-white mr-4" th:if="${#authorization.expression('isAnonymous()')}">
+          <a href="login">로그인</a>
+        </div>
+        <div class="text-gray-200 text-sm hover:text-white mr-4" th:if="${#authorization.expression('isAuthenticated()')}">
+          <a href="mypage1">마이페이지</a>
+          <a href="logout">로그아웃</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
