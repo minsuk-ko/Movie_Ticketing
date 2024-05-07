@@ -12,10 +12,7 @@ class Theater {
     @Column(name = "theater_id")
     val id: Int = 0
 
-    protected constructor() {
-    }
-
-    constructor(name: String?) {
-        this.name = name
+    override fun toString(): String {
+        return "Theater(name=$name, id=$id)"
     }
 }
