@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ScheduleRepository : JpaRepository<Schedule?, Int?> {
-    fun findByMovieIdAndDateAndStart(movieId: Int, date: String, start: String): Schedule?
+interface ScheduleRepository : JpaRepository<Schedule, Int> {
+    fun findByMovieIdAndDateAndStart(movieId: Int, date: String, start: String): Schedule
 }

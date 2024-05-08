@@ -6,15 +6,15 @@ import jakarta.persistence.*
 class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "schedule_id")
-    var schedule: Schedule? = null
+    lateinit var schedule: Schedule
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seat_id")
-    var seat: Seat? = null
+    lateinit var seat: Seat
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
-    var reservation: Reservation? = null
+    lateinit var reservation: Reservation
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

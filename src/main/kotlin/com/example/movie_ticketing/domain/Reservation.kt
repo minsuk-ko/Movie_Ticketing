@@ -16,20 +16,13 @@ class Reservation{
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    var member: Member? = null
+    lateinit var member: Member
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     val id : Int = 0
-
-    constructor() {
-    }
-
-    constructor(date: String, price: Int, num: Int, member: Member?) {
-        this.date = date
-        this.price = price
-        this.num = num
-        this.member = member
+    override fun toString(): String {
+        return "Reservation(date='$date', price=$price, num=$num, member=$member, id=$id)"
     }
 }
