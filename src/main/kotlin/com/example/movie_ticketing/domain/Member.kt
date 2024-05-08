@@ -22,7 +22,6 @@ class Member{
 
     constructor() {
     }
-
     private constructor(name: String, email: String, age: Int, password: String) {
         this.name = name
         this.email = email

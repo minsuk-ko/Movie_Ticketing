@@ -16,16 +16,17 @@
             CINE
         </div>
         <div class="flex mt-2">
-            <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
-            <a href="reservation" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-            <div th:if="${#authorization.expression('isAnonymous()')}">
-                <a href="login">로그인</a>
+            <div class="flex mt-2">
+                <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+                <a href="reservation" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+                <div class="text-gray-200 text-sm hover:text-white mr-4" th:if="${#authorization.expression('isAnonymous()')}">
+                    <a href="login">로그인</a>
+                </div>
+                <div class="text-gray-200 text-sm hover:text-white mr-4" th:if="${#authorization.expression('isAuthenticated()')}">
+                    <a href="mypage1">마이페이지</a>
+                    <a href="logout">로그아웃</a>
+                </div>
             </div>
-            <div th:if="${#authorization.expression('isAuthenticated()')}">
-                <a href="mypage1">마이페이지</a>
-                <a href="logout">로그아웃</a>
-            </div>
-
         </div>
     </div>
 </nav>
