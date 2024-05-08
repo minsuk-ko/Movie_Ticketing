@@ -2,6 +2,7 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.*
 import com.example.movie_ticketing.repository.ScheduleRepository
+import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.MovieService
 import com.example.movie_ticketing.service.ReservationService
 import com.example.movie_ticketing.service.SeatService
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -22,7 +25,8 @@ class ReservationController(
     private val movieService: MovieService,
     private val seatService: SeatService,
     private val reservationService: ReservationService,
-    private val scheduleRepository: ScheduleRepository) {
+    private val scheduleRepository: ScheduleRepository,
+    private val ticketRepository: TicketRepository) {
 
 //    @GetMapping("/reservation")
 //    fun createForm(model : Model): String {
@@ -96,6 +100,29 @@ class ReservationController(
 //        model.addAttribute("selectSeat", selectSeat)
 //        return "SuccessReservation"
 //    }
+
+    // 마이페이지 - 예약 내역 조회에서의 예약 취소
+    @PostMapping("/cancelReservation")
+    fun cancelReservation(ticketId: Int, result: BindingResult) : String {
+
+        if (result.hasErrors()) {
+            return "redirect:/reservation";
+        }
+
+        // 티켓 ID로 티켓 정보 조회
+        val ticket = ticketRepository.findById(ticketId)
+            .orElseThrow { IllegalArgumentException("error") }
+
+        // 선택한 좌석의 상태를 '선택 가능'으로 변경
+        // 티켓 하나에 좌석 하나가 매핑되어 있음을 유의
+        ticket.seat.isSelected = true
+
+        // 예약 티켓 삭제
+        ticketRepository.delete(ticket)
+
+        // 마이페이지로 이동
+        return "redirect:/mypage2"
+    }
 
     // (임시) 날짜의 범위를 현재부터 10일 후까지로 설정
     fun generateDateRange(): List<String> {
