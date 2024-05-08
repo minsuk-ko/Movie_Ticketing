@@ -23,7 +23,8 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         return movieRepository.findByTitleContaining(query)
     }
     fun retrieveMovieDetails(movieId: Int): MovieDetails {
-        val url = "$baseUrl/$movieId?api_key=$apiKey"
+        // URL 뒤에 language=ko-KR 을 통해 한글로 가져온다.
+        val url = "$baseUrl/$movieId?api_key=$apiKey&language=ko-KR"
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
     fun searchMovies(query: String): Flux<MovieDetails> {
