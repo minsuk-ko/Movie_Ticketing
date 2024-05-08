@@ -5,19 +5,19 @@ import jakarta.persistence.*
 @Entity
 class Schedule {
 
-    var start : String? = null
-    var end : String? = null
+    lateinit var start : String
+    lateinit var end : String
 
     // 영화 상영일
-    var date : String? = null
+    lateinit var date : String
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
-    var movie : Movie? = null
+    lateinit var movie : Movie
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
-    var theater : Theater? = null
+    lateinit var theater : Theater
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ class Seat {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id")
-    var theater: Theater? = null
+    lateinit var theater: Theater
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
