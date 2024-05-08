@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS movie (
 id             INT         NOT NULL AUTO_INCREMENT,
 title          VARCHAR(45) NOT NULL,
 story          VARCHAR(500)NOT NULL,
-director       VARCHAR(10) NOT NULL,
+director       VARCHAR(200) NOT NULL,
 actor          VARCHAR(100)NOT NULL,
 posterUrl      TEXT        NOT NULL,
 openDate       DATE        NOT NULL,
