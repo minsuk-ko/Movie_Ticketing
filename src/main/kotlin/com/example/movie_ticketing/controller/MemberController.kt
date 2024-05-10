@@ -2,6 +2,7 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
+import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
 import com.example.movie_ticketing.service.MemberService
 import jakarta.servlet.http.HttpServletRequest
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
@@ -26,11 +28,11 @@ import java.security.Principal
 
 @Controller
 class MemberController(
-
     private val memberService: MemberService,
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val userDetailsService: CustomUserDetailsService
+    private val userDetailsService: CustomUserDetailsService,
+    private val ticketRepository: TicketRepository
 ) {
 
 
@@ -125,6 +127,7 @@ class MemberController(
 
         return "redirect:/logout"
     }
+
 
 
 
