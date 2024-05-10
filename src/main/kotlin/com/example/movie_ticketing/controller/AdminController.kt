@@ -25,9 +25,9 @@ class AdminController(private val memberService: MemberService,
 ) {
 
     // 관리자 페이지의 회원 관리
-    // Paging 처리를 이용해 회원을 정렬
     @GetMapping("/admin/member")
-    fun memberManagement(@PageableDefault(size = 10) pageable: Pageable, model: Model): String {
+    // 한 페이지에 보여질 항목의 수 = 10
+    fun memberManagement(@PageableDefault(size = 5) pageable: Pageable, model: Model): String {
         val page: Page<Member?> = memberRepository.findAll(pageable)
         model.addAttribute("membersPage", page)
         return "adminMember"
