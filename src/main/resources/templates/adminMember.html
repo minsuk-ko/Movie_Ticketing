@@ -133,11 +133,12 @@
 
         <!-- Paging 처리 -->
         <div class="flex items-center gap-4">
-          <!-- Previous Button -->
+          <!-- 이전 버튼 "←" -->
           <a th:href="@{/admin/member(page=${membersPage.number - 1}, size=${membersPage.size})}"
              class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
              uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
              disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+            <!-- svg : 웹 페이지에 벡터 이미지 추가. -->
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
                  aria-hidden="true" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
@@ -145,21 +146,24 @@
 
           </a>
 
-          <!-- Page Number Buttons -->
+          <!-- 페이지 숫자 ex : "1" -->
+          <!-- flex 컨테이너 :  CSS의 박스 레이아웃 모델. 화면 크기와 디스플레이 유형에 맞춰 동적으로 조절될 수 있도록 해준다. -->
           <div class="flex items-center gap-2">
             <a th:each="pageNum : ${#numbers.sequence(0, membersPage.totalPages - 1)}"
                th:href="@{/admin/member(page=${pageNum}, size=${membersPage.size})}"
                th:text="${pageNum + 1}"
-               class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
-               uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
-               disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
-      <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-        1
-      </span>
+               th:class="${pageNum == membersPage.number} ? 'flex items-center justify-center relative h-10 w-10 ' +
+             'select-none rounded-lg bg-gray-900 font-sans text-xs font-medium uppercase text-white ' +
+             'shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 ' +
+             'focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none ' +
+             'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none' :
+             'inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 ' +
+             'uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 ' +
+             'active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline'">
             </a>
           </div>
 
-          <!-- Next Button -->
+          <!-- 다음 버튼 "→" -->
           <a th:href="@{/admin/member(page=${membersPage.number + 1}, size=${membersPage.size})}"
              class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
              uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
