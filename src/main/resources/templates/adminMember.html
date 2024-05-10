@@ -63,6 +63,14 @@
       color: white;
       transition: background 0.3s;
     }
+    /*.pagination {*/
+    /*  display: inline;*/
+    /*  text-align: center;*/
+    /*}*/
+    /*.pagination > li > a{*/
+    /*  float: none;*/
+    /*  margin-left: -5px;*/
+    /*}*/
   </style>
 </head>
 
@@ -109,52 +117,59 @@
         <table class="w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" class="py-3 px-6">ID</th>
-            <th scope="col" class="py-3 px-6">Name</th>
-            <th scope="col" class="py-3 px-6">Status</th>
-            <th scope="col" class="py-3 px-6">Role</th>
+            <th scope="col" class="py-3 px-6">회원 ID</th>
+            <th scope="col" class="py-3 px-6">Email</th>
+            <th scope="col" class="py-3 px-6">이름</th>
           </tr>
           </thead>
           <tbody>
-          <!-- Repeat for each row -->
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">1</td>
-            <td class="py-4 px-6">Name 1</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
+          <tr th:each="member : ${membersPage}">
+            <td th:text="${member.id}">ID</td>
+            <td th:text="${member.email}">Email</td>
+            <td th:text="${member.name}">Name</td>
           </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">2</td>
-            <td class="py-4 px-6">오건</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">3</td>
-            <td class="py-4 px-6">Name 3</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">4</td>
-            <td class="py-4 px-6">Name 4</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">5</td>
-            <td class="py-4 px-6">Name 5</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-
-          <!-- Repeat above tr for the number of rows you need -->
           </tbody>
         </table>
-        <div class="flex justify-between border-t mt-4 pt-4">
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Previous</a>
-          1 | 2 | 3 | 4 | ......
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Next</a>
+
+        <!-- Paging 처리 -->
+        <div class="flex items-center gap-4">
+          <!-- Previous Button -->
+          <a th:href="@{/admin/member(page=${membersPage.number - 1}, size=${membersPage.size})}"
+             class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
+             uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
+             disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                 aria-hidden="true" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+            </svg>
+
+          </a>
+
+          <!-- Page Number Buttons -->
+          <div class="flex items-center gap-2">
+            <a th:each="pageNum : ${#numbers.sequence(0, membersPage.totalPages - 1)}"
+               th:href="@{/admin/member(page=${pageNum}, size=${membersPage.size})}"
+               th:text="${pageNum + 1}"
+               class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
+               uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
+               disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+      <span class="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        1
+      </span>
+            </a>
+          </div>
+
+          <!-- Next Button -->
+          <a th:href="@{/admin/member(page=${membersPage.number + 1}, size=${membersPage.size})}"
+             class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
+             uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
+             disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                 aria-hidden="true" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
