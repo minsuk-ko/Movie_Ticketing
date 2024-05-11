@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service
 //findbyEmail을통해서 userDetails 객체를 생성해서
 // 이 객체로 로그인 시도하려고 하는 거임
 
+//시큐리티 설정에서 loginProcessUrl("/login")설정했기에
+//로그인 요청이 오면 자동으로 UserDetailService 타입으로 Ioc되어 있는 loadUserByUsername이 실행
+// 규칙임 ->정의
+//UserDetailServiece는 결국 Authentication 객체 생성위해서 커스터마이징 한 것
+//시큐리티 session(내부 Authentication(내부 UserDetails))
+
 @Service
 class CustomUserDetailsService(val memberRepository: MemberRepository) : UserDetailsService {
     override fun loadUserByUsername(email: String): UserDetails {
@@ -20,8 +26,10 @@ class CustomUserDetailsService(val memberRepository: MemberRepository) : UserDet
         return User.builder()
             .username(member.email)
             .password(member.password)
-            .authorities("ROLE_USER") //spring Security관례 기본적인 메소드가 ROLE_ 이렇게 설정
-            // 그냥 USER해도 되나 hasAuthority 같은 메소드로 권한 검사해야함
+            .authorities(member.role) // 이 role권한을 멤버에 저장되어 있는 것을 확인해서 가져감
+            // 그렇기에 권한을 바꾸려면
+            //  마리아db들어가서 update문을 사용해야함
             .build()
+
     }
 }
