@@ -78,12 +78,12 @@ class AdminController(private val memberService: MemberService,
         val reservations = reservationRepository.findByMemberId(id)
         //deleteByreservation => delete from tikets where reservation_id =?
         // 예약 정보에 따른 티켓들 삭제
-if(reservations.isNotEmpty()) {  //예약 내용이 있을경우 삭제
-    reservations.forEach { reservation ->
-        ticketRepository.deleteByReservation(reservation)
-        reservationRepository.delete(reservation)
-    }
-}
+        if(reservations.isNotEmpty()) {  //예약 내용이 있을경우 삭제
+          reservations.forEach { reservation ->
+              ticketRepository.deleteByReservation(reservation)
+              reservationRepository.delete(reservation)
+          }
+        }
         //forEach: 리스트 각각의 요소에 순차적으로 처리시킴
         // 즉 ,티켓 삭제 메소드 실행후 예약 삭제 메소드
 

@@ -9,9 +9,6 @@ class Reservation{
     // 예약 날짜
     lateinit var date : String
 
-    // 티켓 수량
-    var num : Int = 0
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     lateinit var member: Member
@@ -22,6 +19,6 @@ class Reservation{
     val id : Int = 0
 
     override fun toString(): String {
-        return "Reservation(date='$date', num=$num, member=$member, id=$id)"
+        return "Reservation(date='$date', member=$member, id=$id)"
     }
 }
