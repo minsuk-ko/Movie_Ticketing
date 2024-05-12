@@ -9,8 +9,6 @@ class Reservation{
     // 예약 날짜
     lateinit var date : String
 
-    var price : Int = 0
-
     // 티켓 수량
     var num : Int = 0
 
@@ -22,7 +20,8 @@ class Reservation{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reservation_id")
     val id : Int = 0
+
     override fun toString(): String {
-        return "Reservation(date='$date', price=$price, num=$num, member=$member, id=$id)"
+        return "Reservation(date='$date', num=$num, member=$member, id=$id)"
     }
 }
