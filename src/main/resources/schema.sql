@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS reservation (
 id           INT         NOT NULL AUTO_INCREMENT,
 date         VARCHAR(10) NOT NULL,
 -- price        INT         NOT NULL,
-num   INT         NOT NULL,
+--num   INT         NOT NULL,
 member_id    INT         NOT NULL,
 PRIMARY KEY (id),
 FOREIGN KEY (member_id)
