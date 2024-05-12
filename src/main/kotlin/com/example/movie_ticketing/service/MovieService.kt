@@ -2,6 +2,7 @@ package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
+import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -40,8 +41,8 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
 //            .bodyToMono(String::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환
 //    }
 
-    fun searchMovies(query: String): MovieDetails {
+    fun searchMovies(query: String): MovieSearchResult {
         val uri = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
-        return restTemplate.getForObject(uri, MovieDetails::class.java) ?: throw Exception("Movie not found")
+        return restTemplate.getForObject(uri, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
     }
 }
