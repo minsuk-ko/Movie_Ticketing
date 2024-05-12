@@ -57,8 +57,8 @@ class ReservationController(
     @Transactional // 티켓과 예약 테이블 둘 다 사용하니까 오류 안나게 방지
     @PostMapping("/selectReservation")
     fun selectReservation(@Valid form : ReservationForm, result: BindingResult , model : Model,@AuthenticationPrincipal user:User) : String {
-        val email = user. username  //교수님 sprinsecurity에서 바로 유저만 꺼내옴
-        // memberController에서의 mypage1쪽 처럼 Authentication객체를 꺼내서 하나하나 가져와도 되지만 좀 더 간편한 방법
+        val email = user.username  //교수님 spring Security 에서 바로 유저만 꺼내옴
+        // memberController 에서의 mypage1 처럼 Authentication 객체를 꺼내서 하나하나 가져와도 되지만 좀 더 간편한 방법
         val member = memberRepository.findByEmail(email).orElseThrow() //optional타입이라 무조건 검증
        // 로그인 한 유저정보를 꺼내서 그 유저의 정보를 member에 넣음
        // 이미 로그인 한 사람의 정보니까 인증되어있음 = .orElseThrow()에 따로 설정필요x
@@ -78,14 +78,14 @@ class ReservationController(
 
         val reservation = Reservation().apply{
             this.member = member
-            //this.date => @CreationTimeStamp로 자동생성
-            //이 객체가 생성됐을 때 id필드가 설정되지 않은 상태 0 or null
+            // this.date => @CreationTimeStamp 로 자동생성
+            // 이 객체가 생성됐을 때 id 필드가 설정되지 않은 상태 0 or null
 
         }
         reservationRepository.save(reservation)
-        //reservation이 db에 저장되어야 id가 자동으로 생성됨
-        // 이 엔티티를 저장할 때 데이터 베이스가 자동으로 id 생성시키고 reservation객체의 id필드에 들어감
-        //@GeneratedValue(strategy = GenerationType.IDENTITY) 이 어노테이션떄문에 자동으로 생성
+        // reservation 이 db에 저장되어야 id가 자동으로 생성됨
+        // 이 엔티티를 저장할 때 데이터 베이스가 자동으로 id 생성시키고 reservation 객체의 id필드에 들어감
+        // @GeneratedValue(strategy = GenerationType.IDENTITY) 이 어노테이션떄문에 자동으로 생성
 
 
 
