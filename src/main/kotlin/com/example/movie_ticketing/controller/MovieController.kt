@@ -25,14 +25,7 @@ class MovieController(private val movieService: MovieService) {
         }
     }
     @GetMapping("/movie")
-    fun search(@RequestParam(value = "query", required = false) query: String?, model: Model): String {
-
-        if (query != null && query.isNotEmpty()) {
-            val movies = movieService.searchMovies(query)
-            model.addAttribute("movies", movies)
-        } else {
-            model.addAttribute("error", "Query parameter is required")
-        }
+    fun search(): String {
         return "movie"
     }
 
