@@ -31,11 +31,13 @@ class MovieController(private val movieService: MovieService) {
     }
 
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String): MovieDetails {
+    fun searchMovie(@RequestParam("query") query: String, model: Model): String  {
 //        val results = movieService.searchMovies(query)
 //        model.addAttribute("movies", results)
 //        return "movie" // Thymeleaf 뷰 템플릿의 이름
-        return movieService.searchMovies(query)
+        val searchResult = movieService.searchMovies(query)
+        model.addAttribute("movies", searchResult.movies)
+        return "searchResult"
     }
 
 //    <div th:each="movie : ${movies}" class="poster">
