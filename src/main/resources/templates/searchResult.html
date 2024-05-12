@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Search Results</title>
+</head>
+<body>
+<h1>Movie Search Results</h1>
+<div th:each="movie : ${movies}">
+    <h2 th:text="${movie.title}">Movie Title</h2>
+    <div th:if="${movie.posterPath}">
+        <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster"/>
+    </div>
+    <p th:text="${movie.overview}">Movie Overview</p>
+</div>
+</body>
+</html>
