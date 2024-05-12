@@ -1,6 +1,7 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Movie
+import com.example.movie_ticketing.service.GenreService
 import com.example.movie_ticketing.service.MovieService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -11,29 +12,25 @@ import org.springframework.web.bind.annotation.RequestParam
 
 
 @Controller
-class MovieController(private val movieService: MovieService) {
+class MovieController(
+    private val movieService: MovieService,
+    private val genreService: GenreService
+) {
+
+    @GetMapping("/")
+    fun showMovies(model: Model): String {
+        val movies = movieService.getMoviesFromJson()
+        model.addAttribute("movies", movies)
+        return "home"
+    }
 
     @GetMapping("/movieInfo/{id}")
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
-        try {
-            val movieDetails = movieService.retrieveMovieDetails(movieId)
-            model.addAttribute("movieDetails", movieDetails)
-            return "movieInfo" // Thymeleaf 뷰 파일 이름
-        } catch (e: Exception) {
-            model.addAttribute("error", "Movie not found")
-            return "errorView" // 에러 시 보여줄 뷰
-        }
-    }
-    @GetMapping("/movie")
-    fun search(@RequestParam(value = "query", required = false) query: String?, model: Model): String {
-
-        if (query != null && query.isNotEmpty()) {
-            val movies = movieService.searchMovies(query)
-            model.addAttribute("movies", movies)
-        } else {
-            model.addAttribute("error", "Query parameter is required")
-        }
-        return "movie"
+        val movieDetails = movieService.retrieveMovieDetails(movieId)
+        val genreNames = genreService.getGenreNames(movieDetails.genreIds)
+        model.addAttribute("movieDetails", movieDetails)
+        model.addAttribute("genreNames", genreNames.joinToString(", "))
+        return "movieInfo" // Thymeleaf 뷰 파일 이름
     }
 
     @GetMapping("/search")

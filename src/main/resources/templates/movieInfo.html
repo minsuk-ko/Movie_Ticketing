@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${movieDetails.id}">Movie Details</title>
+  <title th:text="${movieDetails.title}">Movie Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="/css/movieInfo.css" rel="stylesheet">
 </head>
@@ -40,15 +40,14 @@
       <div>
         <h2 class="text-xl font-bold" th:text="${movieDetails.title}">영화명</h2>
         <div class="info-box p-2 mt-2">
-          | 평점 : <span th:text="${movieDetails.rating}"></span>
+          | 평점 : <span th:text="${movieDetails.voteAverage}"></span>
         </div>
       </div>
 
       <div class="info-box rounded p-4">
-        장르: <span th:each="genre, iterStat : ${movieDetails.genres}"
-              th:text="${genre.name} + (iterStat.last ? '' : ', ')">[장르명]</span>
+        <p>장르명: <span th:each="genre : ${genreNames}" th:text="${genre} + ' '">Genre</span></p>
 
-        / 개봉일자 : <span th:text="${movieDetails.openDate}"></span>
+        / 개봉일자 : <span th:text="${movieDetails.releaseDate}"></span>
       </div>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         예매하기
