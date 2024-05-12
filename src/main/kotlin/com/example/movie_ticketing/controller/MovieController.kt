@@ -14,6 +14,12 @@ import reactor.core.publisher.Mono
 @Controller
 class MovieController(private val movieService: MovieService) {
 
+    @GetMapping("/")
+    fun showMovies(model: Model): String {
+        val movies: List<MovieDetails> = movieService.getMoviesFromJson()
+        model.addAttribute("movies", movies)
+        return "home"  // 이는 Thymeleaf 템플릿 'home.html'을 참조합니다.
+    }
     @GetMapping("/movieInfo/{id}")
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
         try {
