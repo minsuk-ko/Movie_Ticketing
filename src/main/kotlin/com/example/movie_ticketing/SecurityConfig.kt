@@ -23,8 +23,10 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http.csrf { csrf -> csrf.disable() } //csrf토큰 비활성화
-        http.authorizeHttpRequests { authorize ->
-            authorize.requestMatchers("/**").permitAll()
+        http.authorizeHttpRequests { authorize -> authorize
+            .requestMatchers("/user/**").authenticated()
+            .requestMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().permitAll()
             //모든 url 로그인 없이 허용
         }
         http.formLogin { formLogin ->
