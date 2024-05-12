@@ -17,7 +17,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
     private lateinit var apiKey: String
 
 
-    private val baseUrl = "https://api.themoviedb.org/3/movie/language=ko-KR"
+    private val baseUrl = "https://api.themoviedb.org/3/movie/"
 
     fun searchByQuery(query: String): List<Movie> {
         return movieRepository.findByTitleContaining(query)
