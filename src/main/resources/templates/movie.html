@@ -81,11 +81,32 @@
 </nav>
 
 <!-- 검색 -->
-<form th:action="@{/search}" method="get">
-    <div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
+<div id="movie-grid" class="movie-grid mt-4 mx-auto w-3/4 grid grid-cols-4 gap-4">
+    <div th:each="movie : ${movies}" class="poster">
+        <img th:src="@{|https://image.tmdb.org/t/p/w500${movie.posterPath}|}" alt="Movie Poster" class="w-full">
+        // |https://image.tmdb.org/t/p/w500${movieDetails.posterPath}|
+        <div class="movie-name mt-2" th:text="${movie.title}"></div>
+        <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
+
+    </div>
+</div>
+
+
+<!--&lt;!&ndash; Search Form &ndash;&gt;-->
+<!--<div class="search-sorting mt-4 mx-auto w-3/4 flex justify-between items-center">-->
+<!--    <form th:action="@{/search}" method="get">-->
+<!--        <input type="text" name="query" placeholder="Search Movies" class="px-4 py-2 border rounded"> &lt;!&ndash; 이 쿼리에서 값을 참조&ndash;&gt;-->
+<!--        <button type="submit" class="px-4 py-2 border rounded">Search</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+<!-- Movie Grid -->
+
+<div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
+    <form th:action="@{/search}" method="get">
         <div class="relative flex w-full gap-2 md:w-max">
             <div class="relative h-10 w-full  min-w-[288px]">
-                <input type="search" placeholder="Search"
+                <input type="text" placeholder="Search" name="query" required
                        class="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-transparent
                        px-3 py-2.5 pl-9 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder:text-blue-gray-300
                        placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2
@@ -118,32 +139,11 @@
                 class="select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase
                 text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]
                 focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="button">
+                type="submit">
             Search
         </button>
-    </div>
-</form>
-
-
-<!--&lt;!&ndash; Search Form &ndash;&gt;-->
-<!--<div class="search-sorting mt-4 mx-auto w-3/4 flex justify-between items-center">-->
-<!--    <form th:action="@{/search}" method="get">-->
-<!--        <input type="text" name="query" placeholder="Search Movies" class="px-4 py-2 border rounded"> &lt;!&ndash; 이 쿼리에서 값을 참조&ndash;&gt;-->
-<!--        <button type="submit" class="px-4 py-2 border rounded">Search</button>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!-- Movie Grid -->
-<div id="movie-grid" class="movie-grid mt-4 mx-auto w-3/4 grid grid-cols-4 gap-4">
-    <div th:each="movie : ${movies}" class="poster">
-        <img th:src="@{|https://image.tmdb.org/t/p/w500${movie.posterPath}|}" alt="Movie Poster" class="w-full">
-        // |https://image.tmdb.org/t/p/w500${movieDetails.posterPath}|
-        <div class="movie-name mt-2" th:text="${movie.title}"></div>
-        <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
-
-    </div>
+    </form>
 </div>
-
 <!-- Pagination -->
 
 

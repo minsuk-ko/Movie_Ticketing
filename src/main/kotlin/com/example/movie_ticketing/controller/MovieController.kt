@@ -30,7 +30,7 @@ class MovieController(private val movieService: MovieService) {
     }
 
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String, model: Model): Mono<String> {
+    fun searchMovie(@RequestParam("query") query: String): String {
 //        val results = movieService.searchMovies(query)
 //        model.addAttribute("movies", results)
 //        return "movie" // Thymeleaf 뷰 템플릿의 이름
