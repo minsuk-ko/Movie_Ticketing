@@ -42,3 +42,7 @@ logging:
     org.hibernate:
       sql: debug
       type: trace
+
+#tmdb:
+#  api-key: your_api_key_here
+#  base-url: https://api.themoviedb.org/3

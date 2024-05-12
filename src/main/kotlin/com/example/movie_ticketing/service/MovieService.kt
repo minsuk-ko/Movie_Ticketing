@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
 import reactor.core.publisher.Flux
+import reactor.core.publisher.Mono
 
 
 @Service
@@ -16,7 +17,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
     @Value("\${tmdb.api.key}")
     private lateinit var apiKey: String
 
-
+    @Value("\${tmdb.api.url}")
     private val baseUrl = "https://api.themoviedb.org/3/movie/"
 
     fun searchByQuery(query: String): List<Movie> {
@@ -27,7 +28,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         val url = "$baseUrl/$movieId?api_key=$apiKey&language=ko-KR"
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
-    fun searchMovies(query: String): Flux<MovieDetails> {
+    fun searchMovies(query: String): Mono<String> {
         return webClient.get()
             .uri { uriBuilder ->
                 uriBuilder.path("/search/movie")
@@ -36,6 +37,6 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
                     .build()
             }
             .retrieve()  // API 호출을 수행하고 응답을 가져옴
-            .bodyToFlux(MovieDetails::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환
+            .bodyToMono(String::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환
     }
 }

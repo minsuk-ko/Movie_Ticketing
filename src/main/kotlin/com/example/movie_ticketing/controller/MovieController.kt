@@ -7,7 +7,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
-
+import reactor.core.publisher.Mono
 
 
 @Controller
@@ -30,9 +30,10 @@ class MovieController(private val movieService: MovieService) {
     }
 
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String, model: Model): String {
-        val results = movieService.searchByQuery(query)
-        model.addAttribute("movies", results)
-        return "movie" // Thymeleaf 뷰 템플릿의 이름
+    fun searchMovie(@RequestParam("query") query: String, model: Model): Mono<String> {
+//        val results = movieService.searchMovies(query)
+//        model.addAttribute("movies", results)
+//        return "movie" // Thymeleaf 뷰 템플릿의 이름
+        return movieService.searchMovies(query)
     }
 }
