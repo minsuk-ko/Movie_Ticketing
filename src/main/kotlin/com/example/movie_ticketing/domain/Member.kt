@@ -22,7 +22,7 @@ class Member{
     var role : String = "ROLE_USER" // 기본권한은 유저
 
     override fun toString(): String {
-        return "Member(name='$name', email=$email, age=$age, password='$password', id=$id)"
+        return "Member(name='$name', email=$email, age=$age, password='$password', id=$id, role='$role')"
     }
 }
 
