@@ -1,6 +1,7 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Movie
+import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.service.MovieService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -30,10 +31,18 @@ class MovieController(private val movieService: MovieService) {
     }
 
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String): String {
+    fun searchMovie(@RequestParam("query") query: String): MovieDetails {
 //        val results = movieService.searchMovies(query)
 //        model.addAttribute("movies", results)
 //        return "movie" // Thymeleaf 뷰 템플릿의 이름
         return movieService.searchMovies(query)
     }
+
+//    <div th:each="movie : ${movies}" class="poster">
+//    <img th:src="@{|https://image.tmdb.org/t/p/w500$%7Bmovie.posterPath%7D%7C%7D" alt="Movie Poster" class="w-full">
+//    // |https://image.tmdb.org/t/p/w500$%7BmovieDetails.posterPath%7D%7C
+//    <div class="movie-name mt-2" th:text="${movie.title}"></div>
+//    <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
+//
+//    </div>
 }
