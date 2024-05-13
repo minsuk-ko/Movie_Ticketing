@@ -63,16 +63,6 @@
     </div>
 </nav>
 
-<!-- 검색 -->
-<div id="movie-grid" class="movie-grid mt-4 mx-auto w-3/4 grid grid-cols-4 gap-4">
-    <div th:each="movie : ${movies}" class="poster">
-        <img th:src="@{|https://image.tmdb.org/t/p/w500${movie.posterPath}|}" alt="Movie Poster" class="w-full">
-        // |https://image.tmdb.org/t/p/w500${movieDetails.posterPath}|
-        <div class="movie-name mt-2" th:text="${movie.title}"></div>
-        <a th:href="@{/movieInfo(movieId=${movie.id})}">More details</a>
-
-    </div>
-</div>
 
 <!-- 검색 창 -->
 <div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
@@ -120,10 +110,11 @@
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-3 max-w-screen-xl">
 
-<!--        <div th:each="movie : ${movies}">-->
+        <div th:each="movie : ${movieList}">
         <!-- 영화 하나 -->
             <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
                 <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-80">
+<!--                    이거 안됨-->
 <!--                    <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" />-->
                 </div>
                 <div class="p-6 text-center">
@@ -137,7 +128,7 @@
             </div>
         </div>
     </div>
-<!--</div>-->
+</div>
 
 <!-- 영화 양식 예시 -->
 

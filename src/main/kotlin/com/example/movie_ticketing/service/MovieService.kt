@@ -41,6 +41,9 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         return MovieSearchResult(sortedMovies)
     }
 
+    // 개봉일이 2024-05-01 일 이후이고 지역이 한국인 영화를 찾아옴.
+    // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 movie.posterPath 하면 되지 않나?
+    // 왜 안되는거지? (movie.html)
     fun getBoxOffice() : MovieSearchResult {
         val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
