@@ -5,11 +5,13 @@ import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
+import java.io.InputStream
 
 
 @Service
@@ -50,4 +52,9 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         return sortMoviesByPopularity(result)
     }
 
+    fun getMoviesFromJson(): List<MovieDetails> {
+        val jsonInputStream: InputStream = ClassPathResource("movies.json").inputStream
+        val movieResponse: MovieResponse = objectMapper.readValue(jsonInputStream)
+        return movieResponse.results
+    }
 }
