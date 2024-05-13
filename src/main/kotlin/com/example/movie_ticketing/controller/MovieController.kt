@@ -26,7 +26,10 @@ class MovieController(private val movieService: MovieService) {
         }
     }
     @GetMapping("/movie")
-    fun search(): String {
+    fun search(model: Model): String {
+        val movies = movieService.getBoxOffice()
+        println(movies)
+        model.addAttribute("movieList", movies)
         return "movie"
     }
 

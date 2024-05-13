@@ -1,5 +1,6 @@
 package com.example.movie_ticketing.service
 
+import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
@@ -38,5 +39,11 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         // 인기도가 null 이라면 가장 낮은 값으로 설정
         val sortedMovies = result.movies.sortedByDescending { it.popularity ?: Double.MIN_VALUE }
         return MovieSearchResult(sortedMovies)
+    }
+
+    fun getBoxOffice() : MovieSearchResult {
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01"
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
+        return result
     }
 }

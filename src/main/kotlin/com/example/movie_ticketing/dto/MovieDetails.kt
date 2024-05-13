@@ -1,7 +1,5 @@
 package com.example.movie_ticketing.dto
 
-import com.example.movie_ticketing.domain.Movie
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.Date
 
