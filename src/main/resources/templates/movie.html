@@ -125,7 +125,9 @@
         <!-- 영화 하나 -->
             <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
                 <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
-                    <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="movie-poster" />
+                    <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
+                        <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="movie-poster" />
+                    </a>
                 </div>
                 <div class="p-6 text-center">
                     <h4 th:text="${movie.title}" class="block mb-2 font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 ellipsis">
