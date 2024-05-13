@@ -1,5 +1,6 @@
 package com.example.movie_ticketing.domain
 
+import com.example.movie_ticketing.dto.MovieSearchResult
 import jakarta.persistence.*
 import java.util.Date
 
@@ -32,4 +33,3 @@ class Movie {
                 "rating=$rating, runtime='$runtime', state=$state, story='$story', title='$title', isAdult=$isAdult, id=$id)"
     }
 }
-

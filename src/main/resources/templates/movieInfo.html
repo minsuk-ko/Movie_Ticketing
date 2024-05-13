@@ -77,8 +77,10 @@
       </div>
 
       <div class="info-box rounded p-4">
-        장르: <span th:each="genre, iterStat : ${movieDetails.genres}"
-              th:text="${genre.name} + (iterStat.last ? '' : ', ')">[장르명]</span>
+        장르: <span th:each="genre, iterStat : ${movieDetails.genres}">
+                <span th:text="${genre.name}"></span>
+                <span th:if="${not iterStat.last}">, </span>
+             </span>
 
         / 개봉일자 : <span th:text="${movieDetails.openDate}"></span>
       </div>

@@ -1,16 +1,12 @@
 package com.example.movie_ticketing.service
 
-import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
-import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
 
 
 @Service
@@ -18,31 +14,29 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
     @Value("\${tmdb.api.key}")
     private lateinit var apiKey: String
 
-    @Value("\${tmdb.api.url}")
-    private val baseUrl = "https://api.themoviedb.org/3/movie/"
-
-    fun searchByQuery(query: String): List<Movie> {
-        return movieRepository.findByTitleContaining(query)
-    }
     fun retrieveMovieDetails(movieId: Int): MovieDetails {
         // URL 뒤에 language=ko-KR 을 통해 한글로 가져온다.
-        val url = "$baseUrl/$movieId?api_key=$apiKey&language=ko-KR"
+        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR"
+        println(url)
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
-//    fun searchMovies(query: String): Mono<String> {
-//        return webClient.get()
-//            .uri { uriBuilder ->
-//                uriBuilder.path("/search/movie")
-//                    .queryParam("api_key", apiKey)
-//                    .queryParam("query", query)
-//                    .build()
-//            }
-//            .retrieve()  // API 호출을 수행하고 응답을 가져옴
-//            .bodyToMono(String::class.java)  // 응답 본문을 Movie 클래스의 Flux로 변환
-//    }
 
     fun searchMovies(query: String): MovieSearchResult {
-        val uri = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
-        return restTemplate.getForObject(uri, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
+        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
+        // restTemplate.getForObject : URL로부터 객체를 가져오는 데 사용
+        // MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
+        // MovieSearchResult 타입의 객체로 변환하도록 함.
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
+        return sortMoviesByPopularity(result)
+    }
+
+    /**
+     * 검색 결과를 인기도 순으로 정렬
+     */
+    fun sortMoviesByPopularity(result: MovieSearchResult): MovieSearchResult {
+        // movies 리스트를 인기도순으로 내림차순으로 정렬
+        // 인기도가 null 이라면 가장 낮은 값으로 설정
+        val sortedMovies = result.movies.sortedByDescending { it.popularity ?: Double.MIN_VALUE }
+        return MovieSearchResult(sortedMovies)
     }
 }
