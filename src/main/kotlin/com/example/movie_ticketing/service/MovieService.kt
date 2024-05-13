@@ -17,8 +17,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
 
     fun retrieveMovieDetails(movieId: Int): MovieDetails {
         // URL 뒤에 language=ko-KR 을 통해 한글로 가져온다.
-        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR"
-        println(url)
+        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR" 
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
 
