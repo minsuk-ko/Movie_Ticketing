@@ -25,15 +25,17 @@ CREATE TABLE IF NOT EXISTS seat (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS movie (
                                      id             INT         NOT NULL AUTO_INCREMENT,
-                                     title          VARCHAR(45) NOT NULL,
-    story          VARCHAR(500)NOT NULL,
-    director       VARCHAR(200) NOT NULL,
-    actor          VARCHAR(100)NOT NULL,
-    posterUrl      TEXT        NOT NULL,
+                                     title          VARCHAR(45),
+    overview          TEXT,
+    director       VARCHAR(200),
+    actor          VARCHAR(100),
+    rating          FLOAT,
+    posterPath      TEXT ,
+    backdropPath      TEXT ,
     openDate       DATE        NOT NULL,
     runtime        VARCHAR(15) NOT NULL,
-    state          BOOLEAN,
-    isAdult        BOOLEAN,
+    --state          BOOLEAN,
+    adult        BOOLEAN,
     PRIMARY KEY (id),
     UNIQUE KEY movie_title (title));
 

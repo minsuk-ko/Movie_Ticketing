@@ -36,11 +36,13 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
     fun searchByQuery(query: String): List<Movie> {
         return movieRepository.findByTitleContaining(query) // 쿼리로 검색하는 함수 title을 매개로 받도록 리포지토리에서 선언
     }
-    fun retrieveMovieDetails(movieId: Int): MovieDetails { // 동적으로 값을 가져오는 함수
+    fun retrieveMovieDetails(movieId: Int): MovieDetails {
         // URL 뒤에 language=ko-KR 을 통해 한글로 가져온다.
-        val url = "$baseUrl/$movieId?api_key=$apiKey&language=ko-KR" // 가져오는 위치
+        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR"
+        println(url)
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
+
 //    fun searchMovies(query: String): Mono<String> {
 //        return webClient.get()
 //            .uri { uriBuilder ->
@@ -61,5 +63,29 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         val jsonInputStream: InputStream = ClassPathResource("movies.json").inputStream
         val movieResponse: MovieResponse = objectMapper.readValue(jsonInputStream)
         return movieResponse.results
+    }
+    fun parseMovies(jsonData: String): List<MovieDetails> {
+        val mapper = jacksonObjectMapper()
+        return mapper.readValue(jsonData)
+    }
+    // JSON 데이터를 받아 처리하는 메소드
+    fun importMovies(jsonData: String) {
+        val movies = parseMovies(jsonData)
+        val validMovies = movies.filter { validateMovie(it) }
+        val movieEntities = validMovies.map { it.toEntity() }
+        movieRepository.saveAll(movieEntities)
+    }
+    // DTO 유효성 검증
+    private fun validateMovie(movie: MovieDetails): Boolean {
+        if (movie.openDate < { "2000-01-01" }) {
+            return false
+        }
+        return true
+    }
+
+    private fun MovieDetails.toEntity(): Movie {
+        return Movie(
+
+        )
     }
 }
