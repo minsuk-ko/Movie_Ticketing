@@ -2,8 +2,11 @@ package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
+import com.example.movie_ticketing.dto.MovieResponse
 import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.Page
@@ -15,7 +18,11 @@ import java.io.InputStream
 
 
 @Service
-class MovieService(private val restTemplate: RestTemplate,private val webClient: WebClient,val movieRepository: MovieRepository) {
+class MovieService(private val restTemplate: RestTemplate,
+                   private val webClient: WebClient,
+                   val movieRepository: MovieRepository,
+                   private val objectMapper: ObjectMapper
+) {
     @Value("\${tmdb.api.key}")
     private lateinit var apiKey: String
 

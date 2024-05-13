@@ -1,6 +1,7 @@
 package com.example.movie_ticketing.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.fasterxml.jackson.databind.ObjectMapper
 import java.util.Date
 
 data class Genre(
@@ -21,4 +22,11 @@ data class MovieDetails(
 
 data class MovieSearchResult(
     @JsonProperty("results") val movies: List<MovieDetails>
+)
+
+data class MovieResponse(
+    val page: Int,
+    val results: List<MovieDetails>,
+    @JsonProperty("total_pages") val totalPages: Int,
+    @JsonProperty("total_results") val totalResults: Int
 )
