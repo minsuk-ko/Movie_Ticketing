@@ -32,11 +32,13 @@ class MovieService(private val restTemplate: RestTemplate,
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
 
+    /**
+     * restTemplate.getForObject : URL로부터 객체를 가져오는 데 사용
+     * MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
+     * MovieSearchResult 타입의 객체로 변환하도록 함.
+     */
     fun searchMovies(query: String): MovieSearchResult {
         val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
-        // restTemplate.getForObject : URL로부터 객체를 가져오는 데 사용
-        // MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
-        // MovieSearchResult 타입의 객체로 변환하도록 함.
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
         return sortMoviesByPopularity(result)
     }
@@ -52,7 +54,7 @@ class MovieService(private val restTemplate: RestTemplate,
     }
 
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
-    // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 movie.posterPath 하면 됨.
+    // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
     fun getBoxOffice() : MovieSearchResult {
         val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")

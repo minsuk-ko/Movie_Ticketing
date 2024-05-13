@@ -32,6 +32,10 @@ class MovieController(private val movieService: MovieService) {
             return "errorView" // 에러 시 보여줄 뷰
         }
     }
+
+    /**
+     * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
+     */
     @GetMapping("/movie")
     fun movieOffice(model: Model): String {
         val movies = movieService.getBoxOffice()
