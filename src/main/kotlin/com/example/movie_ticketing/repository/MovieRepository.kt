@@ -17,7 +17,4 @@ interface MovieRepository : JpaRepository<Movie?, Int?> {
     @Query("SELECT m.title FROM Movie m")
     fun findTitles() : List<Movie>
     fun save(movieTitle: Optional<Movie?>)
-
-    fun findByTitle(title : String)
-
 }

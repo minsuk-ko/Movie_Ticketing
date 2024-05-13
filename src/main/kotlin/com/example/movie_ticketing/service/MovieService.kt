@@ -5,6 +5,8 @@ import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
@@ -17,7 +19,7 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
 
     fun retrieveMovieDetails(movieId: Int): MovieDetails {
         // URL 뒤에 language=ko-KR 을 통해 한글로 가져온다.
-        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR" 
+        val url = "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=ko-KR"
         return restTemplate.getForObject(url, MovieDetails::class.java) ?: throw Exception("Movie not found")
     }
 
@@ -47,4 +49,5 @@ class MovieService(private val restTemplate: RestTemplate,private val webClient:
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
         return sortMoviesByPopularity(result)
     }
+
 }

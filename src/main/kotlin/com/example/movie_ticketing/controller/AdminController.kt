@@ -37,7 +37,7 @@ class AdminController(private val memberService: MemberService,
 
     // 관리자 페이지의 회원 관리
     @GetMapping("/admin/member")
-    // 한 페이지에 보여질 항목의 수 = 10
+    // 한 페이지에 보여질 항목의 수 = 5
     fun memberManagement(@PageableDefault(size = 5) pageable: Pageable, model: Model): String {
         val page: Page<Member?> = memberRepository.findAll(pageable)
         model.addAttribute("membersPage", page)
