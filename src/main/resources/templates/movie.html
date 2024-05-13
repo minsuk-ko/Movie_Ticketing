@@ -74,17 +74,7 @@
     </div>
 </div>
 
-
-<!--&lt;!&ndash; Search Form &ndash;&gt;-->
-<!--<div class="search-sorting mt-4 mx-auto w-3/4 flex justify-between items-center">-->
-<!--    <form th:action="@{/search}" method="get">-->
-<!--        <input type="text" name="query" placeholder="Search Movies" class="px-4 py-2 border rounded"> &lt;!&ndash; 이 쿼리에서 값을 참조&ndash;&gt;-->
-<!--        <button type="submit" class="px-4 py-2 border rounded">Search</button>-->
-<!--    </form>-->
-<!--</div>-->
-
-<!-- Movie Grid -->
-
+<!-- 검색 창 -->
 <div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
     <form th:action="@{/search}" method="get">
         <div class="relative flex w-full gap-2 md:w-max">
@@ -115,26 +105,55 @@
                           stroke="#CFD8DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
             </div>
-        </div>
-        <button
-                class="select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase
+            <button
+                    class="select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase
                 text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]
                 focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                type="submit">
-            Search
-        </button>
+                    type="submit">
+                Search
+            </button>
+        </div>
     </form>
 </div>
-<!-- Pagination -->
+
+<!-- 영화 LIST 보여주기 -->
+<div class="max-w-screen-xl mx-auto">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3 max-w-screen-xl">
+        <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-96">
+            <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white shadow-lg bg-clip-border rounded-xl h-80">
+                <img src="https://docs.material-tailwind.com/img/team-3.jpg" alt="profile-picture" />
+            </div>
+            <div class="p-6 text-center">
+                <h4 class="block mb-2 font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                    범죄도시
+                </h4>
+                <p class="block font-sans text-base antialiased font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
+                    CEO / Co-Founder
+                </p>
+            </div>
+            <div class="flex justify-center p-6 pt-2 gap-7">
+                <a href="#facebook"
+                   class="block font-sans text-xl antialiased font-normal leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-600 to-blue-400">
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="#twitter"
+                   class="block font-sans text-xl antialiased font-normal leading-relaxed bg-clip-text bg-gradient-to-tr from-light-blue-600 to-light-blue-400">
+                    <i class="fab fa-twitter" aria-hidden="true">
+                    </i>
+                </a>
+                <a href="#instagram"
+                   class="block font-sans text-xl antialiased font-normal leading-relaxed bg-clip-text bg-gradient-to-tr from-purple-600 to-purple-400"><i
+                        class="fab fa-instagram" aria-hidden="true">
+                </i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 영화 양식 예시 -->
 
 
-<script>
-    function handlePaginationClick(page) {
-        // Implement the logic to handle pagination.
-    }
-    function handleShiftClick(shift) {
-        // Implement the logic for shifting pages left or right.
-    }
-</script>
+
 </body>
 </html>
