@@ -41,6 +41,7 @@ class MovieController(private val movieService: MovieService) {
 
     /**
      * 영화 검색
+     * 검색 결과 MovieSearchResult 의 movies 를 view 로 보냄 (List 형식)
      */
     @GetMapping("/search")
     fun searchMovie(@RequestParam("query") query: String, model: Model): String  {
