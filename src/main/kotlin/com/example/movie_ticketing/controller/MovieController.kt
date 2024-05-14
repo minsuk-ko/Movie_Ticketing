@@ -39,9 +39,11 @@ class MovieController(private val movieService: MovieService) {
      * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
      */
     @GetMapping("/movie")
-    fun movieOffice(model: Model): String {
-        val movies = movieService.getBoxOffice()
-        model.addAttribute("movieList", movies)
+    fun movieOffice(@RequestParam(value = "page", defaultValue = "1")page:Int, model: Model): String {
+        val movies = movieService.getBoxOffice(page)
+        model.addAttribute("movies", movies.results)
+        model.addAttribute("currentPage", page)
+        model.addAttribute("totalPages", movies.total_pages)
         return "movie"
     }
 
@@ -52,7 +54,7 @@ class MovieController(private val movieService: MovieService) {
     @GetMapping("/search")
     fun searchMovie(@RequestParam("query") query: String, model: Model): String  {
         val searchResult = movieService.searchMovies(query)
-        model.addAttribute("movies", searchResult.movies)
+        model.addAttribute("movies", searchResult.results)
         return "searchResult"
     }
 
