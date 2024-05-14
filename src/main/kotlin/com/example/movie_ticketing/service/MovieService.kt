@@ -132,8 +132,7 @@ class MovieService(private val restTemplate: RestTemplate,
     }
 //무비 상태 업데이트 -> 인기수 10개 state=1
     //이거는 매달 1일마다 같이 사용하면 될듯
-    @Transactional //여러번 데이터베이스 연산떄문에 도중에 오류생기면 이상하게 바뀔 여지가 있어서
-                    //트랜잭셔널
+    @Transactional //여러번 데이터베이스 연산떄문에 도중에 오류생기면 이상하게 바뀔 여지가 있기에 사용
     fun updateMovieStates(){
         val movies =movieRepository.findAll().filterNotNull()
     //filterNotNull() => null값을 제거하고 List<Movie>를 반환 ->널이 있는 리스트를 제거

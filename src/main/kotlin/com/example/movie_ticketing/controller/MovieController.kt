@@ -2,6 +2,7 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
+import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.service.MovieService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -12,7 +13,8 @@ import reactor.core.publisher.Mono
 
 
 @Controller
-class MovieController(private val movieService: MovieService) {
+class MovieController(private val movieService: MovieService,
+                        private val movieRepository: MovieRepository) {
 
     @GetMapping("/")
     fun showMovies(model: Model): String {
@@ -23,9 +25,13 @@ class MovieController(private val movieService: MovieService) {
 
     @GetMapping("/movieInfo/{id}")
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
-        try {
+        try {val movie = movieRepository.findById(movieId)
+            var state = false
             val movieDetails = movieService.retrieveMovieDetails(movieId)
             val actors = movieService.getCast(movieId)
+            if(movie.isPresent) //Optional movie가 존재한다면!
+            {state =movie.get().state}
+            model.addAttribute("state",state)
             model.addAttribute("movieDetails", movieDetails)
             model.addAttribute("actors", actors)
             return "movieInfo" // Thymeleaf 뷰 파일 이름
