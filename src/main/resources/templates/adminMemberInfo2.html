@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>예매 조회</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        .container1 {
+            width: 80%;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+
+        select {
+            padding: 10px;
+            margin-top: 10px;
+        }
+        #navbar a {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: padding 0.3s;
+            background-color: #1f2937; /* Added for visibility on scroll */
+        }
+        nav ul li{display: inline-block;list-style-type: none;}
+        nav ul ul{display: none; background: #1f2937}
+        nav ul li:hover ul{display:block; position:absolute;}
+        nav ul ul li{width:100px; height:30px;}
+    </style>
+</head>
+<body>
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+    <div class="container mx-auto flex justify-between">
+        <div class="text-white font-bold text-2xl">
+            CINE
+        </div>
+        <div class="flex mt-2">
+            <ul>
+                <li>
+                    <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+                </li>
+                <li>
+                    <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+                </li>
+                <li>
+                    <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
+                </li>
+                <li>
+                    <a href="admin_Main.html" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container1">
+    <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+        예매 조회
+    </div>
+    <table>
+        <tr>
+            <th>예매id</th>
+            <th>영화 제목</th>
+            <th>상영관</th>
+            <th>상영일시</th>
+            <th>상영시간</th>
+            <th>좌석</th>
+            <th>예약일시</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>파도</td>
+            <td>4</td>
+            <td>2024-03-02</td>
+            <td>16:00 ~ 18:30</td>
+            <td>A-1</td>
+            <td>2024-03-01</td>
+        </tr>
+        <!-- Additional rows can be added here -->
+    </table>
+    <button type="button">1</button> <!-- Placeholder for pagination or similar functionality -->
+</div>
+</body>
+</html>
