@@ -8,6 +8,7 @@ import com.example.movie_ticketing.repository.MovieRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -66,4 +67,20 @@ class MovieService(private val restTemplate: RestTemplate,
         val movieResponse: MovieResponse = objectMapper.readValue(jsonInputStream)
         return movieResponse.results
     }
+
+    fun getTopTwoActorsForMovie(movieId: Int): List<String> {
+        val url = "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey&language=ko-KR"
+        val response = restTemplate.getForObject(url, String::class.java) ?: throw Exception("Actors not found")
+        val jsonResponse = JSONObject(response)
+        val castArray = jsonResponse.getJSONArray("cast")
+
+        val actorsList = mutableListOf<String>()
+        for (i in 0 until castArray.length()) {
+            val actor = castArray.getJSONObject(i)
+            actorsList.add(actor.getString("name"))
+        }
+
+        return actorsList.take(5)  // 이제 정상적으로 take 사용 가능
+    }
+
 }

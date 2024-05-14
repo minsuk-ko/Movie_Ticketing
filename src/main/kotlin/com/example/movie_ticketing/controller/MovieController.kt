@@ -25,7 +25,9 @@ class MovieController(private val movieService: MovieService) {
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
         try {
             val movieDetails = movieService.retrieveMovieDetails(movieId)
+            val actors = movieService.getTopTwoActorsForMovie(movieId)
             model.addAttribute("movieDetails", movieDetails)
+            model.addAttribute("actors", actors)
             return "movieInfo" // Thymeleaf 뷰 파일 이름
         } catch (e: Exception) {
             model.addAttribute("error", "Movie not found")
