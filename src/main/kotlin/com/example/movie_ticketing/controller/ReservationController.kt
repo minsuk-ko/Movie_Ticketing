@@ -101,6 +101,7 @@ class ReservationController(
             val ticket = Ticket().apply {
                 this.schedule = schedule // 스케줄 설정
                 this.seat = seat // 현재 좌석 설정
+
                 // 영화에 대한 다른 정보가 티켓에 필요하다면 여기에 추가하면 된다.
                 this.reservation=reservation  //아까 저장한 객체를 this.reservation에 다 저장
             }

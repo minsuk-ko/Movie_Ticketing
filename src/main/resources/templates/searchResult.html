@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin_Mainpage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>영화 검색결과 페이지</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+    <link href="../static/css/reservation.css" rel="stylesheet">
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
             font-weight: 400;
@@ -13,22 +14,9 @@
         .p2{font-family: "Jua", sans-serif;
             font-weight: 400;
             font-style: normal;}
-        .movie-poster {
-            width: 100%; /* 이미지의 너비를 컨테이너의 너비와 동일하게 설정 */
-            height: 100%; /* 이미지의 높이를 컨테이너의 높이와 동일하게 설정 */
-            object-fit: contain; /* 이미지가 컨테이너 내에 비율을 유지하면서 완전히 맞도록 조정 */
-            object-position: center; /* 이미지를 컨테이너의 가운데에 위치 */
-        }
-        .ellipsis {
-            white-space: nowrap; /* 텍스트를 한 줄로 설정 */
-            overflow: hidden; /* 내용이 넘칠 경우 숨김 */
-            text-overflow: ellipsis; /* 넘친 텍스트를 ...으로 표시!! */
-        }
     </style>
 </head>
-
 <body>
-
 
 <nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
@@ -52,7 +40,7 @@
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="reservation" class="flex items-center p2 text-xl">
+                    <a href= "" class="flex items-center p2 text-xl">
                         예매
                     </a>
                 </li>
@@ -74,8 +62,6 @@
     </div>
 </nav>
 
-
-<!-- 검색 창 -->
 <div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
     <form th:action="@{/search}" method="get">
         <div class="relative flex w-full gap-2 md:w-max">
@@ -116,13 +102,11 @@
         </div>
     </form>
 </div>
-
-<!-- 영화 LIST 보여주기 -->
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
-        <div th:each="movie : ${movieList.movies}">
-        <!-- 영화 하나 -->
+        <div th:each="movie : ${movies}">
+            <!-- 영화 하나 -->
             <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
                 <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
                     <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
@@ -151,6 +135,5 @@
 
 
 </div>
-
 </body>
 </html>

@@ -35,9 +35,6 @@ class MemberController(
     private val ticketRepository: TicketRepository
 ) {
 
-
-
-
     /**
      * 멤버 로그인
      * 조금 더 수정해야함
@@ -173,7 +170,7 @@ class MemberController(
         //  model.addAttribute("member", member)
 
 
-       redirectAttributes.addFlashAttribute("member", member)  // Redirect 후에도 데이터 유지
+        redirectAttributes.addFlashAttribute("member", member)  // Redirect 후에도 데이터 유지
         //redirectAttributes.addFlashAttribute() : 데이터를 Flash attribute로 저장하여 리다이렉트 후에도 일회성으로 데이터를 사용할 수 있게 한다.
         // 일회성이라 추가된 데이터는 리다이렉트된 페이지가 로드 될 때까지만 유지, 페이지 떠나면 사라짐
         // 사용 : 데이터 포함한 상태에서 리다이렉트 해야할 때 사용
