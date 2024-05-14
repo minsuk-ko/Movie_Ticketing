@@ -25,7 +25,7 @@ class MovieController(private val movieService: MovieService) {
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
         try {
             val movieDetails = movieService.retrieveMovieDetails(movieId)
-            val actors = movieService.getTopTwoActorsForMovie(movieId)
+            val actors = movieService.getCast(movieId)
             model.addAttribute("movieDetails", movieDetails)
             model.addAttribute("actors", actors)
             return "movieInfo" // Thymeleaf 뷰 파일 이름

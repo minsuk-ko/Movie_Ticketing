@@ -2,29 +2,23 @@ package com.example.movie_ticketing.domain
 
 import com.example.movie_ticketing.dto.MovieSearchResult
 import jakarta.persistence.*
+import java.time.LocalDate
 import java.util.Date
 
 @Entity
 class Movie {
-
+//나머지값들은 api에서 가져오자!
     lateinit var role:String
     lateinit var cast: String
-    lateinit var openDate: Date
-    lateinit var posterUrl: String
-    lateinit var backdropPath:String
-    //var rating: Double = 0.0
-
-    lateinit var runtime: String
-    // 초기값 true 로 설정
-
-
-    lateinit var story: String
     lateinit var title: String
 
-    // 초기값 false 로 설정
+    //인기순
+    var popularity:Double=0.0
+    //예매가능
+    var state: Boolean = false
 
-    var isAdult : Boolean = false
-
+    lateinit var openDate:LocalDate
+    var tmdbid:Int = 0
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0

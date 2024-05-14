@@ -24,3 +24,8 @@ data class CreditList(
     @JsonProperty("cast") val cast: List<CastDetails>,
     @JsonProperty("crew") val crew: List<CrewDetails>
 )
+
+data class CastName( //cast를 순서에 맞게 뽑아서 리스트에 담고 사용하기위해 만든 클래스
+
+    val name: List<String>
+)

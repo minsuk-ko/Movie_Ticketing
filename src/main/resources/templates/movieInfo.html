@@ -76,9 +76,18 @@
         </div>
       </div>
       <div class="info-box rounded p-4">
-        <h2 th:text="${actors}">배우명</h2>
-
-      </div>
+        <span>감독 :</span>
+        <span th:text="${actors.name[0]}">감독</span>
+        <br>
+        <span>배우 :</span>
+        <span th:each="name,state: ${actors.name}" th:if="${state.index>0}">
+          <span th:text="${name}">배우</span><span th:if="${!state.last}"> ,</span>
+          </span>
+      </div> <!-- th if문을통해 리스트로 받은것에서 리스트 첫번째 항목은 디렉터 두번째부터는 배우!
+            th:each의 새로운 문법 th:each = "변수명,상태변수명 :${}" 상태변수를 사용하여 인덱스/항목의 정보를 알 수 있다.
+            기본적으로 리스트의 각 항목을 name에 할당하고 state를 통해 리스트의 인덱스를 알 수 있다.\
+            감독: 변수1
+            배우: 변수2 , 변수3 , ..이런 방식-->
 
       <div class="info-box rounded p-4">
         장르: <span th:each="genre, iterStat : ${movieDetails.genres}">
@@ -86,7 +95,7 @@
                 <span th:if="${not iterStat.last}">, </span>
              </span>
 
-        / 개봉일자 : <span th:text="${#dates.format(movieDetails.openDate, 'yyyy.MM.dd')}"></span>
+        / 개봉일자 : <span th:text="${movieDetails.openDate}"></span>
       </div>
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         예매하기

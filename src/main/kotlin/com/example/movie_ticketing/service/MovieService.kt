@@ -1,10 +1,7 @@
 package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.domain.Movie
-import com.example.movie_ticketing.dto.CreditList
-import com.example.movie_ticketing.dto.MovieDetails
-import com.example.movie_ticketing.dto.MovieResponse
-import com.example.movie_ticketing.dto.MovieSearchResult
+import com.example.movie_ticketing.dto.*
 import com.example.movie_ticketing.repository.MovieRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
@@ -14,9 +11,12 @@ import org.springframework.core.io.ClassPathResource
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.reactive.function.client.WebClient
 import java.io.InputStream
+import java.time.LocalDate
+import java.util.*
 
 
 @Service
@@ -58,6 +58,7 @@ class MovieService(private val restTemplate: RestTemplate,
 
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
+    @Transactional //앞으로도 개봉일 따라서 가져올거기에 db에 저장해야함 (유저용/admin용 나눠서 해야할지도)
     fun getBoxOffice() : MovieSearchResult {
         val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
@@ -74,27 +75,37 @@ class MovieService(private val restTemplate: RestTemplate,
         val movieResponse: MovieResponse = objectMapper.readValue(jsonInputStream)
         return movieResponse.results
     }
-    fun getTopTwoActorsForMovie(movieId: Int): List<String> {
-        val url = "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey&language=ko-KR"
-        val response = restTemplate.getForObject(url, String::class.java) ?: throw Exception("Actors not found")
-        val jsonResponse = JSONObject(response)
-        val castArray = jsonResponse.getJSONArray("cast")
 
-        val actorsList = mutableListOf<String>()
-        for (i in 0 until castArray.length()) {
-            val actor = castArray.getJSONObject(i)
-            actorsList.add(actor.getString("name"))
+    fun getCast(movieId: Int): CastName {
+       val credits = findCreditList(movieId)
+        val castList = mutableListOf<String>()
+        // 디렉터 뽑기 first로 오는 디렉터만 저장후 이후는 다 저장x
+        credits.crew.firstOrNull { crew -> crew.knownForDepartment == "Directing" }?.let {
+            castList.add(it.name) //crew리스트에서 각항목의 name필드값을 castList에 추가
         }
 
-        return actorsList.take(2)  // 이제 정상적으로 take 사용 가능
-    }
+        // Acting인 cast만 저장하기
+        credits.cast.filter { cast -> cast.knownForDepartment == "Acting" }
+            .take(5)
+            .forEach { cast ->
+                castList.add(cast.name)
+            }
 
-    // movie db저장 및 배우/디렉터
+        val creditList =CastName(
+             name = castList
+        )
+
+        return creditList  // 이제 정상적으로 take 사용 가능
+    }
+    // movie 완전 저장
+// 즉, tmdbid를 기반으로 없는 영화일 경우 저장하면서 출연진과 역할들도!
+        @Transactional//여러번 데이터베이스 연산시킴 (forEach 도중에 오류나면 다시 되돌아가기 위함)
     fun savemovie(movieDetails: MovieDetails){
-        val title = movieDetails.title!! //영화 제목은 무조건 있을테니까
-        if(movieRepository.findByTitle(title).isEmpty) {
+        val tmdbid = movieDetails.id!! //영화 제목은 무조건 있을테니까
+        if(movieRepository.findByTmdbid(tmdbid).isEmpty) {
             //제목이 없을경우 리스트들 저장 실행
             val movie = convertmovie(movieDetails)
+
             println(movieDetails.id)
             val credits=findCreditList(movieDetails.id)
             val castlist = mutableListOf<String>()
@@ -106,7 +117,7 @@ class MovieService(private val restTemplate: RestTemplate,
             } // 조건에 맞는함수 하나만 반환하고 나머지는 다 무시함 즉Directing 첫번째(대부분 주요감독만 배출)
             // acting 부서에서 최대 10명만 선택
             credits.cast.filter { cast -> cast.knownForDepartment == "Acting" }
-                .take(10) //최대 10명 취하고
+                .take(5) //최대 10명 취하고
                 .forEach { cast ->  //각각의 cast리스트항목마다 추가
                     castlist.add(cast.name)
                     roleslist.add(cast.knownForDepartment)
@@ -119,15 +130,40 @@ class MovieService(private val restTemplate: RestTemplate,
             movieRepository.save(movie)
         }
     }
+//무비 상태 업데이트 -> 인기수 10개 state=1
+    //이거는 매달 1일마다 같이 사용하면 될듯
+    @Transactional //여러번 데이터베이스 연산떄문에 도중에 오류생기면 이상하게 바뀔 여지가 있어서
+                    //트랜잭셔널
+    fun updateMovieStates(){
+        val movies =movieRepository.findAll().filterNotNull()
+    //filterNotNull() => null값을 제거하고 List<Movie>를 반환 ->널이 있는 리스트를 제거
+    //그냥 널아님 !! 연산자 해도 되는데 혹시모르니까 필터로 거치고 decending
+    //원래 findall 하면 List<Movie?> 이런식으로 나옴
+        val updateMovies = movies.sortedByDescending { it.popularity }.take(10)
+        movies.forEach{it.state =false}    //전체적인 영화들 다시 state조정
+        updateMovies.forEach{it.state = true} //업데이트 하는 무비만 state=1
+
+          movieRepository.saveAll(movies)
+    }
+    //무비 openDate랑 현재 date랑 비교하는거
+    // 상영스케줄러랑 비교해서 인기순위10위지만 예매날짜 안 맞을경우에 실행 못하도록
+    fun movieCompareDate(movieId: Int):Boolean{
+        val optionalmovie = movieRepository.findByTmdbid(movieId)
+        val currentDate = LocalDate.now()
+        val movie= optionalmovie.orElseThrow{Exception("Movie not found") } //옵셔널타입 검증
+        return movie.openDate.isBefore(currentDate)
+        //오픈데이트가 현재 날짜보다 이전일경우 트루를 반환 if문안에 넣으면 될듯
+    }
+
+
+
+
+    //크레딧들을 리스트형태로 모두 가져옴
     fun findCreditList(movieId: Int): CreditList {
         val url = "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey&language=ko-KR"
         return restTemplate.getForObject(url, CreditList::class.java) ?: throw Exception("API 배우 호출 실패")
     }
 
-//  movieResponse.results.forEach { movieDetails ->
-//            val movie = convertmovie(movieDetails)
-//            movieRepository.save(movie)
-//        }// 상영관되어있는거 저장 이거 처음에 셋팅해서 json파일 불러온것들 db에 저장
 
 
     //moviedetails를 가져와서 이거를 무비타입으로 맵핑
@@ -135,15 +171,13 @@ class MovieService(private val restTemplate: RestTemplate,
         val movie = Movie() //변환을하는데  무조건 ""이나 null값이 아니어야함 즉
         // ?타입을 널이 안들어가는 것을 확신시켜야해
         //movie.tmdbid = movieDetails.id!!  영화id는 필수
-        movie.story = movieDetails.overview ?: "NO Description"//movieDetails.overview ?:  //설명없음
-        movie.isAdult =movieDetails.adult ?: false //값 없으면 미성년자관람
-        movie.openDate = movieDetails.openDate!!
-        movie.posterUrl ="https://image.tmdb.org/t/p/w500${movieDetails.posterPath}"
-        movie.backdropPath= "https://image.tmdb.org/t/p/w500${movieDetails.backdropPath}"
-        movie.title=movieDetails.title!!
-        movie.runtime=movieDetails.runtime ?: "No DATA"
+        movie.tmdbid = movieDetails.id
+        movie.title = movieDetails.title!!
+        movie.popularity = movieDetails.popularity ?: 0.0
+        movie.openDate = movieDetails.openDate ?: LocalDate.now()
         movie.cast=""
         movie.role=""
+
         return movie
     }
 

@@ -12,10 +12,6 @@ import java.util.*
 @Repository
 interface MovieRepository : JpaRepository<Movie?, Int?> {
 
-    fun findByTitleContaining(title: String): List<Movie>
-
-    @Query("SELECT m.title FROM Movie m")
-    fun findTitles() : List<Movie>
     fun save(movieTitle: Optional<Movie?>)
-    fun findByTitle(title : String):Optional<Movie>
+    fun findByTmdbid(id:Int):Optional<Movie>
 }
