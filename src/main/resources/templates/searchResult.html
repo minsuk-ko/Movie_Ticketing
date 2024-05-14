@@ -14,6 +14,11 @@
         .p2{font-family: "Jua", sans-serif;
             font-weight: 400;
             font-style: normal;}
+        .ellipsis {
+            white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+            overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+            text-overflow: ellipsis; /* 넘친 텍스트를 ...으로 표시!! */
+        }
     </style>
 </head>
 <body>
@@ -62,13 +67,32 @@
     </div>
 </nav>
 
-<h1>Movie Search Results</h1>
-<div th:each="movie : ${movies}">
-    <h2 th:text="${movie.title}">Movie Title</h2>
-    <div th:if="${movie.posterPath}">
-        <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster"/>
+<div class="max-w-screen-xl mx-auto">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
+
+        <div th:each="movie : ${movies}">
+            <!-- 영화 하나 -->
+            <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
+                <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
+                    <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
+                        <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="movie-poster" />
+                    </a>
+                </div>
+                <div class="p-6 text-center">
+                    <h4 th:text="${movie.title}" class="block mb-2 font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 ellipsis">
+                        범죄도시
+                    </h4>
+                    <p class="block font-sans text-base font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
+                        <span>평점 </span>
+                        <span th:text="${#numbers.formatDecimal(movie.rating, 1, 'COMMA', 1, 'POINT')}">평점</span>
+                    </p>
+                    <p class="block font-sans text-base font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
+                        <span>개봉일 </span>
+                        <span th:text="${#dates.format(movie.openDate, 'yyyy.MM.dd')}">개봉일</span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-    <p th:text="${movie.overview}">Movie Overview</p>
-</div>
 </body>
 </html>
