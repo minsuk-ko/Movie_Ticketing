@@ -102,7 +102,7 @@ class MovieService(private val restTemplate: RestTemplate,
         @Transactional//여러번 데이터베이스 연산시킴 (forEach 도중에 오류나면 다시 되돌아가기 위함)
     fun savemovie(movieDetails: MovieDetails){
         val tmdbid = movieDetails.id!! //영화 제목은 무조건 있을테니까
-        if(movieRepository.findByTmdbid(tmdbid).isEmpty) {
+        if(movieRepository.findById(tmdbid).isEmpty) {
             //제목이 없을경우 리스트들 저장 실행
             val movie = convertmovie(movieDetails)
 
@@ -148,10 +148,11 @@ class MovieService(private val restTemplate: RestTemplate,
     //무비 openDate랑 현재 date랑 비교하는거
     // 상영스케줄러랑 비교해서 인기순위10위지만 예매날짜 안 맞을경우에 실행 못하도록
     fun movieCompareDate(movieId: Int):Boolean{
-        val optionalmovie = movieRepository.findByTmdbid(movieId)
+        // findById가 Optional<Movie?> 이어서 Optional떼내고
+        val optionalmovie= movieRepository.findById(movieId)
         val currentDate = LocalDate.now()
-        val movie= optionalmovie.orElseThrow{Exception("Movie not found") } //옵셔널타입 검증
-        return movie.openDate.isBefore(currentDate)
+        val movie = optionalmovie.orElseThrow{Exception("Movie not found")} //optinal검증
+        return movie!!.openDate.isBefore(currentDate) //movie를 찾았으면 무조건 null이아님
         //오픈데이트가 현재 날짜보다 이전일경우 트루를 반환 if문안에 넣으면 될듯
     }
 
@@ -171,7 +172,7 @@ class MovieService(private val restTemplate: RestTemplate,
         val movie = Movie() //변환을하는데  무조건 ""이나 null값이 아니어야함 즉
         // ?타입을 널이 안들어가는 것을 확신시켜야해
         //movie.tmdbid = movieDetails.id!!  영화id는 필수
-        movie.tmdbid = movieDetails.id
+        movie.id =movieDetails.id
         movie.title = movieDetails.title!!
         movie.popularity = movieDetails.popularity ?: 0.0
         movie.openDate = movieDetails.openDate ?: LocalDate.now()

@@ -18,10 +18,8 @@ class Movie {
     var state: Boolean = false
 
     lateinit var openDate:LocalDate
-    var tmdbid:Int = 0
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id: Int = 0
+    var id: Int = 0
 
     /*
     override fun toString(): String {

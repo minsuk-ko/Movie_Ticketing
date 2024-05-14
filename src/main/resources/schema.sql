@@ -23,12 +23,11 @@ CREATE TABLE IF NOT EXISTS seat (
 -- Table `movie`.`movie`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS movie (
-    id             INT         NOT NULL AUTO_INCREMENT,
+    id             INT         NOT NULL ,
     title          VARCHAR(45) NOT NULL,
     state           BOOLEAN,
     open_date DATE NOT NULL,
      popularity DOUBLE DEFAULT 0.0,
-    tmdbid           INT         NOT NULL,
     role       TEXT     NOT NULL,
     cast          TEXT     NOT NULL,
 

@@ -13,5 +13,5 @@ import java.util.*
 interface MovieRepository : JpaRepository<Movie?, Int?> {
 
     fun save(movieTitle: Optional<Movie?>)
-    fun findByTmdbid(id:Int):Optional<Movie>
+
 }
