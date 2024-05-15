@@ -4,6 +4,7 @@ import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
+import com.example.movie_ticketing.service.EmailService
 import com.example.movie_ticketing.service.MemberService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
@@ -32,7 +33,7 @@ class MemberController(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
     private val userDetailsService: CustomUserDetailsService,
-    private val ticketRepository: TicketRepository
+    private val emailService: EmailService
 ) {
 
     /**
@@ -138,7 +139,8 @@ class MemberController(
     }
 
     @PostMapping("/addmember") //따로 페이지 안만들어도 됨.
-    fun create(@Valid form: MemberForm, result: BindingResult,redirectAttributes: RedirectAttributes, request: HttpServletRequest): String {
+    fun create(@Valid form: MemberForm,   result: BindingResult,
+               redirectAttributes: RedirectAttributes, request: HttpServletRequest): String {
         println(form)
 
         if (result.hasErrors()) {
@@ -151,6 +153,11 @@ class MemberController(
                 "패스워드가 일치하지 않습니다."
             )
             return "redirect:/join";
+        }
+
+        if (!ㄷ.verifyCode(form.email, form.code)) {
+            result.rejectValue("code", "codeIncorrect", "인증 코드가 일치하지 않습니다.")
+            return "redirect:/join"
         }
 
         val hashpassword = passwordEncoder.encode(form.password)

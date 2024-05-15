@@ -102,13 +102,12 @@
 </div>
 
 
-</div>
 
 <script>
 
   document.getElementById('joinbutton').addEventListener('submit', function(event){
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('check-password').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('check-password').value;
 
     if(password !== confirmPassword) {
       alert('비밀번호가 서로 맞지 않습니다');
