@@ -78,11 +78,11 @@
           <input type="number" name="age" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
         </div>
           <div>
-            <input type="text" name="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
+            <input type="text" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
           </div>
           <button type="button" onclick="sendCode()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
         <div>
-          <input type="text" id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
+          <input type="text" name="emailCode"  id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
         </div>
         <div>
           <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
@@ -99,8 +99,6 @@
 </div>
 
 
-</div>
-
 <script>
 
   document.getElementById('joinbutton').addEventListener('submit', function(event){
@@ -110,9 +108,6 @@
     if(password !== confirmPassword) {
       alert('비밀번호가 서로 맞지 않습니다');
       event.preventDefault(); // Prevent form submission if passwords do not match
-    } else {
-// If passwords match, allow the form to submit
-      alert("회원가입 성공");
     }
   });
 
@@ -124,22 +119,25 @@
     }
   }
 
-  function sendCode() {
-    const email = document.querySelector('input[name="email"]').value;
-    fetch('/send/mail?email=' + email, {
-      method: 'POST'
-    })
-            .then(response => response.text())
-            .then(data => {
-              alert("인증 코드가 이메일로 전송되었습니다람쥐");
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-  }
+  document.getElementById('joinbutton').addEventListener('click', function(event){
+    var name = document.getElementById('name').value;
+    var age = document.getElementById('age').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('check-password').value;
+    var emailCode = document.getElementById('email-check').value;
+
+    if(password !== confirmPassword) {
+       alert('비밀번호가 서로 맞지 않습니다');
+       event.preventDefault(); // Prevent form submission if passwords do not match
+     }
+
+    if(!name || !age || !email || !password || !confirmPassword || !emailCode) {
+      alert('모든 필드를 채워주세요');
+      event.preventDefault(); // Prevent form submission if any field is empty
+    }
+    });
+
 </script>
-
-
 </body>
-
 </html>

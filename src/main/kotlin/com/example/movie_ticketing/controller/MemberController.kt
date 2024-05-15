@@ -143,20 +143,9 @@ class MemberController(
                redirectAttributes: RedirectAttributes, request: HttpServletRequest): String {
 
         if (result.hasErrors()) {
-            return "redirect:/join";
-        }
-        if (form.password != form.confirmPassword) {
-            result.rejectValue(
-                "confirmPassword", "passwordInCorrect",
-                "패스워드가 일치하지 않습니다."
-            )
-            return "redirect:/join";
+            return "errorView";
         }
 
-        if (!emailService.verifyCode(form.email, form.code)) {
-            result.rejectValue("code", "codeIncorrect", "인증 코드가 일치하지 않습니다.")
-            return "redirect:/join"
-        }
         println(form)
 
         val hashpassword = passwordEncoder.encode(form.password)

@@ -15,9 +15,6 @@ class MemberForm {
     @NotNull(message = "나이를 입력해주세요")
     var age : Int? = 0
 
-    @NotEmpty(message = "코드를 입력해주세요")
-    var code : String = ""
-
     @NotEmpty(message = "비밀번호를 입력해주세요")
     var password : String = ""
 
