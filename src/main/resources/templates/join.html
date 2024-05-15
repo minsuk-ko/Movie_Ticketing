@@ -78,7 +78,7 @@
           <input type="number" name="age" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
         </div>
           <div>
-            <input type="text" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
+            <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
           </div>
           <button type="button" onclick="sendCode()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
         <div>
@@ -88,7 +88,7 @@
           <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
         </div>
         <div>
-          <input type="password" name="confirmPassword" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인"> <!--how to check password check -->
+          <input type="password" name="confirmPassword" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인">
         </div>
 
         <button type="submit" id="joinbutton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
@@ -99,17 +99,39 @@
 </div>
 
 
-<script>
+<script th:inline="javascript">
 
-  document.getElementById('joinbutton').addEventListener('submit', function(event){
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('check-password').value;
+  var verificationError = /*[[${verificationError}]]*/ "";
+  if (verificationError) {
+    alert(verificationError);
+  }
 
-    if(password !== confirmPassword) {
-      alert('비밀번호가 서로 맞지 않습니다');
-      event.preventDefault(); // Prevent form submission if passwords do not match
+  function sendCode() {
+    const email = document.querySelector('input[name="email"]').value;
+
+    // 이메일 입력 칸이 비어있다면 메일을 보내지 않는다
+    if (!email) {
+      return;
     }
-  });
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    // 이메일 형식이 아니라면 메일을 보내지 않는다.
+    if (!emailPattern.test(email)) {
+      return;
+    }
+
+    fetch('/send/mail?email=' + email, {
+      method: 'POST'
+    })
+            .then(response => response.text())
+            .then(data => {
+              alert("인증 코드가 이메일로 전송되었습니다람쥐");
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+  }
 
   function scrollFunction() {
     if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
@@ -129,12 +151,13 @@
 
     if(password !== confirmPassword) {
        alert('비밀번호가 서로 맞지 않습니다');
-       event.preventDefault(); // Prevent form submission if passwords do not match
+       event.preventDefault();
+      return
      }
 
     if(!name || !age || !email || !password || !confirmPassword || !emailCode) {
       alert('모든 필드를 채워주세요');
-      event.preventDefault(); // Prevent form submission if any field is empty
+      event.preventDefault();
     }
     });
 
