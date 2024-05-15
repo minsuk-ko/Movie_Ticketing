@@ -77,10 +77,10 @@
         <div>
           <input type="number" name="age" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
         </div>
-        <div>
-          <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
-        </div>
-        <button type="button" id="send-code" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
+          <div>
+            <input type="text" name="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
+          </div>
+          <button type="button" onclick="sendCode()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
         <div>
           <input type="text" id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
         </div>
@@ -94,10 +94,7 @@
         <button type="submit" id="joinbutton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
       </form>
     </div>
-    <div class="flex justify-center space-x-4 text-sm mt-4">
 
-
-    </div>
   </div>
 </div>
 
@@ -125,6 +122,20 @@
     } else {
       document.getElementById("navbar").style.padding = "2rem 0";
     }
+  }
+
+  function sendCode() {
+    const email = document.querySelector('input[name="email"]').value;
+    fetch('/send/mail?email=' + email, {
+      method: 'POST'
+    })
+            .then(response => response.text())
+            .then(data => {
+              alert("인증 코드가 이메일로 전송되었습니다람쥐");
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
   }
 </script>
 
