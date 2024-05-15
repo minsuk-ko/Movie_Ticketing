@@ -15,14 +15,14 @@ data class MovieDetails(
     @JsonProperty("backdrop_path") val backdropPath: String?,
     @JsonProperty("genres") val genres: List<Genre>?,
     @JsonProperty("overview") val overview: String?,
-    @JsonProperty("vote_average") val rating: Float?,
+    @JsonProperty("vote_average") val rating: Double?,
     @JsonProperty("release_date") val openDate: Date?,
     @JsonProperty("popularity") val popularity: Double?
 )
 
 data class MovieSearchResult(
     val page: Int,
-    val results: List<MovieDetails>,
+    @JsonProperty("results") val movies: List<MovieDetails>,
     val total_pages: Int,
     val total_results: Int
 )

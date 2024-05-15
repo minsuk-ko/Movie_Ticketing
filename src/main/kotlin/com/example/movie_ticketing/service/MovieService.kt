@@ -38,8 +38,8 @@ class MovieService(private val restTemplate: RestTemplate,
      * MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
      * MovieSearchResult 타입의 객체로 변환하도록 함.
      */
-    fun searchMovies(query: String): MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
+    fun searchMovies(query: String, page: Int): MovieSearchResult {
+        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
         return sortMoviesByPopularity(result)
     }
@@ -48,7 +48,15 @@ class MovieService(private val restTemplate: RestTemplate,
     /**
      * 검색 결과를 인기도 순으로 정렬
      */
-
+    private fun sortMoviesByPopularity(result: MovieSearchResult): MovieSearchResult {
+        val sortedMovies = result.movies.sortedByDescending { it.popularity }
+        return MovieSearchResult(
+            page = result.page,
+            movies= sortedMovies,
+            total_pages = result.total_pages,
+            total_results = result.total_results
+        )
+    }
 
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
@@ -58,31 +66,12 @@ class MovieService(private val restTemplate: RestTemplate,
         return sortMoviesByPopularity(result)
     }
 
-    private fun sortMoviesByPopularity(movieSearchResult: MovieSearchResult): MovieSearchResult {
-        val sortedResults = movieSearchResult.results.sortedByDescending { it.popularity }
-        return movieSearchResult.copy(results = sortedResults)
-    }
-
-//    fun getAllBoxOfficeMovies(page: Int): List<MovieDetails> {
-//        val allMovies = mutableListOf<MovieDetails>()
-//        var page = 1
-//
-//        while (true) {
-//            val movieSearchResult = getBoxOffice(page)
-//            if (movieSearchResult.results.isEmpty()) break
-//            allMovies.addAll(movieSearchResult.results)
-//            if (page >= movieSearchResult.total_pages) break
-//            page++
-//        }
-//
-//        return allMovies
-//    }
-
     fun getMoviesFromJson(): List<MovieDetails> {
         val jsonInputStream: InputStream = ClassPathResource("movies.json").inputStream
         val movieResponse: MovieResponse = objectMapper.readValue(jsonInputStream)
         return movieResponse.results
     }
+
     fun getTopTwoActorsForMovie(movieId: Int): List<String> {
         val url = "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey&language=ko-KR"
         val response = restTemplate.getForObject(url, String::class.java) ?: throw Exception("Actors not found")
@@ -95,6 +84,9 @@ class MovieService(private val restTemplate: RestTemplate,
             actorsList.add(actor.getString("name"))
         }
 
-        return actorsList.take(2)  // 이제 정상적으로 take 사용 가능
+
+        return actorsList.take(5)  // 이제 정상적으로 take 사용 가능
     }
+
+
 }

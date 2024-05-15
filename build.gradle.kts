@@ -49,6 +49,7 @@ dependencies {
 
     //spring security (로그인 로그아웃 설정)
     implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation("org.springframework.security:spring-security-test")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
 
     // mail support
