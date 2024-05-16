@@ -15,9 +15,13 @@
     .p2{font-family: "Jua", sans-serif;
       font-weight: 400;
       font-style: normal;}
+    .email-send-button {
+      writing-mode: horizontal-tb;
+      transform: none;
+    }
   </style>
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-100 items-center justify-center h-screen">
 
 <nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
@@ -63,48 +67,69 @@
   </div>
 </nav>
 
-<div class="min-h-screen flex items-center justify-center">
+<!-- 회원가입 form -->
+<div class="flex items-center justify-center h-full w-full">
+  <div class="bg-white p-8 rounded-lg shadow-lg max-w-sm w-full">
+    <h1 class="text-xl mb-4">회원 가입</h1>
+    <form action="/addmember" method="POST" id="signup-form">
+      <div class="mb-4">
+        <label for="name" class="block text-sm font-medium text-gray-700">이름</label>
+        <input type="text" id="name" name="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+                shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        <p id="name-error" class="text-red-500 text-xs hidden">유효한 이름을 입력하세요.</p>
+      </div>
+
+      <div class="mb-4">
+        <label for="age" class="block text-sm font-medium text-gray-700">나이</label>
+        <input type="text" id="age" name="age" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+                shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        <p id="age-error" class="text-red-500 text-xs hidden">유효한 나이를 입력하세요.</p>
+      </div>
+
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700">이메일</label>
+        <div class = "flex space-x-2">
+          <input type="email" id="email" name="email" class="mt-1 block w-4/5 px-3 py-2 border border-gray-300 rounded-md
+                    shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+          <button class="rounded bg-black py-2 px-4 items-center text-center font-sans text-xs font-bold text-white shadow-md shadow-blue-gray-500/20
+                         hover:shadow-blue-gray-500/40 focus:shadow-none active:opacity-[0.85] active:shadow-none
+                          disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none email-send-button"
+                  type="button" onclick="sendCode()">
+            전송
+          </button>
+        </div>
+        <p id="email-error" class="text-red-500 text-xs hidden">유효한 이메일 주소를 입력하세요.</p>
+      </div>
 
 
-  <!-- Login container -->
-  <div class="bg-white p-8 m-4 rounded shadow-md max-w-md w-full">
-    <div class="bg-white p-8 m-4 rounded shadow-md max-w-md w-full">
-      <h1 class="text-xl mb-4 font-bold">회원가입</h1>
-      <form action="/addmember" method="POST" id="loginForm" class="space-y-4">
-        <div>
-          <input type="text" name="name" id="name" class="w-full p-2 border border-gray-300 rounded" placeholder="이름">
-        </div>
-        <div>
-          <input type="number" name="age" id="age" class="w-full p-2 border border-gray-300 rounded" placeholder="나이">
-        </div>
-          <div>
-            <input type="email" name="email" id="email" class="w-full p-2 border border-gray-300 rounded" placeholder="이메일">
-          </div>
-          <button type="button" onclick="sendCode()" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">코드전송</button>
-        <div>
-          <input type="text" name="emailCode"  id="email-check" class="w-full p-2 border border-gray-300 rounded" placeholder="전송된 코드 입력">
-        </div>
-        <div>
-          <input type="password" name="password" id="password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호">
-        </div>
-        <div>
-          <input type="password" name="confirmPassword" id="check-password" class="w-full p-2 border border-gray-300 rounded" placeholder="비밀번호 확인">
-        </div>
+      <div class="mb-4">
+        <label for="code-check" class="block text-sm font-medium text-gray-700">전송된 코드 입력</label>
+        <input type="text" id="code-check" name="emailCode" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+                shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        <p id="code-error" class="text-red-500 text-xs hidden">입력한 코드가 일치하지 않습니다.</p>
+      </div>
 
-        <button type="submit" id="joinbutton" class="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600">회원가입</button>
-      </form>
-    </div>
+      <div class="mb-4">
+        <label for="password" class="block text-sm font-medium text-gray-700">비밀번호</label>
+        <input type="password" id="password" name="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+                shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        <p id="password-error" class="text-red-500 text-xs hidden">나중에 없앨듯.</p>
+      </div>
 
+      <div class="mb-4">
+        <label for="check-password" class="block text-sm font-medium text-gray-700">비밀번호 확인</label>
+        <input type="password" id="check-password" name="confirmPassword" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
+                shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
+        <p id="check-password-error" class="text-red-500 text-xs hidden">비밀번호가 일치하지 않습니다.</p>
+      </div>
+
+      <button type="submit" id="submit-button" class="w-full bg-blue-500 text-white px-4 py-2 rounded-md
+            hover:bg-blue-700 disabled:bg-gray-300 disabled" >제출</button>
+    </form>
   </div>
 </div>
-
-
-<script th:inline="javascript">
-
-  var verificationError = /*[[${verificationError}]]*/ "";
-  if (verificationError) {
-    alert(verificationError);
-  }
+</body>
+<script>
 
   function sendCode() {
     const email = document.querySelector('input[name="email"]').value;
@@ -133,34 +158,87 @@
             });
   }
 
-  function scrollFunction() {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      document.getElementById("navbar").style.padding = "1rem 0";
-    } else {
-      document.getElementById("navbar").style.padding = "2rem 0";
+  // 폼 요소와 필드들을 ID로 찾아 변수에 할당한다.
+  const ageInput = document.getElementById('age');  // 나이 입력 필드를 가져옴. 이하 동문
+  const emailInput = document.getElementById('email');
+  const codeInput = document.getElementById('code-check');
+  const passwordInput = document.getElementById('password');
+  const pwCheckInput = document.getElementById('check-password');
+  const submitButton = document.getElementById('submit-button');
+
+  const ageError = document.getElementById('age-error');
+  const emailError = document.getElementById('email-error');
+  const codeError = document.getElementById('code-error');
+  const pwCheckError = document.getElementById('check-password-error');
+
+  // 입력 필드의 유효성을 검사하는 함수
+  function validateInput() {
+    let valid = true; // 입력이 유효한지 판단하는 변수
+
+    // 나이가 숫자형식이 아니라면 error
+    if(!/^\d+$/.test(ageInput.value.trim()) && ageInput.value.trim() !== '') { // 숫자가 아님
+      ageError.classList.remove('hidden'); // 에러 메시지를 보여준다
+      valid = false; // 유효하지 않음
+    } else{
+      ageError.classList.add('hidden'); // 에러 메시지를 숨김
     }
+
+    // 이메일 입력 필드의 유효성 검사
+    if(!emailInput.value.includes('@')  && emailInput.value.trim() !== '') { // 이메일 필드가 '@'를 포함하지 않거나 비어있는지 확인
+      emailError.classList.remove('hidden'); // 에러 메시지를 보여준다
+      valid = false; // 유효하지 않다고 표시
+    } else{
+      emailError.classList.add('hidden'); // 에러 메시지를 숨긴다
+    }
+
+    // 비밀번호 입력 확인 유효성 검사
+    if (passwordInput.value !== pwCheckInput.value  && passwordInput.value.trim() !== '') {
+      pwCheckError.classList.remove('hidden');
+      valid = false;
+    } else {
+      pwCheckError.classList.add('hidden');
+    }
+
+    const email = emailInput.value.trim();
+    const code = codeInput.value.trim();
+
+    fetch('/verify-code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',  // 요청 본문의 콘텐츠 타입은 JSON
+      },
+      body: JSON.stringify({ // 입력한 이메일과 코드를 JSON 형태로 변환하여 요청 본문에 포함시킨다
+        email, code }),
+    })
+            .then(response => response.json()) // 응답을 JSON 형식으로 파싱!
+            .then(data => {
+              if (data.valid) {
+                codeError.classList.add('hidden');
+              } else if(codeInput.value.trim() === '') {    // 비어있을 때 error message 뜨는 것을 방지하기 위해 넣었음
+                codeError.classList.add('hidden');
+              } else {
+                codeError.classList.remove('hidden');
+                valid = false;
+              }
+              submitButton.disabled = !valid;
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              valid = false;
+              submitButton.disabled = !valid;
+            });
+
+
+    // 제출 버튼의 활성화 상태를 업데이트
+    submitButton.disabled = !valid; // 모든 입력이 유효하면 버튼을 활성화, 그렇지 않으면 비활성화
   }
 
-  document.getElementById('joinbutton').addEventListener('click', function(event){
-    var name = document.getElementById('name').value;
-    var age = document.getElementById('age').value;
-    var email = document.getElementById('email').value;
-    var password = document.getElementById('password').value;
-    var confirmPassword = document.getElementById('check-password').value;
-    var emailCode = document.getElementById('email-check').value;
-
-    if(password !== confirmPassword) {
-       alert('비밀번호가 서로 맞지 않습니다');
-       event.preventDefault();
-      return
-     }
-
-    if(!name || !age || !email || !password || !confirmPassword || !emailCode) {
-      alert('모든 필드를 채워주세요');
-      event.preventDefault();
-    }
-    });
+  // 입력 필드에서 입력이 이루어질 때마다 유효성 검사 함수를 호출
+  emailInput.addEventListener('input', validateInput);
+  ageInput.addEventListener('input', validateInput);
+  codeInput.addEventListener('input',validateInput);
+  pwCheckInput.addEventListener('input', validateInput);
+  pwCheckInput.addEventListener('input', validateInput);
 
 </script>
-</body>
 </html>
