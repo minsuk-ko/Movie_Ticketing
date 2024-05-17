@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Search Results</title>
+    <title>영화 검색</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <link href="../static/css/reservation.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/page.css" />
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
             font-weight: 400;
@@ -45,7 +46,7 @@
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="reservation" class="flex items-center p2 text-xl">
+                    <a href= "" class="flex items-center p2 text-xl">
                         예매
                     </a>
                 </li>
@@ -66,6 +67,47 @@
         </div>
     </div>
 </nav>
+
+<div class="items-center hidden gap-x-2 lg:flex ml-80 py-5">
+    <form th:action="@{/search}" method="get">
+        <div class="relative flex w-full gap-2 md:w-max">
+            <div class="relative h-10 w-full  min-w-[288px]">
+                <input type="text" placeholder="Search" name="query" required
+                       class="peer h-full w-full rounded-[7px] border border-blue-gray-200 bg-transparent
+                       px-3 py-2.5 pl-9 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder:text-blue-gray-300
+                       placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2
+                       focus:!border-blue-gray-300 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50" />
+                <label
+                        class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none
+                        !overflow-visible truncate text-[11px] font-normal leading-tight text-gray-500 transition-all before:pointer-events-none
+                        before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t
+                        before:border-l before:border-blue-gray-200 before:transition-all before:content-none after:pointer-events-none after:mt-[6.5px]
+                        after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r
+                        after:border-blue-gray-200 after:transition-all after:content-none peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75]
+                        peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent
+                        peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2
+                        peer-focus:before:!border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:!border-gray-900
+                        peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent
+                        peer-disabled:peer-placeholder-shown:text-blue-gray-500"></label>
+            </div>
+            <div class="!absolute left-3 top-[13px]">
+                <svg width="13" height="14" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9.97811 7.95252C10.2126 7.38634 10.3333 6.7795 10.3333 6.16667C10.3333 4.92899 9.84167 3.742 8.9665 2.86683C8.09133 1.99167 6.90434 1.5 5.66667 1.5C4.42899 1.5 3.242 1.99167 2.36683 2.86683C1.49167 3.742 1 4.92899 1 6.16667C1 6.7795 1.12071 7.38634 1.35523 7.95252C1.58975 8.51871 1.93349 9.03316 2.36683 9.4665C2.80018 9.89984 3.31462 10.2436 3.88081 10.4781C4.447 10.7126 5.05383 10.8333 5.66667 10.8333C6.2795 10.8333 6.88634 10.7126 7.45252 10.4781C8.01871 10.2436 8.53316 9.89984 8.9665 9.4665C9.39984 9.03316 9.74358 8.51871 9.97811 7.95252Z"
+                          fill="#CFD8DC"></path>
+                    <path d="M13 13.5L9 9.5M10.3333 6.16667C10.3333 6.7795 10.2126 7.38634 9.97811 7.95252C9.74358 8.51871 9.39984 9.03316 8.9665 9.4665C8.53316 9.89984 8.01871 10.2436 7.45252 10.4781C6.88634 10.7126 6.2795 10.8333 5.66667 10.8333C5.05383 10.8333 4.447 10.7126 3.88081 10.4781C3.31462 10.2436 2.80018 9.89984 2.36683 9.4665C1.93349 9.03316 1.58975 8.51871 1.35523 7.95252C1.12071 7.38634 1 6.7795 1 6.16667C1 4.92899 1.49167 3.742 2.36683 2.86683C3.242 1.99167 4.42899 1.5 5.66667 1.5C6.90434 1.5 8.09133 1.99167 8.9665 2.86683C9.84167 3.742 10.3333 4.92899 10.3333 6.16667Z"
+                          stroke="#CFD8DC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+            </div>
+            <button
+                    class="select-none rounded-lg bg-gray-900 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase
+                text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85]
+                focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                    type="submit">
+                Search
+            </button>
+        </div>
+    </form>
+</div>
 
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
@@ -93,6 +135,31 @@
                 </div>
             </div>
         </div>
+
+
     </div>
+    <br>
+    <div class="flex justify-center mt-4">
+        <nav class="pagination inline-flex space-x-2">
+            <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:href="@{/movie(page=${i})}"
+                       th:text="${i}"
+                       th:class="${currentPage == i} ? 'px-4 py-2 text-gray-700 bg-white border rounded-md bg-gray-300' : 'px-4 py-2 text-gray-700 bg-white border rounded-md'">
+                    </a>
+                </span>
+            <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
 </body>
 </html>

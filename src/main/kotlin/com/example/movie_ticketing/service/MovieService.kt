@@ -38,26 +38,30 @@ class MovieService(private val restTemplate: RestTemplate,
      * MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
      * MovieSearchResult 타입의 객체로 변환하도록 함.
      */
-    fun searchMovies(query: String): MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
+    fun searchMovies(query: String, page: Int): MovieSearchResult {
+        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
         return sortMoviesByPopularity(result)
     }
 
+
     /**
      * 검색 결과를 인기도 순으로 정렬
      */
-    fun sortMoviesByPopularity(result: MovieSearchResult): MovieSearchResult {
-        // movies 리스트를 인기도순으로 내림차순으로 정렬
-        // 인기도가 null 이라면 가장 낮은 값으로 설정
-        val sortedMovies = result.movies.sortedByDescending { it.popularity ?: Double.MIN_VALUE }
-        return MovieSearchResult(sortedMovies)
+    private fun sortMoviesByPopularity(result: MovieSearchResult): MovieSearchResult {
+        val sortedMovies = result.movies.sortedByDescending { it.popularity }
+        return MovieSearchResult(
+            page = result.page,
+            movies= sortedMovies,
+            total_pages = result.total_pages,
+            total_results = result.total_results
+        )
     }
 
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
-    fun getBoxOffice() : MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01"
+    fun getBoxOffice(page: Int): MovieSearchResult {
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
         return sortMoviesByPopularity(result)
     }
@@ -79,8 +83,9 @@ class MovieService(private val restTemplate: RestTemplate,
             val actor = castArray.getJSONObject(i)
             actorsList.add(actor.getString("name"))
         }
-
+ 
         return actorsList.take(5)  // 이제 정상적으로 take 사용 가능
     }
 
+ 
 }

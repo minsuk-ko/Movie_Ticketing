@@ -53,6 +53,9 @@ dependencies {
     implementation("com.sun.mail:javax.mail:1.6.2")
     implementation("org.springframework.boot:spring-boot-starter-mail:3.2.4")
 
+    testImplementation("org.springframework.security:spring-security-test")
+
+
 }
 
 allOpen {
