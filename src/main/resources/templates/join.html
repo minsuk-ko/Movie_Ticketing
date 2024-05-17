@@ -19,6 +19,9 @@
       writing-mode: horizontal-tb;
       transform: none;
     }
+    .code-input-container{
+
+    }
   </style>
 </head>
 <body class="bg-gray-100 items-center justify-center h-screen">
@@ -102,7 +105,7 @@
       </div>
 
 
-      <div class="mb-4">
+      <div class="mb-4 code-input-container">
         <label for="code-check" class="block text-sm font-medium text-gray-700">전송된 코드 입력</label>
         <input type="text" id="code-check" name="emailCode" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md
                 shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" required>
@@ -149,12 +152,38 @@
     fetch('/send/mail?email=' + email, {
       method: 'POST'
     })
-            .then(response => response.text())
-            .then(data => {
-              alert("인증 코드가 이메일로 전송되었습니다람쥐");
+            .then(response => {
+              if (response.ok) {
+                // 이메일 전송 성공 시
+                // 카운트다운 타이머 요소 생성
+                const timerElement = document.createElement('div');
+                timerElement.style.color = 'red';
+                timerElement.classList.add('countdown-timer');
+                timerElement.textContent = '3:00';
+                document.querySelector('.code-input-container').appendChild(timerElement);
+
+                // 3분 카운트다운 시작
+                let timeLeft = 180; // 3분 = 180초
+                const countdownInterval = setInterval(() => {
+                  const minutes = Math.floor(timeLeft / 60);
+                  const seconds = timeLeft % 60;
+                  timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                  if (timeLeft === 0) {
+                    // 타이머 종료
+                    clearInterval(countdownInterval);
+                    timerElement.remove();
+                  }
+
+                  timeLeft--;
+                }, 1000);
+              } else {
+                throw new Error('메일 전송에 실패했습니다.');
+              }
             })
             .catch(error => {
               console.error('Error:', error);
+              alert(error.message);
             });
   }
 
