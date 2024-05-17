@@ -19,7 +19,7 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
 ) {
     private val scheduler = Executors.newScheduledThreadPool(1)
 
-    fun starDailyTask() {
+    fun startDailyTask() {
         val initialDelay = calculateInitialDelay()
         val period = TimeUnit.DAYS.toMillis(1) // 24시간을 밀리초로 계산
 

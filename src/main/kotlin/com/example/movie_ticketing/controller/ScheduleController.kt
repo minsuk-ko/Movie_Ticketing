@@ -33,7 +33,6 @@ fun viewReservation(model: Model):String{
     // 영화별로 중복을 제거한 리스트 생성
     val uniqueMovies = schedules.map { it.movie }.distinctBy { it.id } //이래야지 리스트에는 상영하는 영화만 보임
     model.addAttribute("uniqueMovies",uniqueMovies)
-
     model.addAttribute("schedules", schedules)  // 모델에 스케줄 리스트 추가
     return "reservation"  // 타임리프를 사용하는 뷰의 이름
 

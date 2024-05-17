@@ -24,6 +24,7 @@
       opacity: 1;
     }
     .selected { background-color: #f0f0f0; }
+    .scrollable-list { max-height: 400px; overflow-y: auto; }
   </style>
 </head>
 
@@ -73,56 +74,54 @@
     </div>
   </div>
 </nav>
-
 <div class="container mx-auto p-4">
   <div class="grid grid-cols-3 gap-4">
-    <!-- 영화 목록 -->
     <div class="bg-white p-4 rounded shadow">
       <h2 class="text-xl font-bold mb-4">영화</h2>
-      <ul id="movieList" class="space-y-2">
+      <ul id="movieList" class="space-y-2 scrollable-list">
         <li th:each="movie : ${uniqueMovies}"
             th:data-movie-id="${movie.id}"
             class="cursor-pointer hover:bg-gray-200 p-2 rounded"
             th:text="${movie.title}"></li>
       </ul>
     </div>
-    <!-- 날짜 선택 -->
     <div class="bg-white p-4 rounded shadow">
       <h2 class="text-xl font-bold mb-4">날짜</h2>
-      <ul id="dateList" class="space-y-2">
-        <!-- 날짜 목록이 여기에 동적으로 추가됩니다 -->
+      <ul id="dateList" class="space-y-2 scrollable-list">
       </ul>
     </div>
-    <!-- 시간 선택 -->
     <div class="bg-white p-4 rounded shadow">
       <h2 class="text-xl font-bold mb-4">시간</h2>
-      <ul id="timeList" class="space-y-2">
-        <!-- 시간 목록이 여기에 동적으로 추가됩니다 -->
+      <ul id="timeList" class="space-y-2 scrollable-list">
       </ul>
     </div>
   </div>
 </div>
+<script th:inline="javascript">
+  /*<![CDATA[*/
+  let schedules = [[${schedules}]];
+  schedules = JSON.parse(schedules);
+  /*]]>*/
+</script>
 
 <script>
-  // 스케줄 데이터를 저장할 변수
-  let schedules = /*[[${schedules}]]*/ [];
+  document.addEventListener('DOMContentLoaded', () => {
 
-  // 영화 목록 클릭 이벤트 처리
-  document.querySelectorAll('#movieList li').forEach(movieLi => {
-    movieLi.addEventListener('click', () => {
-      const movieId = parseInt(movieLi.getAttribute('data-movie-id'), 10);
-      showDatesForMovie(movieId);
-      // 시각적 선택 효과 추가
-      document.querySelectorAll('#movieList li').forEach(li => li.classList.remove('selected'));
-      movieLi.classList.add('selected');
+    // 영화 목록 클릭 이벤트 처리
+    document.querySelectorAll('#movieList li').forEach(movieLi => {
+      movieLi.addEventListener('click', () => {
+        const movieId = movieLi.getAttribute('data-movie-id');
+        showDatesForMovie(movieId);
+        document.querySelectorAll('#movieList li').forEach(li => li.classList.remove('selected'));
+        movieLi.classList.add('selected');
+      });
     });
   });
 
-  // 영화에 대한 날짜 목록 표시
   function showDatesForMovie(movieId) {
     const dateList = document.getElementById('dateList');
-    dateList.innerHTML = '';  // 초기화
-    const dates = Array.from(new Set(schedules.filter(schedule => schedule.movie.id === movieId).map(schedule => schedule.date)));
+    dateList.innerHTML = '';
+    const dates = Array.from(new Set(schedules.filter(schedule => schedule.movie.id === parseInt(movieId)).map(schedule => schedule.date)));
 
     dates.forEach(date => {
       let li = document.createElement('li');
@@ -130,7 +129,6 @@
       li.classList.add('cursor-pointer', 'hover:bg-gray-200', 'p-2', 'rounded');
       li.addEventListener('click', () => {
         showTimesForDate(movieId, date);
-        // 시각적 선택 효과 추가
         document.querySelectorAll('#dateList li').forEach(li => li.classList.remove('selected'));
         li.classList.add('selected');
       });
@@ -138,18 +136,16 @@
     });
   }
 
-  // 영화 및 날짜에 대한 시간 목록 표시
   function showTimesForDate(movieId, date) {
     const timeList = document.getElementById('timeList');
-    timeList.innerHTML = '';  // 초기화
-    const times = schedules.filter(schedule => schedule.movie.id === movieId && schedule.date === date).map(schedule => schedule.start);
+    timeList.innerHTML = '';
+    const times = schedules.filter(schedule => schedule.movie.id === parseInt(movieId) && schedule.date === date).map(schedule => `${schedule.start} (${schedule.theater.id}관)`);
 
     times.forEach(time => {
       let li = document.createElement('li');
       li.textContent = time;
       li.classList.add('cursor-pointer', 'hover:bg-gray-200', 'p-2', 'rounded');
       li.addEventListener('click', () => {
-        // 시각적 선택 효과 추가
         document.querySelectorAll('#timeList li').forEach(li => li.classList.remove('selected'));
         li.classList.add('selected');
       });
