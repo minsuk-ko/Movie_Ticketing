@@ -21,7 +21,6 @@ class Schedule {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "schedule_id")
     val id : Int = 0
 
     override fun toString(): String {

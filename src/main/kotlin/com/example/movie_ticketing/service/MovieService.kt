@@ -59,16 +59,20 @@ class MovieService(private val restTemplate: RestTemplate,
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
     @Transactional //앞으로도 개봉일 따라서 가져올거기에 db에 저장해야함 (유저용/admin용 나눠서 해야할지도)
-    fun getBoxOffice() : MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01"
+                    //인기무비 10개씩만 저장! //현재 날짜 기준으로 한달씩 -> 매일매일 업로드 가능
+    fun getBoxOffice(currentDate: LocalDate) : MovieSearchResult {
+        val monthDate  =currentDate.plusMonths(1)
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=${currentDate}&release_date.lte=${monthDate}"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
-        result.movies.forEach {
+        val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
+        top10movie.forEach {
             movieDetails->
                     savemovie(movieDetails)
         }
 
         return sortMoviesByPopularity(result)
     }
+
 
     fun getMoviesFromJson(): List<MovieDetails> {
         val jsonInputStream: InputStream = ClassPathResource("movies.json").inputStream
@@ -130,7 +134,7 @@ class MovieService(private val restTemplate: RestTemplate,
             movieRepository.save(movie)
         }
     }
-//무비 상태 업데이트 -> 인기수 10개 state=1
+    //무비 상태 업데이트 -> 인기수 10개 state=1
     //이거는 매달 1일마다 같이 사용하면 될듯
     @Transactional //여러번 데이터베이스 연산떄문에 도중에 오류생기면 이상하게 바뀔 여지가 있기에 사용
     fun updateMovieStates(){
@@ -144,16 +148,7 @@ class MovieService(private val restTemplate: RestTemplate,
 
           movieRepository.saveAll(movies)
     }
-    //무비 openDate랑 현재 date랑 비교하는거
-    // 상영스케줄러랑 비교해서 인기순위10위지만 예매날짜 안 맞을경우에 실행 못하도록
-    fun movieCompareDate(movieId: Int):Boolean{
-        // findById가 Optional<Movie?> 이어서 Optional떼내고
-        val optionalmovie= movieRepository.findById(movieId)
-        val currentDate = LocalDate.now()
-        val movie = optionalmovie.orElseThrow{Exception("Movie not found")} //optinal검증
-        return movie!!.openDate.isBefore(currentDate) //movie를 찾았으면 무조건 null이아님
-        //오픈데이트가 현재 날짜보다 이전일경우 트루를 반환 if문안에 넣으면 될듯
-    }
+
 
 
 

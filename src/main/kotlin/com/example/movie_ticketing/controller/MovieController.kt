@@ -1,7 +1,5 @@
 package com.example.movie_ticketing.controller
 
-import com.example.movie_ticketing.domain.Movie
-import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.service.MovieService
 import org.springframework.stereotype.Controller
@@ -9,7 +7,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
-import reactor.core.publisher.Mono
+import java.time.LocalDate
 
 
 @Controller
@@ -37,7 +35,7 @@ class MovieController(private val movieService: MovieService,
             return "movieInfo" // Thymeleaf 뷰 파일 이름
         } catch (e: Exception) {
             model.addAttribute("error", "Movie not found")
-            return "errorView" // 에러 시 보여줄 뷰
+            return "error" // 에러 시 보여줄 뷰
         }
     }
 
@@ -46,7 +44,8 @@ class MovieController(private val movieService: MovieService,
      */
     @GetMapping("/movie")
     fun movieOffice(model: Model): String {
-        val movies = movieService.getBoxOffice()
+        val currentDate = LocalDate.now()
+        val movies = movieService.getBoxOffice(currentDate)
         model.addAttribute("movieList", movies)
         return "movie"
     }
