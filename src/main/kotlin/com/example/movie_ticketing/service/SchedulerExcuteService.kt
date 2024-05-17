@@ -38,12 +38,13 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
     fun createScheduleForDay(scheduleDate: LocalDate) {
         movieService.getBoxOffice(scheduleDate) //현재날짜 +30일 까지의 영화들 가져와서 확인
         val currentDate = LocalDate.now() //현재날짜꺼내기
+        val scheduleDate = currentDate.plusDays(30) //현재 날짜 + 30
         val theaters = theaterRepository.findAll()
         val top10 = movieRepository.findTop10ByStateTrueAndOpenDateBeforeOrderByPopularityDesc(scheduleDate)
         //select * from movie where state = true and open_date<'date' oreder by popularity desc limit 10;
         // 즉 무비리스트 10개 제한걸고 스테이트랑 오픈데이트 비교해서 가져오는 거
         // state가 1인거만 가져오면 open_date가 현재날짜 이후인 경우가 있을 수 있음!
-        val scheduleDate = currentDate.plusDays(30) //현재 날짜 + i
+
         movieService.updateMovieStates()// 인기순위 10개 state=1
 
 
