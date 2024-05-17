@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Admin_Mainpage</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="../styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
   <style>
+    .p1{font-family : "Black Han Sans", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
+    .p2{font-family: "Jua", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
     #navbar a {
       font-weight: bold;
       font-size: 18px;
@@ -52,9 +59,7 @@
       text-align: center;
       background: #444444;
       color: white;
-
     }
-
 
     .link {
       padding: 20px;
@@ -63,31 +68,61 @@
       color: white;
       transition: background 0.3s;
     }
+
+    .delete-button {
+      background-color: #007bff;
+      color: #ffffff; /* 흰색 글자 */
+      border: none; /* 테두리 제거 */
+      padding: 10px 20px; /* 상하 10px, 좌우 20px 패딩 */
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      border-radius: 0px; /* 네모난 모양 */
+    }
+
   </style>
 </head>
-
 <body>
-<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
-  <div class="container mx-auto flex justify-between">
-    <div class="text-white font-bold text-2xl">
+<nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+        bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
+  <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
+    <a href="/"
+       class="mr-4 block cursor-pointer py-1 p1 font-medium text-2xl">
       CINE
-    </div>
-    <div class="flex mt-2">
-      <ul>
-        <li>
-          <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+    </a>
+    <div class="black justify-end ">
+      <ul class="flex flex-row gap-2 mb-0 mt-0 flex-row items-center gap-6">
+        <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+          </svg>
+          <a href="movie" class="flex items-center p2 text-xl">
+            영화
+          </a>
         </li>
-        <li>
-          <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-        </li>
-        <li>
-          <a href="login.html" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
-        </li>
-        <li>
-          <a href="#" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
-
+        <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+          </svg>
+          <a href="reservation" class="flex items-center p2 text-xl">
+            예매
+          </a>
         </li>
       </ul>
+    </div>
+    <div class="flex items-center gap-x-1">
+      <a href="login"
+         class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>로그인</span>
+      </a>
+      <a href="mypage1"
+         class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
+         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>마이페이지</span>
+      </a>
     </div>
   </div>
 </nav>
@@ -95,7 +130,7 @@
 <div id="cinema_main">
   <div class="sidebar">
 
-    <a id="member" href="#" class="link">회원 관리</a>
+    <a id="member" href="/admin/member" class="link">회원 관리</a>
     <a href="#" class="link">영화 관리</a>
     <a href="#" class="link">상영관 관리</a>
 
@@ -109,52 +144,72 @@
         <table class="w-full text-sm text-left text-gray-500">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50">
           <tr>
-            <th scope="col" class="py-3 px-6">ID</th>
-            <th scope="col" class="py-3 px-6">Name</th>
-            <th scope="col" class="py-3 px-6">Status</th>
-            <th scope="col" class="py-3 px-6">Role</th>
+            <th scope="col" class="py-4 px-6">회원 ID</th>
+            <th scope="col" class="py-4 px-6">Email</th>
+            <th scope="col" class="py-4 px-6">이름</th>
+            <th scope="col" class="py-4 px-6">권한</th>
           </tr>
           </thead>
           <tbody>
-          <!-- Repeat for each row -->
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">1</td>
-            <td class="py-4 px-6">Name 1</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">2</td>
-            <td class="py-4 px-6">오건</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">3</td>
-            <td class="py-4 px-6">Name 3</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">4</td>
-            <td class="py-4 px-6">Name 4</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">5</td>
-            <td class="py-4 px-6">Name 5</td>
-            <td class="py-4 px-6">Active</td>
-            <td class="py-4 px-6">Member</td>
+          <tr th:each="member : ${membersPage}">
+            <td th:text="${member.id}">ID</td>
+            <td th:text="${member.email}">Email</td>
+            <td th:text="${member.name}">Name</td>
+            <td th:text="${member.role}">role</td>
+            <td><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
+            <button class="delete-button" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+            <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
+                th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
+                사실상 onclick="deleteMember(-->
+            </td>
           </tr>
 
-          <!-- Repeat above tr for the number of rows you need -->
           </tbody>
         </table>
-        <div class="flex justify-between border-t mt-4 pt-4">
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Previous</a>
-          1 | 2 | 3 | 4 | ......
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Next</a>
+
+        <!-- Paging 처리 -->
+        <div class="flex items-center gap-4 justify-center">
+          <!-- 이전 버튼 "←" -->
+          <a th:href="@{/admin/member(page=${membersPage.number - 1}, size=${membersPage.size})}"
+             class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
+             uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
+             disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+            <!-- svg : 웹 페이지에 벡터 이미지 추가. -->
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                 aria-hidden="true" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"></path>
+            </svg>
+
+          </a>
+
+          <!-- 페이지 숫자 ex : "1" -->
+          <!-- flex 컨테이너 :  CSS의 박스 레이아웃 모델. 화면 크기와 디스플레이 유형에 맞춰 동적으로 조절될 수 있도록 해준다. -->
+          <div class="flex items-center gap-2">
+            <a th:each="pageNum : ${#numbers.sequence(0, membersPage.totalPages - 1)}"
+               th:href="@{/admin/member(page=${pageNum}, size=${membersPage.size})}"
+               th:text="${pageNum + 1}"
+               th:class="${pageNum == membersPage.number} ? 'flex items-center justify-center relative h-10 w-10 ' +
+             'select-none rounded-lg bg-gray-900 font-sans text-xs font-medium uppercase text-white ' +
+             'shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 ' +
+             'focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none ' +
+             'disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none' :
+             'inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900 ' +
+             'uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 ' +
+             'active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline'">
+            </a>
+          </div>
+
+          <!-- 다음 버튼 "→" -->
+          <a th:href="@{/admin/member(page=${membersPage.number + 1}, size=${membersPage.size})}"
+             class="inline-flex items-center gap-2 px-6 py-3 font-sans text-xs font-bold text-center text-gray-900
+             uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20
+             disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none no-underline">
+
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                 aria-hidden="true" class="w-4 h-4">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
@@ -162,5 +217,16 @@
 
   </div>
 </div>
+
+<script>
+  function deleteMember(memberId) {
+    // confirm 함수를 사용하여 사용자에게 확인 요청
+    //
+    if (confirm('해당 회원을 탈퇴시키겠습니까?')) {
+      // 사용자가 '예'를 선택한 경우, 회원 탈퇴 처리를 위해 URL로 요청을 보냄 =>GETMAPPING
+      window.location.href = '/admin/member/' + memberId;
+    }
+  }
+</script>
 </body>
 </html>

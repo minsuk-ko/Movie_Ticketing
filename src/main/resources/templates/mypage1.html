@@ -6,42 +6,63 @@
   <title>Member Page</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="../static/css/mypage1.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
   <style>
     nav ul li{display: inline-block;}
     ul,li{list-style-type:none;}
     nav ul ul{display: none; background: #1f2937}
     nav ul li:hover ul{display:block; position:absolute;}
     nav ul ul li{width:100px; height:30px;}
+    .p1{font-family : "Black Han Sans", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
+    .p2{font-family: "Jua", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
   </style>
 
 </head>
-<body class="bg-gray-100">
-<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
-  <div class="container mx-auto flex justify-between">
-    <div class="text-white font-bold text-2xl">
-      <a href="/">CINE</a>
-    </div>
-    <div class="flex mt-2">
-      <ul>
-        <li>
-          <a href="movie.html" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+<body>
+<nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+        bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
+  <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
+    <a href="/"
+       class="mr-4 block cursor-pointer py-1 p1 font-medium text-2xl">
+      CINE
+    </a>
+    <div class="black justify-end ">
+      <ul class="flex flex-row gap-2 mb-0 mt-0 flex-row items-center gap-6">
+        <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+          </svg>
+          <a href="movie" class="flex items-center p2 text-xl">
+            영화
+          </a>
         </li>
-        <li>
-          <a href="reservation.html" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-        </li>
-        <li>
-          <a href="logout" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
-        </li>
-        <li>
-          <a href="#" class="text-gray-200 text-sm hover:text-white">마이페이지</a>
-          <ul>
-            <li><a href = '#' class="text-gray-150 text -sm  hover:text-white">내 정보변경</a></li>
-            <li><a href = 'mypage2' class = "text-gray-150 text -sm  hover:text-white">예매 조회 </a></li>
-          </ul>
-
+        <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+          </svg>
+          <a href="reservation" class="flex items-center p2 text-xl">
+            예매
+          </a>
         </li>
       </ul>
+    </div>
+    <div class="flex items-center gap-x-1">
+      <a href="login"
+         class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>로그인</span>
+      </a>
+      <a href="mypage1"
+         class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
+         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>마이페이지</span>
+      </a>
     </div>
   </div>
 </nav>

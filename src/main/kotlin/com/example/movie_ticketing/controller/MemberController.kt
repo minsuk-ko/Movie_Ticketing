@@ -2,7 +2,9 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
+import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
+import com.example.movie_ticketing.service.EmailService
 import com.example.movie_ticketing.service.MemberService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
@@ -26,15 +29,12 @@ import java.security.Principal
 
 @Controller
 class MemberController(
-
     private val memberService: MemberService,
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
-    private val userDetailsService: CustomUserDetailsService
+    private val userDetailsService: CustomUserDetailsService,
+    private val emailService: EmailService
 ) {
-
-
-
 
     /**
      * 멤버 로그인
@@ -128,6 +128,7 @@ class MemberController(
 
 
 
+
     /**
      * 회원가입 페이지로 이동
      */
@@ -138,20 +139,21 @@ class MemberController(
     }
 
     @PostMapping("/addmember") //따로 페이지 안만들어도 됨.
-    fun create(@Valid form: MemberForm, result: BindingResult,redirectAttributes: RedirectAttributes, request: HttpServletRequest): String {
-        println(form)
+    fun create(@Valid form: MemberForm,   result: BindingResult,
+               redirectAttributes: RedirectAttributes, request: HttpServletRequest, model: Model): String {
 
         if (result.hasErrors()) {
-            return "redirect:/join";
+            model.addAttribute("memberForm", form)
+            return "join";
         }
-        println(form)
-        if (form.password != form.confirmPassword) {
-            result.rejectValue(
-                "confirmPassword", "passwordInCorrect",
-                "패스워드가 일치하지 않습니다."
-            )
-            return "redirect:/join";
+
+        val enteredCode = form.emailCode
+
+        if (!emailService.verifyCode(form.email, enteredCode)) {
+            model.addAttribute("verificationError", "Code does not match.")
+            return "join"
         }
+
 
         val hashpassword = passwordEncoder.encode(form.password)
         // member 객체 생성
@@ -170,7 +172,7 @@ class MemberController(
         //  model.addAttribute("member", member)
 
 
-       redirectAttributes.addFlashAttribute("member", member)  // Redirect 후에도 데이터 유지
+        redirectAttributes.addFlashAttribute("member", member)  // Redirect 후에도 데이터 유지
         //redirectAttributes.addFlashAttribute() : 데이터를 Flash attribute로 저장하여 리다이렉트 후에도 일회성으로 데이터를 사용할 수 있게 한다.
         // 일회성이라 추가된 데이터는 리다이렉트된 페이지가 로드 될 때까지만 유지, 페이지 떠나면 사라짐
         // 사용 : 데이터 포함한 상태에서 리다이렉트 해야할 때 사용
@@ -189,27 +191,29 @@ class MemberController(
          폼에서 데이터 제출하면 시큐리티에서 이 요청을 가로채서 받은 데이터를 바탕으로 인증 객체 생성후
          이 객체의 유효성을 확인 후 인증성공시키는 과정(로그인되는 과정)
          자동 로그인은 수동으로 실행 시켜야함
-         */
-        //(폐기 원래는 인증객체 생성후 검사해주는 매니저 생성 그리고 검사한 결과를 컨텍스트에 저장이었음)
-        // 즉 원래는 값을 넣은 객체생성후 이 값들을 검증해주는 매니저를 생성후 유효하면 인증된 객체로 변환하는 과정
-        //인증객체 생성 UsernamePasswordAuthenticationToken은 Authentication의 구현체
-        //아직 이 객체가 유효한지 모름 (로그인 실행전)
-        // val authentication = authenticationManager.authenticate(auth) //인증시도
-        //인증 과정을 시도하여 인증이 성공할시 Authentication 객체를 반환하고 그걸 변수에 저장
-        //인증 안되면  AuthenticationException 예외 발생
-        // SecurityContextHolder.getContext().authentication =authentication //인증된 정보 저장
-        // SecurityContextHolder이거를 통해서
-        // SecurityContext에 사용자의 정보 저장함
-        //여기에 정보를 저장하면 시큐리티가 사용자가 인증 되었다는 거로 판단되어서
-        //요청에 대한 접근제어 수행 ( 로그인완)
+        (폐기 원래는 인증객체 생성후 검사해주는 매니저 생성 그리고 검사한 결과를 컨텍스트에 저장이었음)
+         즉 원래는 값을 넣은 객체생성후 이 값들을 검증해주는 매니저를 생성후 유효하면 인증된 객체로 변환하는 과정
+        인증객체 생성 UsernamePasswordAuthenticationToken은 Authentication의 구현체
+        아직 이 객체가 유효한지 모름 (로그인 실행전)
+         val authentication = authenticationManager.authenticate(auth) //인증시도
+        인증 과정을 시도하여 인증이 성공할시 Authentication 객체를 반환하고 그걸 변수에 저장
+        인증 안되면  AuthenticationException 예외 발생
+         SecurityContextHolder.getContext().authentication =authentication //인증된 정보 저장
+         SecurityContextHolder이거를 통해서
+         SecurityContext에 사용자의 정보 저장함
+        여기에 정보를 저장하면 시큐리티가 사용자가 인증 되었다는 거로 판단되어서
+        요청에 대한 접근제어 수행 ( 로그인완)
+        */
 
-        //2번째 방식 인증을 건너뛰고 인증된 것으로 간주해서 바로 객체를 가져오는 방식
-        // 로그인하는 멤버의 정보를 가져오게 loadByUsername을 사용하고 불러온 것을 userdetails객체에저장
+
         val userDetails = userDetailsService.loadUserByUsername(member.email!!)
-        //Username뭐시기 토큰은 (principal,credentials,authorities) 이렇게 값을 넣어야함
-        //principal = userdetails 객체로 사용자 정보
-        //credentials = 주로 사용자의 비번을 의미= 메모리에 비번 보관 피하기위해 null로 설정
-        //authorities = 사용자가 가진권한( ex :일반유저 or admin)
+        /**
+         * 2번째 방식 인증을 건너뛰고 인증된 것으로 간주해서 바로 객체를 가져오는 방식
+         * 로그인하는 멤버의 정보를 가져오게 loadByUsername을 사용하고 불러온 것을 userdetails객체에저장
+         * Username뭐시기 토큰은 (principal,credentials,authorities) 이렇게 값을 넣어야함
+         * principal = userdetails 객체로 사용자 정보
+         * credentials = 주로 사용자의 비번을 의미= 메모리에 비번 보관 피하기위해 null로 설정
+         * authorities = 사용자가 가진권한( ex :일반유저 or admin)*/
         val authentication = UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
         println(authentication.name)
         SecurityContextHolder.getContext().authentication = authentication
