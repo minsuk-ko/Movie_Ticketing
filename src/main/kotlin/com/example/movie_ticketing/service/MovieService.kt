@@ -83,10 +83,9 @@ class MovieService(private val restTemplate: RestTemplate,
             val actor = castArray.getJSONObject(i)
             actorsList.add(actor.getString("name"))
         }
-
-
+ 
         return actorsList.take(5)  // 이제 정상적으로 take 사용 가능
     }
 
-
+ 
 }
