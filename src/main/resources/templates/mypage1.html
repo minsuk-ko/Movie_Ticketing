@@ -181,38 +181,17 @@
       alert('비밀번호를 입력하세요.');
       return;
     }
-/* 잘 안됨 보류
-    // 비밀번호를 서버에 전송하여 회원 탈퇴 시도
-    //fetch함수를 통해서 redirection을 처리하기에 서버에서 반환한 return "redirect:/logout"
-    //이런 코드가 직접적으로 코드에 영향을 미치지 않음 어렵노
-    fetch('/delete-member', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: `password=${password}`
-    })      //fetch url에서 만약 redirect가 됐으면
-            .then(response => { // response redirect 동작해서 알림울림
-              if (response.redirected) {
-                if(response.url == "/mypage1") {
-                 alert("비밀번호가 일치하지 않습니다.")
-                  window.location.href = response.url;
-                }else {
-                  // 회원 탈퇴가 성공한 경우
-                  alert('회원탈퇴가 완료되었습니다.');
-                  window.location.href = response.url;
-                  //postMapping을 통해서 받은 return url을 사용
-                }
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-
- */
-
-
   }
+
+  // 마이페이지 메뉴 Dropdown
+  document.getElementById("menuButton").addEventListener("click", function() {
+      const dropdownMenu = document.getElementById("dropdownMenu");
+      if(dropdownMenu.classList.contains("hidden")) {
+          dropdownMenu.classList.remove("hidden");
+      } else {
+          dropdownMenu.classList.add("hidden");
+      }
+  });
 </script>
 
 </body>

@@ -133,6 +133,15 @@
       document.getElementById("navbar").style.padding = "2rem 0";
     }
   }
+    // 마이페이지 메뉴 Dropdown
+    document.getElementById("menuButton").addEventListener("click", function() {
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        if(dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.remove("hidden");
+        } else {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
 </script>
 </body>
 </html>
