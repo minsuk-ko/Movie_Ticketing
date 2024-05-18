@@ -4,6 +4,7 @@ import com.example.movie_ticketing.domain.Schedule
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ScheduleRepository
 import com.example.movie_ticketing.repository.TheaterRepository
+import org.springframework.web.bind.annotation.RequestParam
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
@@ -36,7 +37,7 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
     }
 
     fun createScheduleForDay(scheduleDate: LocalDate) {
-        movieService.getBoxOffice(scheduleDate) //현재날짜 +30일 까지의 영화들 가져와서 확인
+     //   movieService.getBoxOffice(scheduleDate, ) //현재날짜 +30일 까지의 영화들 가져와서 확인
         val currentDate = LocalDate.now() //현재날짜꺼내기
         val scheduleDate = currentDate.plusDays(30) //현재 날짜 + 30
         val theaters = theaterRepository.findAll()

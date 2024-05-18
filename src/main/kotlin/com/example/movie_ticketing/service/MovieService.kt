@@ -65,14 +65,15 @@ class MovieService(private val restTemplate: RestTemplate,
                     //인기무비 10개씩만 저장! //현재 날짜 기준으로 한달씩 -> 매일매일 업로드 가능
     fun getBoxOffice(currentDate: LocalDate,page: Int) : MovieSearchResult {
         val monthDate  =currentDate.plusMonths(1)
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=${currentDate}&release_date.lte=${monthDate}"
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
-        val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
-        top10movie.forEach {
-            movieDetails->
-                    savemovie(movieDetails)
-        }
+        if(page ==1) { //1 페이지 인기순위만 가져옴 다른거 필요 x
+            val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
 
+            top10movie.forEach { movieDetails ->
+                savemovie(movieDetails)
+            }
+        }
         return sortMoviesByPopularity(result)
     }
 
@@ -111,7 +112,6 @@ class MovieService(private val restTemplate: RestTemplate,
         if(movieRepository.findById(tmdbid).isEmpty) {
             //제목이 없을경우 리스트들 저장 실행
             val movie = convertmovie(movieDetails)
-
             println(movieDetails.id)
             val credits=findCreditList(movieDetails.id)
             val castlist = mutableListOf<String>()

@@ -43,12 +43,10 @@ class MovieController(private val movieService: MovieService,
      * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
      */
     @GetMapping("/movie")
-    fun movieOffice(model: Model): String {
-        val currentDate = LocalDate.now()
-        val movies = movieService.getBoxOffice(currentDate)
-        model.addAttribute("movieList", movies)
     fun movieOffice(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
-        val movies = movieService.getBoxOffice(page)
+
+        val currentDate = LocalDate.now()
+        val movies = movieService.getBoxOffice(currentDate,page)
         model.addAttribute("movies", movies.movies)
         model.addAttribute("currentPage", page)
         model.addAttribute("totalPages", movies.total_pages)
