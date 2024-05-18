@@ -35,7 +35,7 @@ class MovieController(private val movieService: MovieService,
             return "movieInfo" // Thymeleaf 뷰 파일 이름
         } catch (e: Exception) {
             model.addAttribute("error", "Movie not found")
-            return "error" // 에러 시 보여줄 뷰
+            return "errorView" // 에러 시 보여줄 뷰
         }
     }
 
@@ -47,6 +47,11 @@ class MovieController(private val movieService: MovieService,
         val currentDate = LocalDate.now()
         val movies = movieService.getBoxOffice(currentDate)
         model.addAttribute("movieList", movies)
+    fun movieOffice(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val movies = movieService.getBoxOffice(page)
+        model.addAttribute("movies", movies.movies)
+        model.addAttribute("currentPage", page)
+        model.addAttribute("totalPages", movies.total_pages)
         return "movie"
     }
 
@@ -55,9 +60,11 @@ class MovieController(private val movieService: MovieService,
      * 검색 결과 MovieSearchResult 의 movies 를 view 로 보냄 (List 형식)
      */
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String, model: Model): String  {
-        val searchResult = movieService.searchMovies(query)
+    fun searchMovie(@RequestParam("query") query: String, @RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val searchResult = movieService.searchMovies(query, page)
         model.addAttribute("movies", searchResult.movies)
+        model.addAttribute("currentPage", page)
+        model.addAttribute("totalPages", searchResult.total_pages)
         return "searchResult"
     }
 

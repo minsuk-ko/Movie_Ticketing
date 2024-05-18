@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영화 검색결과 페이지</title>
+    <title>영화 검색</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <link href="../static/css/reservation.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/page.css" />
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
             font-weight: 400;
@@ -14,6 +15,11 @@
         .p2{font-family: "Jua", sans-serif;
             font-weight: 400;
             font-style: normal;}
+        .ellipsis {
+            white-space: nowrap; /* 텍스트를 한 줄로 설정 */
+            overflow: hidden; /* 내용이 넘칠 경우 숨김 */
+            text-overflow: ellipsis; /* 넘친 텍스트를 ...으로 표시!! */
+        }
     </style>
 </head>
 <body>
@@ -102,6 +108,7 @@
         </div>
     </form>
 </div>
+
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
@@ -130,10 +137,29 @@
         </div>
 
 
-
     </div>
-
-
+    <br>
+    <div class="flex justify-center mt-4">
+        <nav class="pagination inline-flex space-x-2">
+            <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:href="@{/movie(page=${i})}"
+                       th:text="${i}"
+                       th:class="${currentPage == i} ? 'px-4 py-2 text-gray-700 bg-white border rounded-md bg-gray-300' : 'px-4 py-2 text-gray-700 bg-white border rounded-md'">
+                    </a>
+                </span>
+            <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+        </nav>
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
 </body>
 </html>

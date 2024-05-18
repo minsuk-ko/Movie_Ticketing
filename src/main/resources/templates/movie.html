@@ -2,9 +2,10 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin_Mainpage</title>
+    <title>영화 목록</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/css/page.css" />
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
@@ -121,8 +122,8 @@
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
-        <div th:each="movie : ${movieList.movies}">
-        <!-- 영화 하나 -->
+        <div th:each="movie : ${movies}">
+            <!-- 영화 하나 -->
             <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
                 <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
                     <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
@@ -147,10 +148,26 @@
 
 
 
+
     </div>
 
 
 </div>
+<br>
+<div class="flex justify-center mt-4">
+    <nav class="pagination inline-flex space-x-2">
+        <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:href="@{/movie(page=${i})}"
+                       th:text="${i}"
+                       th:class="${currentPage == i} ? 'px-4 py-2 text-gray-700 bg-white border rounded-md bg-gray-300' : 'px-4 py-2 text-gray-700 bg-white border rounded-md'">
+                    </a>
+                </span>
+        <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+    </nav>
+</div>
+
+
 
 </body>
 </html>
