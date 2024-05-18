@@ -43,6 +43,8 @@ class AdminController(private val memberService: MemberService,
         model.addAttribute("membersPage", page)
         return "adminMember"
     }
+    // 관리자 페이지의 회원 관리
+
 
     //임시 페이지 회원 누르면 여기링크 들어감
     @GetMapping("/admin/memberinfo/{id}")

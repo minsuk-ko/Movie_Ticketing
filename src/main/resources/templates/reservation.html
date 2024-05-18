@@ -30,7 +30,6 @@
 
 
 <body class="bg-gray-100 text-gray-900">
-
 <nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
   <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
@@ -59,17 +58,28 @@
         </li>
       </ul>
     </div>
-    <div class="flex items-center gap-x-1">
-      <a href="login"
+    <div class="flex items-center gap-x-1" >
+      <a href="login" sec:authorize="isAnonymous"
          class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
          hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
         <span>로그인</span>
       </a>
-      <a href="mypage1"
+      <a href="logout" sec:authorize="isAuthenticated"
+         class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>로그아웃</span>
+      </a>
+      <a href="/user/mypage1" sec:authorize="hasRole('ROLE_USER')"
          class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
          text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
          active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
         <span>마이페이지</span>
+      </a>
+      <a href="/admin/member" sec:authorize="hasRole('ROLE_ADMIN')"
+         class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
+         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>관리자페이지</span>
       </a>
     </div>
   </div>

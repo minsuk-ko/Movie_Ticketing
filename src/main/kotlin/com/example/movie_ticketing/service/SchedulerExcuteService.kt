@@ -50,7 +50,7 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
         //select * from movie where state = true and open_date<'date' oreder by popularity desc limit 10;
         // 즉 무비리스트 10개 제한걸고 스테이트랑 오픈데이트 비교해서 가져오는 거
         // state가 1인거만 가져오면 open_date가 현재날짜 이후인 경우가 있을 수 있음!
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=${scheduleDate}"
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=${scheduleDate}&include_adult=false&vote_average.gte=1"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
 
         val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)

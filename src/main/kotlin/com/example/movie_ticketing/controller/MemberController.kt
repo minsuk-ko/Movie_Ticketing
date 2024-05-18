@@ -52,8 +52,8 @@ class MemberController(
     /**
      * 마이페이지 (내정보 / 비밀번호 변경 / 탈퇴)
      */
-    @PreAuthorize("isAuthenticated()") //로그인 했을때
-    @GetMapping("/mypage1")
+    //@PreAuthorize("isAuthenticated()") //로그인 했을때
+    @GetMapping("/user/mypage1")
     fun mypage(auth: Authentication,model: Model): String {
         // Authentication 객체에서 UserDetails를 추출하고
         // 이를 통해 username (이메일)을 얻음 기본적으로 Spring security
@@ -72,7 +72,7 @@ class MemberController(
         model.addAttribute("member",member)
 
 
-        return "mypage1.html"
+        return "mypage1"
     }
 
     @PostMapping("/update-password")
@@ -99,7 +99,7 @@ class MemberController(
          * 그래서 데이터 변경이나 그런걸 처리한 후에는 redirect로
          */
 
-        return "redirect:/mypage1"
+        return "redirect:/user/mypage1"
 
 
     }
@@ -114,7 +114,7 @@ class MemberController(
         if (!passwordEncoder.matches(password, member.password)) {
             // 비밀번호가 일치하지 않는 경우
            // 다시 본래페이지로
-            return "redirect:/mypage1"
+            return "redirect:/user/mypage1"
         }
 
 
@@ -135,7 +135,7 @@ class MemberController(
     @GetMapping("/join")
     fun createForm(): String {
 
-        return "join2"
+        return "join"
     }
 
     @PostMapping("/addmember") //따로 페이지 안만들어도 됨.

@@ -111,17 +111,22 @@
         </li>
       </ul>
     </div>
-    <div class="flex items-center gap-x-1">
-      <a href="login"
+    <div class="flex items-center gap-x-1" >
+      <a href="login" sec:authorize="isAnonymous"
          class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
          hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
         <span>로그인</span>
       </a>
-      <a href="mypage1"
+      <a href="logout" sec:authorize="isAuthenticated"
+         class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+        <span>로그아웃</span>
+      </a>
+      <a href="/admin/admin" sec:authorize="hasRole('ROLE_ADMIN')"
          class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
          text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
          active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-        <span>마이페이지</span>
+        <span>관리자페이지</span>
       </a>
     </div>
   </div>
@@ -130,7 +135,7 @@
 <div id="cinema_main">
   <div class="sidebar">
 
-    <a href="adminMember.html" class="link">회원 관리</a>
+    <a href="adminMember" class="link">회원 관리</a>
     <a href="#" class="link">영화 관리</a>
     <a href="#" class="link">상영관 관리</a>
 
