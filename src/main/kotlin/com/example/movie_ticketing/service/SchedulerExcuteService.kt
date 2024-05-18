@@ -1,10 +1,13 @@
 package com.example.movie_ticketing.service
 
 import com.example.movie_ticketing.domain.Schedule
+import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ScheduleRepository
 import com.example.movie_ticketing.repository.TheaterRepository
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.client.RestTemplate
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
@@ -16,8 +19,12 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
                               private val movieRepository: MovieRepository,
                               private val theaterRepository: TheaterRepository,
                               private val movieService: MovieService,
-                             private val scheduleService: ScheduleService
+                             private val scheduleService: ScheduleService,
+                              private val restTemplate: RestTemplate
 ) {
+    @Value("\${tmdb.api.key}")
+    private lateinit var apiKey: String
+
     private val scheduler = Executors.newScheduledThreadPool(1)
 
     fun startDailyTask() {
@@ -37,16 +44,24 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
     }
 
     fun createScheduleForDay(scheduleDate: LocalDate) {
-     //   movieService.getBoxOffice(scheduleDate, ) //현재날짜 +30일 까지의 영화들 가져와서 확인
-        val currentDate = LocalDate.now() //현재날짜꺼내기
-        val scheduleDate = currentDate.plusDays(30) //현재 날짜 + 30
+
         val theaters = theaterRepository.findAll()
         val top10 = movieRepository.findTop10ByStateTrueAndOpenDateBeforeOrderByPopularityDesc(scheduleDate)
         //select * from movie where state = true and open_date<'date' oreder by popularity desc limit 10;
         // 즉 무비리스트 10개 제한걸고 스테이트랑 오픈데이트 비교해서 가져오는 거
         // state가 1인거만 가져오면 open_date가 현재날짜 이후인 경우가 있을 수 있음!
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=${scheduleDate}"
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
+
+        val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
+
+        top10movie.forEach { movieDetails ->
+            movieService.savemovie(movieDetails) // 스케줄을 만드는거기에 인기영화를 자주
+        }
 
         movieService.updateMovieStates()// 인기순위 10개 state=1
+
+
 
 
             for (theater in theaters) {
