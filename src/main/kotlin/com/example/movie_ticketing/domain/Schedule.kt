@@ -1,6 +1,7 @@
 package com.example.movie_ticketing.domain
 
 import jakarta.persistence.*
+import java.time.LocalDate
 
 @Entity
 class Schedule {
@@ -9,7 +10,7 @@ class Schedule {
     lateinit var end : String
 
     // 영화 상영일
-    lateinit var date : String
+    lateinit var date: String
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")

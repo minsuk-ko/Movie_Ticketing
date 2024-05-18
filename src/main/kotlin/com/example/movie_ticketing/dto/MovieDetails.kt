@@ -26,7 +26,10 @@ data class MovieDetails(
 
 )
 data class MovieSearchResult(
-    @JsonProperty("results") val movies: List<MovieDetails>
+    @JsonProperty("page") val page: Int,
+    @JsonProperty("results") val movies: List<MovieDetails>,
+    @JsonProperty("total_pages") val total_pages: Int,
+    @JsonProperty("total_results") val total_results: Int
 )
 
 data class MovieResponse(

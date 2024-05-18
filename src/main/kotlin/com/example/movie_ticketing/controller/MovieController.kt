@@ -7,7 +7,6 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
-import java.time.LocalDate
 
 
 @Controller
@@ -39,14 +38,13 @@ class MovieController(private val movieService: MovieService,
         }
     }
 
-    /**
-     * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
-     */
+
     @GetMapping("/movie")
-    fun movieOffice(model: Model): String {
-        val currentDate = LocalDate.now()
-        val movies = movieService.getBoxOffice(currentDate)
-        model.addAttribute("movieList", movies)
+    fun movieOffice(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val movies = movieService.getBoxOfficeForMovie(page)
+        model.addAttribute("movies", movies.movies)
+        model.addAttribute("currentPage", page)
+        model.addAttribute("totalPages", movies.total_pages)
         return "movie"
     }
 
@@ -55,9 +53,11 @@ class MovieController(private val movieService: MovieService,
      * 검색 결과 MovieSearchResult 의 movies 를 view 로 보냄 (List 형식)
      */
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String, model: Model): String  {
-        val searchResult = movieService.searchMovies(query)
+    fun searchMovie(@RequestParam("query") query: String, @RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val searchResult = movieService.searchMovies(query, page)
         model.addAttribute("movies", searchResult.movies)
+        model.addAttribute("currentPage", page)
+        model.addAttribute("totalPages", searchResult.total_pages)
         return "searchResult"
     }
 
