@@ -1,8 +1,12 @@
 package com.example.movie_ticketing.controller
 
+import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.dto.MovieDetails
 import com.example.movie_ticketing.service.MovieService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -46,6 +50,8 @@ class MovieController(private val movieService: MovieService) {
         model.addAttribute("totalPages", movies.total_pages)
         return "movie"
     }
+
+
 
     /**
      * 영화 검색

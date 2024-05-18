@@ -61,7 +61,9 @@ class MovieService(private val restTemplate: RestTemplate,
     // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
     fun getBoxOffice(page: Int): MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=2024-06-01&page=$page"
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR" +
+                "&release_date.gte=2024-05-01&release_date.lte=2024-06-01&page=$page&include_adult=false&vote_average.gte=1"
+
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
         return sortMoviesByPopularity(result)
     }
