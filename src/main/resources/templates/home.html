@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CINE - Movie Reservation</title>
+    <title>Login Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
@@ -14,9 +15,6 @@
         .p2{font-family: "Jua", sans-serif;
             font-weight: 400;
             font-style: normal;}
-        body {
-            min-width: 1200px; /* 최소 너비를 1200px로 설정 */
-        }
     </style>
 </head>
 <body>
@@ -79,6 +77,7 @@
         </div>
     </div>
 </nav>
+
 
 <section class="bg-white py-8">
     <div class="container mx-auto">
@@ -149,16 +148,6 @@
         window.location.href ='reservation.html'
     }
 
-
-    // 마이페이지 메뉴 Dropdown
-    document.getElementById("menuButton").addEventListener("click", function() {
-        const dropdownMenu = document.getElementById("dropdownMenu");
-        if(dropdownMenu.classList.contains("hidden")) {
-            dropdownMenu.classList.remove("hidden");
-        } else {
-            dropdownMenu.classList.add("hidden");
-        }
-    });
     // 마이페이지 메뉴 Dropdown
     document.getElementById("menuButton").addEventListener("click", function() {
         const dropdownMenu = document.getElementById("dropdownMenu");
