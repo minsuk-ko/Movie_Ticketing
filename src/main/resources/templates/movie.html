@@ -155,7 +155,7 @@
                     </p>
                     <p class="block font-sans text-base font-medium leading-relaxed bg-clip-text bg-gradient-to-tr from-blue-gray-600 to-blue-gray-400">
                         <span>개봉일 </span>
-                        <span th:text="${#dates.format(movie.openDate, 'yyyy.MM.dd')}">개봉일</span>
+                        <span th:text="${movie.openDate}">개봉일</span>
                     </p>
                 </div>
             </div>

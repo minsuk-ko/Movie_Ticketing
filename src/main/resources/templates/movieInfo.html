@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${movieDetails.title}">Movie Details</title>
+  <title th:text="${movieDetails.id}">Movie Details</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="/css/movieInfo.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
@@ -14,6 +14,11 @@
     .p2{font-family: "Jua", sans-serif;
       font-weight: 400;
       font-style: normal;}
+
+    .disabled {
+      background-color: gray !important;
+      cursor: not-allowed !important;
+    }
   </style>
 </head>
 <body>
@@ -91,20 +96,39 @@
         </div>
       </div>
       <div class="info-box rounded p-4">
-        <h2 th:text="${actors}">배우명</h2>
- 
-      </div>
+        <span>감독 :</span>
+        <span th:text="${actors.name[0]}">감독</span>
+        <br>
+        <span>배우 :</span>
+        <span th:each="name,state: ${actors.name}" th:if="${state.index>0}">
+          <span th:text="${name}">배우</span><span th:if="${!state.last}"> ,</span>
+          </span>
+      </div> <!-- th if문을통해 리스트로 받은것에서 리스트 첫번째 항목은 디렉터 두번째부터는 배우!
+            th:each의 새로운 문법 th:each = "변수명,상태변수명 :${}" 상태변수를 사용하여 인덱스/항목의 정보를 알 수 있다.
+            기본적으로 리스트의 각 항목을 name에 할당하고 state를 통해 리스트의 인덱스를 알 수 있다.\
+            감독: 변수1
+            배우: 변수2 , 변수3 , ..이런 방식-->
+
       <div class="info-box rounded p-4">
         장르: <span th:each="genre, iterStat : ${movieDetails.genres}">
                 <span th:text="${genre.name}"></span>
                 <span th:if="${not iterStat.last}">, </span>
              </span>
 
-        / 개봉일자 : <span th:text="${#dates.format(movieDetails.openDate, 'yyyy.MM.dd')}"></span>
+        / 개봉일자 : <span th:text="${movieDetails.openDate}"></span>
       </div>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+      <button th:attr="disabled=${!state}" th:text="${state} ? '예매하기' : '예매 불가'"
+              th:classappend="${!state} ? 'disabled' : ''"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
         예매하기
-      </button>
+      </button>  <!--th:attr: html요소의 속성을 동적으로 설정 즉 버튼의 속성을 state값으로 조정가능 state가 false일때 동작
+                    이유: state가 false이면 disabled =1이어서 이게 동작함
+                    th: classappend html 클래스를 추가함 -> ${!state} 가 1이면 'disabled' 아니면 ''
+                    => disabled 클래스를 덧붙여서 state가 false일 때 disabled 클래스 속성을 가짐
+                    => style태그에서 disabled 클래스 꾸미기 가능
+                     +style태그안에서 !important추가하면 이 스타일 규칙이 다른 모든 규칙보다 우선하게 만듬
+                    th:text="${state} ? '예매하기' : '예매 불가' 이거는 삼항연산자
+                    !-->
     </div>
 
 

@@ -6,15 +6,13 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.util.*
 
 
 @Repository
 interface MovieRepository : JpaRepository<Movie?, Int?> {
 
-    fun findByTitleContaining(title: String): List<Movie>
-
-    @Query("SELECT m.title FROM Movie m")
-    fun findTitles() : List<Movie>
     fun save(movieTitle: Optional<Movie?>)
+    fun findTop10ByStateTrueAndOpenDateBeforeOrderByPopularityDesc(localDate: LocalDate):List<Movie>
 }

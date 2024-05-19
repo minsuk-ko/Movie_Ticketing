@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 정보</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+        }
+
+        .container1 {
+            width: 90%; /* Adjusted for more space */
+            max-width: 800px; /* Limits the maximum width */
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px; /* Added for better aesthetics */
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%; /* Ensures input fields do not overflow */
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px; /* Adds slight rounding to inputs */
+            box-sizing: border-box; /* Ensures padding does not add to width */
+        }
+
+        .red-button {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%; /* Button width matches input fields */
+            box-sizing: border-box; /* Ensures padding does not add to width */
+            border-radius: 4px; /* Adds slight rounding to the button */
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold; /* Makes labels bold */
+            margin-top: 10px; /* Adds spacing above labels */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container1 {
+                width: 95%; /* More width on smaller screens */
+            }
+        }
+
+
+        #navbar a {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: padding 0.3s;
+            background-color: #1f2937; /* Added for visibility on scroll */
+        }
+        nav ul li{display: inline-block;list-style-type: none;}
+        nav ul ul{display: none; background: #1f2937}
+        nav ul li:hover ul{display:block; position:absolute;}
+        nav ul ul li{width:100px; height:30px;}
+    </style>
+</head>
+<body>
+
+<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
+    <div class="container mx-auto flex justify-between">
+        <div class="text-white font-bold text-2xl">
+            CINE
+        </div>
+        <div class="flex mt-2">
+            <ul>
+                <li>
+                    <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+                </li>
+                <li>
+                    <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
+                </li>
+                <li>
+                    <a href="logout" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
+                </li>
+                <li>
+                    <a href="adminMember" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div id="cinema_main">
+    <div class="container1">
+        <div class="userinfo">
+            <div class = main-content>
+                <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+                    회원 정보
+                </div>
+                <form id="user-form">
+                <label for="user_id">회원id</label>
+                <input type="text" id="user_id" value="3">
+
+                <label for="name">이름</label>
+                <input type="text" id="name" value="정주현">
+
+                <label for="age">나이</label>
+                <input type="text" id="age" value="20">
+
+                <label for="role">권한</label>
+                <input type="text" id="role" value="ROLE_USER">
+
+                <label for="email">Email</label>
+                <input type="email" id="email" value="wngusqt@naver.com">
+
+
+
+                    <button class="delete-button" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+                    <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
+                        th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
+                        사실상 onclick="deleteMember(-->
+
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+</html>

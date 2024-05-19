@@ -9,7 +9,6 @@ class Theater {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "theater_id")
     val id: Int = 0
 
     override fun toString(): String {

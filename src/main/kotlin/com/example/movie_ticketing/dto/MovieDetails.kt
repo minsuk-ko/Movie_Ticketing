@@ -2,6 +2,7 @@ package com.example.movie_ticketing.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.ObjectMapper
+import java.time.LocalDate
 import java.util.Date
 
 data class Genre(
@@ -15,11 +16,11 @@ data class MovieDetails(
     @JsonProperty("backdrop_path") val backdropPath: String?,
     @JsonProperty("genres") val genres: List<Genre>?,
     @JsonProperty("overview") val overview: String?,
-    @JsonProperty("vote_average") val rating: Double?,
-    @JsonProperty("release_date") val openDate: Date?,
-    @JsonProperty("popularity") val popularity: Double?
+    @JsonProperty("vote_average") val rating: Float?,
+    @JsonProperty("popularity") val popularity: Double?,
+    @JsonProperty("release_date") val openDate: LocalDate?,
+    @JsonProperty("runtime") val runtime: Int?
 )
-
 data class MovieSearchResult(
     val page: Int,
     @JsonProperty("results") val movies: List<MovieDetails>,
