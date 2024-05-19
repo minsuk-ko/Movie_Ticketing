@@ -37,7 +37,7 @@ class SchedulerExecuteService(
     }
 
     fun createScheduleForDay(scheduleDate: LocalDate) {
-        movieService.getBoxOffice(scheduleDate) // 현재날짜 +30일 까지의 영화들 가져와서 확인
+
         val theaters = theaterRepository.findAll()
         val top10 = movieRepository.findTop10ByStateTrueAndOpenDateBeforeOrderByPopularityDesc(scheduleDate)
         // select * from movie where state = true and open_date<'date' order by popularity desc limit 10;
