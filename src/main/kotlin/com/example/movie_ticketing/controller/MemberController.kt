@@ -99,7 +99,7 @@ class MemberController(
          * 그래서 데이터 변경이나 그런걸 처리한 후에는 redirect로
          */
 
-        return "redirect:/mypage1"
+        return "redirect:/user/mypage1"
 
 
     }
@@ -113,8 +113,8 @@ class MemberController(
         // 비밀번호 확인
         if (!passwordEncoder.matches(password, member.password)) {
             // 비밀번호가 일치하지 않는 경우
-           // 다시 본래페이지로
-            return "redirect:/mypage1"
+            // 다시 본래페이지로
+            return "redirect:/user/mypage1"
         }
 
 
