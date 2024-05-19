@@ -1,5 +1,6 @@
 package com.example.movie_ticketing.controller
 
+import MemberForm
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.TicketRepository

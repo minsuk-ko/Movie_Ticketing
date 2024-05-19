@@ -1,9 +1,5 @@
-package com.example.movie_ticketing.controller
-
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
-import jakarta.validation.constraints.NotNull
-
 
 class MemberForm {
 
