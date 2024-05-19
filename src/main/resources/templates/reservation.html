@@ -1,58 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>예매 페이지</title>
+  <title>예매 정보</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/css/seat.css">
+  <link href="/css/movieInfo.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-  <link href="/css/reservation.css" rel="stylesheet">
   <style>
-    .p1{font-family : "Black Han Sans", sans-serif; font-weight: 400; font-style: normal;}
-    .p2{font-family: "Jua", sans-serif; font-weight: 400; font-style: normal;}
+    .p1{font-family : "Black Han Sans", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
+    .p2{font-family: "Jua", sans-serif;
+      font-weight: 400;
+      font-style: normal;}
+
     .disabled {
-      pointer-events: none;
-      opacity: 0.6;
-    }
-    .enabled {
-      pointer-events: auto;
-      opacity: 1;
-    }
-    .selected { background-color: #f0f0f0; }
-    .scrollable-list { max-height: 400px; overflow-y: auto; }
-    .seat-row {
-      display: flex;
-      justify-content: center;
-    }
-    .seat {
-      width: 30px;
-      height: 30px;
-      margin: 3px;
-      background-color: #f3f4f6; /* Tailwind gray-100 */
-      border: none;
-      border-radius: 5px;
-    }
-    .selected {
-      background-color: #10b981; /* Tailwind emerald-500 */
-    }
-    .screen {
-      display: block;
-      width: 30%;
-      padding: 10px;
-      margin: 20px auto;
-      background-color: #4f46e5; /* Tailwind indigo-500 */
-      color: white;
-      text-align: center;
-      border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      font-weight: bold;
-      font-size: 1.25rem; /* Equivalent to Tailwind's text-lg */
+      background-color: gray !important;
+      cursor: not-allowed !important;
     }
   </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
-
+<body>
 <nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
   <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
@@ -82,18 +52,29 @@
       </ul>
     </div>
     <div class="flex items-center gap-x-1">
-      <a href="login"
-         class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-        <span>로그인</span>
-      </a>
-      <a href="mypage1"
-         class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+      <div class="flex items-center gap-x-1">
+        <sec:authorize access="isAuthenticated()">
+          <a href="/logout"
+             class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+             hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+            <span>로그아웃</span>
+          </a>
+        </sec:authorize>
+        <sec:authorize access="!isAuthenticated()">
+          <a href="/login"
+             class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+             hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+            <span>로그인</span>
+          </a>
+        </sec:authorize>
+      </div>
+    </div>
+    <a href="mypage1"
+       class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
          text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
          active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-        <span>마이페이지</span>
-      </a>
-    </div>
+      <span>마이페이지</span>
+    </a>
   </div>
 </nav>
 <form action="/user/reservation" method="post">

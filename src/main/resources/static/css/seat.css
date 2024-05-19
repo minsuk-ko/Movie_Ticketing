@@ -1,0 +1,40 @@
+.p1{font-family : "Black Han Sans", sans-serif; font-weight: 400; font-style: normal;}
+.p2{font-family: "Jua", sans-serif; font-weight: 400; font-style: normal;}
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+.enabled {
+    pointer-events: auto;
+    opacity: 1;
+}
+.selected { background-color: #f0f0f0; }
+.scrollable-list { max-height: 400px; overflow-y: auto; }
+.seat-row {
+    display: flex;
+    justify-content: center;
+}
+.seat {
+    width: 30px;
+    height: 30px;
+    margin: 3px;
+    background-color: #f3f4f6; /* Tailwind gray-100 */
+    border: none;
+    border-radius: 5px;
+}
+.selected {
+    background-color: #10b981; /* Tailwind emerald-500 */
+}
+.screen {
+    display: block;
+    width: 30%;
+    padding: 10px;
+    margin: 20px auto;
+    background-color: #4f46e5; /* Tailwind indigo-500 */
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 1.25rem; /* Equivalent to Tailwind's text-lg */
+}
