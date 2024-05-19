@@ -2,9 +2,10 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin_Mainpage</title>
+    <title>영화 목록</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="/css/page.css" />
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
@@ -64,12 +65,27 @@
          hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
                 <span>로그인</span>
             </a>
-            <a href="mypage1"
-               class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
-         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
-         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-                <span>마이페이지</span>
-            </a>
+            <div>
+                <button id="menuButton" data-ripple-light="true" data-popover-target="menu"
+                        class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
+            shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                    마이페이지
+                </button>
+                <ul id="dropdownMenu" role="menu" data-popover="menu" data-popover-placement="bottom"
+                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
+        text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/user/mypage1">개인정보수정</a>
+                    </li>
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/user/mypage2">예매내역확인</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -121,8 +137,8 @@
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
-        <div th:each="movie : ${movieList.movies}">
-        <!-- 영화 하나 -->
+        <div th:each="movie : ${movies}">
+            <!-- 영화 하나 -->
             <div class="relative flex flex-col text-gray-700 bg-white shadow-md bg-clip-border rounded-xl">
                 <div class="relative mx-4 mt-4 overflow-hidden text-gray-700 bg-white bg-clip-border rounded-xl h-80">
                     <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
@@ -147,10 +163,36 @@
 
 
 
+
     </div>
 
 
 </div>
+<br>
+<div class="flex justify-center mt-4">
+    <nav class="pagination inline-flex space-x-2">
+        <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+                    <a th:href="@{/movie(page=${i})}"
+                       th:text="${i}"
+                       th:class="${currentPage == i} ? 'px-4 py-2 text-gray-700 bg-white border rounded-md bg-gray-300' : 'px-4 py-2 text-gray-700 bg-white border rounded-md'">
+                    </a>
+                </span>
+        <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+    </nav>
+</div>
 
+
+<script>
+    // 마이페이지 메뉴 Dropdown
+    document.getElementById("menuButton").addEventListener("click", function() {
+        const dropdownMenu = document.getElementById("dropdownMenu");
+        if(dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.remove("hidden");
+        } else {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+</script>
 </body>
 </html>

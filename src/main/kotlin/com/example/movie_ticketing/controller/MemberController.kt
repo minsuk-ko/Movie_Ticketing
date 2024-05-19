@@ -135,7 +135,7 @@ class MemberController(
     @GetMapping("/join")
     fun createForm(): String {
 
-        return "join"
+        return "join2"
     }
 
     @PostMapping("/addmember") //따로 페이지 안만들어도 됨.
