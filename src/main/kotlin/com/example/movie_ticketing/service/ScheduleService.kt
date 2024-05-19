@@ -38,7 +38,7 @@ class ScheduleService(private val movieRepository: MovieRepository,
 
     fun createSchedule(){
         val currentDate = LocalDate.now() //현재날짜꺼내기
-        val theaters = theaterRepository.findAll() //theaters 리스트 반환 => 1에서 7관 있겠죠~ 인정?
+        val theaters = theaterRepository.findAll() //theaters 리스트 반환 => 1에서 7관 있겠죠~ 인정? ㅇㅇㅈ
         for(i in 0 until 30 )// 0<= i <30  //30일 스케줄 만드는거야
         {
             val scheduleDate = currentDate.plusDays(i.toLong()) //현재 날짜 + i

@@ -11,6 +11,9 @@ data class Genre(
 )
 data class MovieDetails(
     @JsonProperty("id") val id: Int,
+    @JsonProperty("adult") val adult: Boolean?,
+    //@JsonProperty("original_language") val originalLanguage: String?,
+    //@JsonProperty("original_title") val originalTitle: String?,
     @JsonProperty("title") val title: String?,
     @JsonProperty("poster_path") val posterPath: String?,
     @JsonProperty("backdrop_path") val backdropPath: String?,
@@ -22,10 +25,10 @@ data class MovieDetails(
     @JsonProperty("runtime") val runtime: Int?
 )
 data class MovieSearchResult(
-    val page: Int,
+    @JsonProperty("page") val page: Int,
     @JsonProperty("results") val movies: List<MovieDetails>,
-    val total_pages: Int,
-    val total_results: Int
+    @JsonProperty("total_pages") val total_pages: Int,
+    @JsonProperty("total_results") val total_results: Int
 )
 
 data class MovieResponse(

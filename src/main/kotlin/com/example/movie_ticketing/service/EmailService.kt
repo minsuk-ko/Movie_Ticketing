@@ -43,3 +43,10 @@ class EmailService(private val javaMailSender: JavaMailSender) {
         return uuid.substring(0, length)
     }
 }
+
+
+
+
+
+
+
