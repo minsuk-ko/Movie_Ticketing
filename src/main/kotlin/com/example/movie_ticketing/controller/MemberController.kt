@@ -52,8 +52,8 @@ class MemberController(
     /**
      * 마이페이지 (내정보 / 비밀번호 변경 / 탈퇴)
      */
-    @PreAuthorize("isAuthenticated()") //로그인 했을때
-    @GetMapping("/mypage1")
+    //@PreAuthorize("isAuthenticated()") //로그인 했을때
+    @GetMapping("/user/mypage1")
     fun mypage(auth: Authentication,model: Model): String {
         // Authentication 객체에서 UserDetails를 추출하고
         // 이를 통해 username (이메일)을 얻음 기본적으로 Spring security
@@ -72,7 +72,7 @@ class MemberController(
         model.addAttribute("member",member)
 
 
-        return "mypage1.html"
+        return "mypage1"
     }
 
     @PostMapping("/update-password")
