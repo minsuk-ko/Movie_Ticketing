@@ -13,7 +13,6 @@ interface TicketRepository : JpaRepository<Ticket, Int> {
     //단일 reservation을 통해서 티켓을가져옴
     //where reservation_id =?
     //한 예약에 대한 모든 티켓 -> 나중에 사용할 수 있을 듯?
-
     fun findByReservation(reservation: Reservation):List<Ticket>
 
 

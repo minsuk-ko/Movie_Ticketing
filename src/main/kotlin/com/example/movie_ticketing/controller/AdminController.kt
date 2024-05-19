@@ -37,7 +37,7 @@ class AdminController(private val memberService: MemberService,
 
     // 관리자 페이지의 회원 관리
     @GetMapping("/admin/member")
-    // 한 페이지에 보여질 항목의 수 = 5
+    // 한 페이지에 보여질 항목의 수 = 10
     fun memberManagement(@PageableDefault(size = 5) pageable: Pageable, model: Model): String {
         val page: Page<Member?> = memberRepository.findAll(pageable)
         model.addAttribute("membersPage", page)
@@ -47,7 +47,7 @@ class AdminController(private val memberService: MemberService,
     //임시 페이지 회원 누르면 여기링크 들어감
     @GetMapping("/admin/memberinfo/{id}")
     fun memberInfo(@PathVariable id :Int,model: Model) : String{
-       val member = memberRepository.findById(id)
+        val member = memberRepository.findById(id)
 
         model.addAttribute("member",member)
 
@@ -75,21 +75,23 @@ class AdminController(private val memberService: MemberService,
 
         // 회원 삭제
         /* 예매내역삭제 이렇게 어때?*/
-        val reservations = reservationRepository.findByMemberId(id)
+        val reservations = reservationRepository.findByMemberId(id) //멤버에 관련된 모든 예매내역 꺼내기
+
+
         //deleteByreservation => delete from tikets where reservation_id =?
         // 예약 정보에 따른 티켓들 삭제
-        if(reservations.isNotEmpty()) {  //예약 내용이 있을경우 삭제
-          reservations.forEach { reservation ->
-              ticketRepository.deleteByReservation(reservation)
-              reservationRepository.delete(reservation)
-          }
+        if(reservations.isNotEmpty()) {  //예매 내용이 있을경우 삭제
+            reservations.forEach { reservation ->
+                ticketRepository.deleteByReservation(reservation)
+                reservationRepository.delete(reservation)
+            }
         }
         //forEach: 리스트 각각의 요소에 순차적으로 처리시킴
         // 즉 ,티켓 삭제 메소드 실행후 예약 삭제 메소드
 
 
 
-            memberRepository.deleteById(id)
+        memberRepository.deleteById(id)
 
         return "redirect:/admin/member"
     }

@@ -1,0 +1,13 @@
+.pagination a {
+    padding: 10px;
+    margin: 5px;
+    text-decoration: none;
+    color: black;
+    border: 1px solid #ddd;
+}
+.pagination a.bg-gray-300 {
+    background-color: #ddd; /* 현재 페이지 버튼 색상 */
+}
+.pagination a:hover {
+    background-color: #ccc;
+}
