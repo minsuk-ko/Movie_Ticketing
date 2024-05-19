@@ -7,6 +7,8 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 @Controller
@@ -39,9 +41,14 @@ class MovieController(private val movieService: MovieService,
     }
 
 
+    /**
+     * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
+     */
     @GetMapping("/movie")
     fun movieOffice(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
-        val movies = movieService.getBoxOfficeForMovie(page)
+
+        val currentDate = LocalDate.now()
+        val movies = movieService.getBoxOffice(currentDate,page)
         model.addAttribute("movies", movies.movies)
         model.addAttribute("currentPage", page)
         model.addAttribute("totalPages", movies.total_pages)
