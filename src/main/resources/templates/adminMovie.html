@@ -126,9 +126,9 @@
 <div id="cinema_main">
   <div class="sidebar">
 
-    <a href="admin_Member.html" class="link">회원 관리</a>
+    <a href="adminMember" class="link">회원 관리</a>
     <a id="selected" href="#" class="link">영화 관리</a>
-    <a href="admin_Theater.html" class="link">상영관 관리</a>
+    <a href="adminTheater" class="link">상영관 관리</a>
 
   </div>
   <div class = main-content>
@@ -143,55 +143,27 @@
             <th scope="col" class="py-3 px-4">영화ID</th>
             <th scope="col" class="py-3 px-4">제목</th>
             <th scope="col" class="py-3 px-4">장르</th>
-            <th scope="col" class="py-3 px-4">국가</th>
-            <th scope="col" class="py-3 px-4">등급정보</th>
+            <th scope="col" class="py-3 px-4">평점</th>
             <th scope="col" class="py-3 px-4">개봉</th>
+              <th scope ="col" class="py-3 px-4">상태</th>
           </tr>
           </thead>
           <tbody>
           <!-- Repeat for each row -->
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">1</td>
-            <td class="py-4 px-6">파묘</td>
-            <td class="py-4 px-6">미스터리</td>
-            <td class="py-4 px-6">한국</td>
-            <td class="py-4 px-6">15세 이상 관람가</td>
-            <td class="py-4 px-6">2024-02-24</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">2</td>
-            <td class="py-4 px-6">듄-파트2</td>
-            <td class="py-4 px-6">액션</td>
-            <td class="py-4 px-6">미국</td>
-            <td class="py-4 px-6">12세 이상 관람가</td>
-            <td class="py-4 px-6">2024-02-28</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">3</td>
-            <td class="py-4 px-6">극장판 스파이패밀리 코드 :화이트</td>
-            <td class="py-4 px-6">애니메이션</td>
-            <td class="py-4 px-6">일본</td>
-            <td class="py-4 px-6">12세 이상 관람가</td>
-            <td class="py-4 px-6">2024-03-20</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6">4</td>
-            <td class="py-4 px-6">댓글부대</td>
-            <td class="py-4 px-6">범죄</td>
-            <td class="py-4 px-6">한국</td>
-            <td class="py-4 px-6">15세 이상 관람가</td>
-            <td class="py-4 px-6">2024-03-27</td>
-          </tr>
-          <tr class="bg-white border-b">
-            <td class="py-4 px-6"></td>
-            <td class="py-4 px-6"></td>
-            <td class="py-4 px-6"></td>
-            <td class="py-4 px-6"></td>
-            <td class="py-4 px-6"></td>
-            <td class="py-4 px-6"></td>
+          <tr th:each="movie : ${movies}" class="bg-white border-b">
+              <td class="py-4 px-6" th:text="${movie.id}">영화번호</td>
+              <td class="py-4 px-6" th:text="${movie.title}">제목</td>
+              <td class="py-4 px-6">
+                <span th:each="genre, iterStat : ${movie.genres}">
+                <span th:text="${genre.name}"></span>
+                <span th:if="${not iterStat.last}">, </span>
+                </span>
+                 </td>
+              <td class="py-4 px-6" th:text="${movie.rating}">15세 이상 관람가</td>
+              <td class="py-4 px-6" th:text="${movie.openDate}">2024-02-24</td>
+              <td class="py-4 px-6" th:text="${state}">2024-02-24</td>
           </tr>
 
-          <!-- Repeat above tr for the number of rows you need -->
           </tbody>
         </table>
         <div class="flex justify-between border-t mt-4 pt-4">
