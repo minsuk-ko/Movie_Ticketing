@@ -49,6 +49,7 @@ class ReservationController(
 
         val reservation = Reservation().apply {
             this.member = member
+            this.date = LocalDate.now().toString()
         }
         reservationRepository.save(reservation)
 
