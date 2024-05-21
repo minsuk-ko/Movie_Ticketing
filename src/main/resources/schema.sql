@@ -11,9 +11,8 @@ CREATE TABLE IF NOT EXISTS theater (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS seat (
     id           INT    NOT NULL AUTO_INCREMENT,
-    seatNumber   INT    NOT NULL,
+    seat_number   INT    NOT NULL,
     theater_id   INT    NOT NULL,
-    isSelected  BOOLEAN,
     PRIMARY KEY (id),
     FOREIGN KEY (theater_id)
     REFERENCES theater (id));
@@ -84,8 +83,7 @@ CREATE TABLE IF NOT EXISTS reservation (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ticket (
     id           INT         NOT NULL AUTO_INCREMENT,
-    price        INT         NOT NULL,
-    schedule_id         INT         NOT NULL,
+    schedule_id         INT        NOT NULL,
     seat_id             INT         NOT NULL,
     reservation_id      INT         NOT NULL,
     PRIMARY KEY (id),
