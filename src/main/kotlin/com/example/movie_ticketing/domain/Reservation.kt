@@ -15,7 +15,7 @@ class Reservation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reservation_id")
+
     val id : Int = 0
 
     override fun toString(): String {
