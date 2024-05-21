@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:margin-right="http://java.sun.com/xml/ns/persistence/orm">
 <head>
   <meta charset="UTF-8">
   <title>Admin_Mainpage</title>
@@ -80,6 +80,12 @@
       border-radius: 0px; /* 네모난 모양 */
     }
 
+    table {
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+    .last-column { border-right: none; }
   </style>
 </head>
 <body>
@@ -155,29 +161,29 @@
     <a href="#" class="link">상영관 관리</a>
 
   </div>
-  <div class = main-content>
+  <div class = main-content >
     <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
       회원 관리
     </div>
     <div class="grid grid-cols-4 gap-4 mt-5">
       <div class="col-span-3">
-        <table class="w-full text-sm text-left text-gray-500">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <table class="w-full text-sm text-left text-gray-500" style="word-break: break-all; text-align: center;">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50"  style="word-break: break-all;">
           <tr>
-            <th scope="col" class="py-4 px-6">회원 ID</th>
-            <th scope="col" class="py-4 px-6">Email</th>
-            <th scope="col" class="py-4 px-6">이름</th>
-            <th scope="col" class="py-4 px-6">권한</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">회원 ID</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Email</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">이름</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">권한</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="member : ${membersPage}">
-            <td th:text="${member.id}">ID</td>
-            <td th:text="${member.email}">Email</td>
-            <td th:text="${member.name}">Name</td>
-            <td th:text="${member.role}">role</td>
-            <td><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
-            <button class="delete-button" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+          <tr th:each="member : ${membersPage}" style="max-width: 200px;">
+            <td th:text="${member.id}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ID</td>
+            <td th:text="${member.email}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Email</td>
+            <td th:text="${member.name}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Name</td>
+            <td th:text="${member.role}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">role</td>
+            <td class = "last-column"><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
+            <button class="delete-button no-border" style="white-space: nowrap" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
             <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
                 th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
                 사실상 onclick="deleteMember(-->
