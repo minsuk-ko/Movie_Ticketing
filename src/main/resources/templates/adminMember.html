@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:margin-right="http://java.sun.com/xml/ns/persistence/orm">
 <head>
   <meta charset="UTF-8">
   <title>Admin_Mainpage</title>
@@ -80,6 +80,12 @@
       border-radius: 0px; /* 네모난 모양 */
     }
 
+    table {
+        margin-left:auto;
+        margin-right:auto;
+
+    }
+    .last-column { border-right: none; }
   </style>
 </head>
 <body>
@@ -96,7 +102,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
                         <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                     </svg>
-                    <a href="movie" class="flex items-center p2 text-xl">
+                    <a href="/movie" class="flex items-center p2 text-xl">
                         영화
                     </a>
                 </li>
@@ -105,27 +111,48 @@
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="reservation" class="flex items-center p2 text-xl">
+                    <a href="/reservation" class="flex items-center p2 text-xl">
                         예매
                     </a>
                 </li>
             </ul>
         </div>
         <div class="flex items-center gap-x-1">
-            <a href="login"
+            <a href="/login" sec:authorize="isAnonymous"
                class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
          hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-           <span>로그인</span>
-        </a>
-            <button id="menuButton" data-ripple-light="true" data-popover-target="menu"
-                    class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-        shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                관리자페이지
-            </button>
+                <span>로그인</span>
+            </a>
+            <a href="/logout" sec:authorize="isAuthenticated"
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>로그아웃</span>
+            </a>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <button id="menuButton2" data-ripple-light="true" data-popover-target="menu"
+                        class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
+            shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                    관리자페이지
+                </button>
+                <ul id="dropdownMenu2" role="menu" data-popover="menu" data-popover-placement="bottom"
+                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
+        text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/member">회원관리</a>
+                    </li>
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/??">미정</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </nav>
-
 <div id="cinema_main">
   <div class="sidebar">
 
@@ -134,29 +161,29 @@
     <a href="#" class="link">상영관 관리</a>
 
   </div>
-  <div class = main-content>
+  <div class = main-content >
     <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
       회원 관리
     </div>
     <div class="grid grid-cols-4 gap-4 mt-5">
       <div class="col-span-3">
-        <table class="w-full text-sm text-left text-gray-500">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+        <table class="w-full text-sm text-left text-gray-500" style="word-break: break-all; text-align: center;">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50"  style="word-break: break-all;">
           <tr>
-            <th scope="col" class="py-4 px-6">회원 ID</th>
-            <th scope="col" class="py-4 px-6">Email</th>
-            <th scope="col" class="py-4 px-6">이름</th>
-            <th scope="col" class="py-4 px-6">권한</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">회원 ID</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Email</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">이름</th>
+            <th scope="col" class="py-4 px-6" style="border: 1px solid #ddd; word-break: break-all; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">권한</th>
           </tr>
           </thead>
           <tbody>
-          <tr th:each="member : ${membersPage}">
-            <td th:text="${member.id}">ID</td>
-            <td th:text="${member.email}">Email</td>
-            <td th:text="${member.name}">Name</td>
-            <td th:text="${member.role}">role</td>
-            <td><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
-            <button class="delete-button" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+          <tr th:each="member : ${membersPage}" style="max-width: 200px;">
+            <td th:text="${member.id}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">ID</td>
+            <td th:text="${member.email}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Email</td>
+            <td th:text="${member.name}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Name</td>
+            <td th:text="${member.role}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">role</td>
+            <td class = "last-column"><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
+            <button class="delete-button no-border" style="white-space: nowrap" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
             <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
                 th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
                 사실상 onclick="deleteMember(-->
@@ -226,6 +253,15 @@
       window.location.href = '/admin/member/' + memberId;
     }
   }
+  // 마이페이지 메뉴 Dropdown2 관리자용
+  document.getElementById("menuButton2").addEventListener("click", function() {
+      const dropdownMenu = document.getElementById("dropdownMenu2");
+      if(dropdownMenu.classList.contains("hidden")) {
+          dropdownMenu.classList.remove("hidden");
+      } else {
+          dropdownMenu.classList.add("hidden");
+      }
+  });
 </script>
 </body>
 </html>

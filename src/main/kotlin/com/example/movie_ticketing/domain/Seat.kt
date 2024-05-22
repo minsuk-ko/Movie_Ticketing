@@ -5,7 +5,7 @@ import jakarta.persistence.*
 @Entity
 class Seat {
 
-    val seatNumber : Int = 0
+    var seatNumber : Int = 0
 
     // 처음에는 예약된 좌석이 없으므로 false
     var isSelected : Boolean = false
@@ -23,3 +23,4 @@ class Seat {
         return "Seat(seatNumber=$seatNumber, isSelected=$isSelected, theater=$theater, id=$id)"
     }
 }
+

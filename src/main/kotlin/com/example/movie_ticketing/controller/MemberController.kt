@@ -41,8 +41,7 @@ class MemberController(
      * 멤버 로그인
      * 조금 더 수정해야함
      */
-    //Springsecurity 기본 로그인/로그아웃 경로
-    //
+
     @GetMapping("/login")
     fun login(): String = "login.html"
 
@@ -50,10 +49,13 @@ class MemberController(
     fun logout(): String {
         return "redirect:/"
     }
+
+
+
     /**
      * 마이페이지 (내정보 / 비밀번호 변경 / 탈퇴)
      */
-    //@PreAuthorize("isAuthenticated()") //로그인 했을때
+
     @GetMapping("/user/mypage1")
     fun mypage(auth: Authentication,model: Model): String {
         // Authentication 객체에서 UserDetails를 추출하고
@@ -71,11 +73,16 @@ class MemberController(
         // null일 가능성이 있어서 member객체를 추출하지 못했어
 
         model.addAttribute("member",member)
-
-
         return "mypage1"
     }
-
+@GetMapping("/user/mypage2")
+fun mypage2(auth: Authentication,model: Model):String{
+    val userDetails = auth.principal as UserDetails
+    val email = userDetails.username
+    val member = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("No member found with email: $email") }
+    model.addAttribute("member",member)
+    return "mypage2"
+}
     @PostMapping("/update-password")
     fun changePw(auth: Authentication,@RequestParam password:String) :String{
         // RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
