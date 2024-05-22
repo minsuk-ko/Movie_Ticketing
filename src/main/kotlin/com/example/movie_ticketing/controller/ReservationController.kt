@@ -67,6 +67,7 @@ class ReservationController(
             reservationService.saveTicket(ticket)
         }
 
+        print("예매 완료!")
         return "redirect:/reservationComplete"
     }
 
