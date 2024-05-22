@@ -32,7 +32,7 @@ spring:
     host: smtp.gmail.com
     port: 465
     username: neko2nu@gmail.com
-    password:  jbcj cwgq rwbn jtkl
+    password: jbcj cwgq rwbn jtkl
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
@@ -43,7 +43,3 @@ logging:
     org.hibernate:
       sql: debug
       type: trace
-
-#tmdb:
-#  api-key: your_api_key_here
-#  base-url: https://api.themoviedb.org/3

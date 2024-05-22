@@ -125,7 +125,6 @@ fun mypage2(auth: Authentication,model: Model):String{
             return "redirect:/user/mypage1"
         }
 
-
         memberRepository.deleteById(member.id)
         // Spring Security 세션 정보 클리어
         // 세션이 로그인한 사용자의 상세정보,권한등등을 지워서 로그아웃
@@ -133,8 +132,6 @@ fun mypage2(auth: Authentication,model: Model):String{
 
         return "redirect:/logout"
     }
-
-
 
 
     /**
