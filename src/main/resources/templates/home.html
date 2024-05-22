@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -188,19 +189,21 @@
         const adminSection = document.getElementById("adminSection");
 
         if (userSection) {
-            document.getElementById("menuButton").addEventListener("click", function () {
+            document.getElementById("menuButton").addEventListener("click", function() {
                 const dropdownMenu = document.getElementById("dropdownMenu");
                 dropdownMenu.classList.toggle("hidden");
             });
         }
 
         if (adminSection) {
-            document.getElementById("menuButton2").addEventListener("click", function () {
+            document.getElementById("menuButton2").addEventListener("click", function() {
                 const dropdownMenu2 = document.getElementById("dropdownMenu2");
                 dropdownMenu2.classList.toggle("hidden");
             });
         }
     });
+
+
 
     /**
      * splide 다중 슬라이더 구문

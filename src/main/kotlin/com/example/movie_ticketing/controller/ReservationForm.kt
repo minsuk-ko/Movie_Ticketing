@@ -12,9 +12,11 @@ class ReservationForm {
     var time : String = ""
 
     // 선택한 좌석 Id 목록
-    var seatIds : List<Int> = listOf()
+    var seatNumbers : List<Int> = listOf()
 
+    // 시간 선택하면서 선택된 관
+    var theaterName:String =""
     override fun toString(): String {
-        return "ReservationForm(movieId=$movieId, date='$date', time='$time', seatIds=$seatIds)"
+        return "ReservationForm(movieId=$movieId, date='$date', time='$time', seatIds=$seatNumbers)"
     }
 }

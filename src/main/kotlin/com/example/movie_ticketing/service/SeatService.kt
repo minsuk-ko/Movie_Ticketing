@@ -19,9 +19,4 @@ class SeatService(private val seatRepository: SeatRepository) {
         // 예시: 특정 극장의 모든 좌석을 반환합니다. 필요에 따라 구현할 수 있습니다.
         return seatRepository.findAll()
     }
-
-    fun selectSeat(seat: Seat): Seat {
-        seat.isSelected = true
-        return seatRepository.save(seat)
-    }
 }
