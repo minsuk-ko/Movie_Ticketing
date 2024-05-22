@@ -89,8 +89,6 @@ class AdminController(private val memberService: MemberService,
         //forEach: 리스트 각각의 요소에 순차적으로 처리시킴
         // 즉 ,티켓 삭제 메소드 실행후 예약 삭제 메소드
 
-
-
         memberRepository.deleteById(id)
 
         return "redirect:/admin/member"

@@ -113,25 +113,25 @@
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
                 <a th:href="@{/movieInfo/{id}(id=${movies[1].id})}">
-                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
-                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1"
-                     >
-              </a>
+                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
+                         class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1"
+                    >
+                </a>
             </div>
             <!-- Movie 2 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <a th:href="@{/movieInfo/{id}(id=${movies[2].id})}">
-                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[2].backdropPath}}"
-                     class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 2"
-                     >
+                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[2].backdropPath}}"
+                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 2"
+                    >
                 </a>
             </div>
             <!-- Movie 3 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <a th:href="@{/movieInfo/{id}(id=${movies[3].id})}">
-                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
-                     class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 3"
-                >
+                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
+                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 3"
+                    >
                 </a>
             </div>
         </div>
@@ -159,12 +159,6 @@
     <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
 </div>
 
-<!--<section class="bg-white py-8">-->
-<!--    <div class="container mx-auto">-->
-<!--        &lt;!&ndash; Horizon movie image, using the first movie's backdrop &ndash;&gt;-->
-<!--        <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}" alt="Main Movie Poster" class="w-full object-cover">-->
-<!--    </div>-->
-<!--</section>-->
 
 <header class="bg-white border-b py-8">
     <div class="container mx-auto flex justify-between">

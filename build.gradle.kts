@@ -51,9 +51,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
 
-    // mail support
-//    implementation("org.springframework:spring-context-support:5.3.24")
-//    implementation("com.sun.mail:javax.mail:1.6.2")
 }
 
 allOpen {
