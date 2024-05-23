@@ -8,6 +8,7 @@ import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
 import com.example.movie_ticketing.service.MemberService
 import com.example.movie_ticketing.service.MovieService
+import jakarta.websocket.server.PathParam
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -103,6 +104,7 @@ class AdminController(private val memberService: MemberService,
         val current = LocalDate.now()
         val movies = movieService.getBoxOfficeForMovie(current, page)
         model.addAttribute("movies", movies)
+        model.addAttribute("page", page)
         return "adminMovie"
     }
 

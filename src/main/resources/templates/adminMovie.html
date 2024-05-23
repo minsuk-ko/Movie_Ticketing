@@ -163,20 +163,26 @@
               <td class="py-4 px-6" th:text="${movie.openDate}">개봉</td>
               <td class="py-4 px-6" th:text="${movie.state ? '상영 중' : '상영 중이 아님'}">상태</td>
           </tr>
-          </tr>
 
           <!-- Repeat above tr for the number of rows you need -->
           </tbody>
         </table>
-        <div class="flex justify-between border-t mt-4 pt-4">
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Previous</a>
-          1 | 2 | 3 | 4 | ......
-          <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Next</a>
-        </div>
+
       </div>
     </div>
-
-
+      <div class="flex justify-center mt-4">
+          <nav class="pagination inline-flex space-x-2">
+              <a th:if="${page > 1}" th:href="@{/admin/adminMovies(page=${page - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+              <span th:each="i : ${#numbers.sequence(1, 5)}">
+                            <a th:href="@{/admin/adminMovies(page=${i})}"
+                               th:text="${i}"
+                               th:classappend="${page == i} ? ' bg-gray-300' : ''"
+                               class="px-4 py-2 text-gray-700 bg-white border rounded-md">
+                            </a>
+                        </span>
+              <a th:if="${page < 5}" th:href="@{/admin/adminMovies(page=${page + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+          </nav>
+      </div>
   </div>
 </div>
 <footer class="bg-gray-800">
