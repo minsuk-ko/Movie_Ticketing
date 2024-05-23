@@ -96,12 +96,7 @@ class AdminController(private val memberService: MemberService,
 
         return "redirect:/admin/member"
     }
-    @GetMapping("/updateMovie")
-    @ResponseBody
-    fun updateMovieStates(): String {
-        movieService.updateMovieStates()
-        return "Movie states updated successfully"
-    }
+
 
     @GetMapping("/admin/adminMovie")
     fun getMovies(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {

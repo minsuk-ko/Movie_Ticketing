@@ -68,4 +68,5 @@ class MovieController(private val movieService: MovieService,
         return "searchResult"
     }
 
+
 }
