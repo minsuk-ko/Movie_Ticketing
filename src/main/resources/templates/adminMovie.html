@@ -143,30 +143,30 @@
             <th scope="col" class="py-3 px-4">영화ID</th>
             <th scope="col" class="py-3 px-4">제목</th>
             <th scope="col" class="py-3 px-4">장르</th>
-            <th scope="col" class="py-3 px-4"></th>
+            <th scope="col" class="py-3 px-4">국가</th>
             <th scope="col" class="py-3 px-4">등급정보</th>
-            <th scope="col" class="py-3 px-4">상영상태</th>
+            <th scope="col" class="py-3 px-4">개봉</th>
           </tr>
           </thead>
-            <tbody>
-            <tr th:each="movie : ${movies}" class="bg-white border-b">
-                <td class="py-4 px-6" th:text="${movie.id}">영화ID</td>
-                <td class="py-4 px-6" th:text="${movie.title}">제목</td>
-                <td class="py-4 px-6">
+          <tbody>
+          <!-- Repeat for each row -->
+          <tr th:each="movie : ${movies}" class="bg-white border-b">
+              <td class="py-4 px-6" th:text="${movie.id}">영화ID</td>
+              <td class="py-4 px-6" th:text="${movie.title}">제목</td>
+              <td class="py-4 px-6">
                     <span th:each="genre, iterStat : ${movie.genres}">
                         <span th:text="${genre.name}"></span>
                         <span th:if="${!iterStat.last}">, </span>
                     </span>
-                </td>
+              </td>
+              <td class="py-4 px-6" th:text="${movie.rating}">등급정보</td>
+              <td class="py-4 px-6" th:text="${movie.openDate}">개봉</td>
+              <td class="py-4 px-6" th:text="${movie.state ? '상영 중' : '상영 중이 아님'}">상태</td>
+          </tr>
+          </tr>
 
-                <td class="py-4 px-6" th:text="${movie.rating}">등급정보</td>
-                <td class="py-4 px-6" th:text="${movie.openDate}">개봉</td>
-                <td class="py-4 px-6">
-                    <span th:if="${movie.state}">상영 중</span>
-                    <span th:if="${!movie.state}">상영 중이 아님</span>
-                </td>
-            </tr>
-            </tbody>
+          <!-- Repeat above tr for the number of rows you need -->
+          </tbody>
         </table>
         <div class="flex justify-between border-t mt-4 pt-4">
           <a href="#" class="text-blue-600 hover:text-blue-800 visited:text-purple-600">Previous</a>
