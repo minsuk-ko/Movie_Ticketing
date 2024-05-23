@@ -2,10 +2,12 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
+import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
 import com.example.movie_ticketing.service.MemberService
+import com.example.movie_ticketing.service.MovieService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -14,9 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.*
+import java.time.LocalDate
 
 
 @Controller
@@ -25,7 +26,9 @@ class AdminController(private val memberService: MemberService,
                       private val passwordEncoder: PasswordEncoder,
                       private val userDetailsService: CustomUserDetailsService,
                       private val ticketRepository: TicketRepository,
-                      private val reservationRepository: ReservationRepository
+                      private val reservationRepository: ReservationRepository,
+                      private val movieService: MovieService,
+                    private val movieRepository: MovieRepository
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -93,6 +96,21 @@ class AdminController(private val memberService: MemberService,
 
         return "redirect:/admin/member"
     }
+    @GetMapping("/updateMovie")
+    @ResponseBody
+    fun updateMovieStates(): String {
+        movieService.updateMovieStates()
+        return "Movie states updated successfully"
+    }
+
+    @GetMapping("/admin/adminMovie")
+    fun getMovies(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val current = LocalDate.now()
+        val movies = movieService.getBoxOfficeForMovie(current, page)
+        model.addAttribute("movies", movies)
+        return "adminMovie"
+    }
+
 
 
 }

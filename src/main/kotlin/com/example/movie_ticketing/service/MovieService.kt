@@ -177,4 +177,13 @@ class MovieService(private val restTemplate: RestTemplate,
 
         return movie
     }
+    fun getBoxOfficeForMovie(currentDate: LocalDate, page: Int): List<MovieDetails> {
+        val monthDate = currentDate.plusMonths(1)
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&vote_average.gte=1&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page"
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
+        val top10Movies = result.movies.sortedByDescending { it.popularity }.take(10)
+        return top10Movies.map { movieSummary -> retrieveMovieDetails(movieSummary.id) }
+    }
+
+
 }

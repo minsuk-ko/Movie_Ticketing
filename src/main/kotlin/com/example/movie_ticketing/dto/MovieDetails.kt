@@ -22,7 +22,9 @@ data class MovieDetails(
     @JsonProperty("vote_average") val rating: Float?,
     @JsonProperty("popularity") val popularity: Double?,
     @JsonProperty("release_date") val openDate: LocalDate?,
-    @JsonProperty("runtime") val runtime: Int?
+    @JsonProperty("runtime") val runtime: Int?,
+    val state: Boolean
+
 )
 data class MovieSearchResult(
     @JsonProperty("page") val page: Int,
