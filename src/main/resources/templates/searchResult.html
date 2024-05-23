@@ -1,29 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영화 검색</title>
+    <title>Movie Schedule</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
-    <link href="../static/css/reservation.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/page.css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="/css/reservation.css" rel="stylesheet">
     <style>
-        .p1{font-family : "Black Han Sans", sans-serif;
-            font-weight: 400;
-            font-style: normal;}
-        .p2{font-family: "Jua", sans-serif;
-            font-weight: 400;
-            font-style: normal;}
-        .ellipsis {
-            white-space: nowrap; /* 텍스트를 한 줄로 설정 */
-            overflow: hidden; /* 내용이 넘칠 경우 숨김 */
-            text-overflow: ellipsis; /* 넘친 텍스트를 ...으로 표시!! */
-        }
+        .p1 { font-family: "Black Han Sans", sans-serif; font-weight: 400; font-style: normal; }
+        .p2 { font-family: "Jua", sans-serif; font-weight: 400; font-style: normal; }
     </style>
 </head>
-<body>
-
+<body class="bg-gray-100 text-gray-900">
 
 <nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
@@ -32,72 +22,44 @@
            class="mr-4 block cursor-pointer py-1 p1 font-medium text-2xl">
             CINE
         </a>
-        <div class="black justify-end ">
+        <div class="black justify-end">
             <ul class="flex flex-row gap-2 mb-0 mt-0 flex-row items-center gap-6">
                 <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
-                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 10 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                     </svg>
-                    <a href="/movie" class="flex items-center p2 text-xl">
-                        영화
-                    </a>
+                    <a href="movie" class="flex items-center p2 text-xl">영화</a>
                 </li>
                 <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="/reservation" class="flex items-center p2 text-xl">
-                        예매
-                    </a>
+                    <a href="reservation" class="flex items-center p2 text-xl">예매</a>
                 </li>
             </ul>
         </div>
         <div class="flex items-center gap-x-1">
-            <a href="/login" sec:authorize="isAnonymous"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-                <span>로그인</span>
+            <sec:authorize access="isAuthenticated()">
+                <a href="/logout"
+                   class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+           hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                    <span>로그아웃</span>
+                </a>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <a href="/login"
+                   class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+           hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                    <span>로그인</span>
+                </a>
+            </sec:authorize>
+            <a href="mypage1"
+               class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
+         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>마이페이지</span>
             </a>
-            <a href="/logout" sec:authorize="isAuthenticated"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-                <span>로그아웃</span>
-            </a>
-            <div id="userSection" data-role="USER" sec:authorize="!hasRole('ROLE_ADMIN')">
-                <button id="menuButton" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-                shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                    마이페이지
-                </button>
-                <ul id="dropdownMenu" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-            text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/user/mypage1">개인정보수정</a>
-                    </li>
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/user/mypage2">예매내역확인</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="adminSection" data-role="ADMIN" sec:authorize="hasRole('ROLE_ADMIN')">
-                <button id="menuButton2" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-                shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                    관리자페이지
-                </button>
-                <ul id="dropdownMenu2" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-            text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/member">회원관리</a>
-                    </li>
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/??">미정</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     </div>
 </nav>
@@ -142,7 +104,6 @@
         </div>
     </form>
 </div>
-
 <div class="max-w-screen-xl mx-auto">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
@@ -171,47 +132,22 @@
         </div>
 
 
+
     </div>
-    <br>
-    <div class="flex justify-center mt-4">
-        <nav class="pagination inline-flex space-x-2">
-            <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
-            <span th:each="i : ${#numbers.sequence(1, totalPages)}">
+
+
+</div>
+<div class="flex justify-center mt-4">
+    <nav class="pagination inline-flex space-x-2">
+        <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
+        <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a th:href="@{/movie(page=${i})}"
                        th:text="${i}"
                        th:class="${currentPage == i} ? 'px-4 py-2 text-gray-700 bg-white border rounded-md bg-gray-300' : 'px-4 py-2 text-gray-700 bg-white border rounded-md'">
                     </a>
                 </span>
-            <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
-        </nav>
-    </div>
+        <a th:if="${currentPage < totalPages}" th:href="@{/movie(page=${currentPage + 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Next</a>
+    </nav>
 </div>
-
-
-
-
-
-
-
-<script>
-// 마이페이지 메뉴 Dropdown
-document.getElementById("menuButton").addEventListener("click", function() {
-const dropdownMenu = document.getElementById("dropdownMenu");
-if(dropdownMenu.classList.contains("hidden")) {
-dropdownMenu.classList.remove("hidden");
-} else {
-dropdownMenu.classList.add("hidden");
-}
-});
-// 마이페이지 메뉴 Dropdown2 관리자용
-document.getElementById("menuButton2").addEventListener("click", function() {
-    const dropdownMenu = document.getElementById("dropdownMenu2");
-    if(dropdownMenu.classList.contains("hidden")) {
-        dropdownMenu.classList.remove("hidden");
-    } else {
-        dropdownMenu.classList.add("hidden");
-    }
-});
-</script>
 </body>
 </html>

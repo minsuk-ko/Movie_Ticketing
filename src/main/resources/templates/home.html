@@ -1,164 +1,75 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
+    <title>Movie Schedule</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
-    <link href="/css/base.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
+    <link href="/css/reservation.css" rel="stylesheet">
     <style>
-        .p1{font-family : "Black Han Sans", sans-serif;
-            font-weight: 400;
-            font-style: normal;}
-        .p2{font-family: "Jua", sans-serif;
-            font-weight: 400;
-            font-style: normal;}
-        /* Custom height for carousel */
-        .custom-height {
-            height: 100vh !important;
-            /* Adjust this value as needed */
-        }
-
+        .p1 { font-family: "Black Han Sans", sans-serif; font-weight: 400; font-style: normal; }
+        .p2 { font-family: "Jua", sans-serif; font-weight: 400; font-style: normal; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 text-gray-900">
 
-<nav  class="z-1 relative max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+<nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
     <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
         <a href="/"
            class="mr-4 block cursor-pointer py-1 p1 font-medium text-2xl">
             CINE
         </a>
-        <div class="black justify-end ">
+        <div class="black justify-end">
             <ul class="flex flex-row gap-2 mb-0 mt-0 flex-row items-center gap-6">
                 <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
-                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 10 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                     </svg>
-                    <a href="/movie" class="flex items-center p2 text-xl">
-                        영화
-                    </a>
+                    <a href="movie" class="flex items-center p2 text-xl">영화</a>
                 </li>
                 <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="/reservation" class="flex items-center p2 text-xl">
-                        예매
-                    </a>
+                    <a href="reservation" class="flex items-center p2 text-xl">예매</a>
                 </li>
             </ul>
         </div>
         <div class="flex items-center gap-x-1">
-            <a href="/login" sec:authorize="isAnonymous"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-                <span>로그인</span>
+            <sec:authorize access="isAuthenticated()">
+                <a href="/logout"
+                   class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+           hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                    <span>로그아웃</span>
+                </a>
+            </sec:authorize>
+            <sec:authorize access="!isAuthenticated()">
+                <a href="/login"
+                   class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+           hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                    <span>로그인</span>
+                </a>
+            </sec:authorize>
+            <a href="mypage1"
+               class="select-none rounded-lg bg-gradient-to-tr from-gray-900 to-gray-800 py-2 px-4 text-center align-middle p2
+         text-xl uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20
+         active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>마이페이지</span>
             </a>
-            <a href="/logout" sec:authorize="isAuthenticated"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
-                <span>로그아웃</span>
-            </a>
-            <div id="userSection" data-role="USER" sec:authorize="!hasRole('ROLE_ADMIN')">
-                <button id="menuButton" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-                shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                    마이페이지
-                </button>
-                <ul id="dropdownMenu" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-            text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/user/mypage1">개인정보수정</a>
-                    </li>
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/user/mypage2">예매내역확인</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="adminSection" data-role="ADMIN" sec:authorize="hasRole('ROLE_ADMIN')">
-                <button id="menuButton2" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-                shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                    관리자페이지
-                </button>
-                <ul id="dropdownMenu2" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-            text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/member">회원관리</a>
-                    </li>
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/??">미정</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-
     </div>
 </nav>
 
-
-<div class="mx-auto container">
-
-    <div id="default-carousel" class="relative" data-carousel="static">
-        <!-- Carousel wrapper -->
-        <div class="overflow-hidden relative rounded-lg sm:h-72 xl:h-96 2xl:h-128 custom-height">
-            <!-- Movie 1 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
-                <a th:href="@{/movieInfo/{id}(id=${movies[1].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1"
-                    >
-                </a>
-            </div>
-            <!-- Movie 2 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <a th:href="@{/movieInfo/{id}(id=${movies[2].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[2].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 2"
-                    >
-                </a>
-            </div>
-            <!-- Movie 3 -->
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <a th:href="@{/movieInfo/{id}(id=${movies[3].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 3"
-                    >
-                </a>
-            </div>
-        </div>
-        <!-- Slider indicators -->
-        <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 1" data-carousel-slide-to="0"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
-            <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
-        </div>
-        <!-- Slider controls -->
-        <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
-            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                <span class="hidden">Previous</span>
-            </span>
-        </button>
-        <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
-            <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                <span class="hidden">Next</span>
-            </span>
-        </button>
+<section class="bg-white py-8">
+    <div class="container mx-auto">
+        <!-- Horizon movie image, using the first movie's backdrop -->
+        <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}" alt="Main Movie Poster" class="w-full object-cover">
     </div>
-
-    <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
-</div>
-
+</section>
 
 <header class="bg-white border-b py-8">
     <div class="container mx-auto flex justify-between">
@@ -204,7 +115,6 @@
 
 <script>
 
-
     // JavaScript to handle movie chart and interactions
     document.addEventListener('DOMContentLoaded', function() {
         loadMovies();
@@ -222,27 +132,6 @@
     function reserveMovie(title){
         window.location.href ='reservation.html'
     }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const userSection = document.getElementById("userSection");
-        const adminSection = document.getElementById("adminSection");
-
-        if (userSection) {
-            document.getElementById("menuButton").addEventListener("click", function() {
-                const dropdownMenu = document.getElementById("dropdownMenu");
-                dropdownMenu.classList.toggle("hidden");
-            });
-        }
-
-        if (adminSection) {
-            document.getElementById("menuButton2").addEventListener("click", function() {
-                const dropdownMenu2 = document.getElementById("dropdownMenu2");
-                dropdownMenu2.classList.toggle("hidden");
-            });
-        }
-    });
-
-
 </script>
 </body>
 </html>

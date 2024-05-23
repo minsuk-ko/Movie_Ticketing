@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 
 @Controller
@@ -35,9 +36,10 @@ class MovieController(private val movieService: MovieService,
             return "movieInfo" // Thymeleaf 뷰 파일 이름
         } catch (e: Exception) {
             model.addAttribute("error", "Movie not found")
-            return "errorView" // 에러 시 보여줄 뷰
+            return "error" // 에러 시 보여줄 뷰
         }
     }
+
 
     /**
      * BoxOffice() 에서 가져온 movies 를 List 형식으로 movie.html 에 넘긴다
