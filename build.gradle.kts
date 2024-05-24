@@ -8,6 +8,9 @@ plugins {
     kotlin("plugin.spring") version "1.9.22"
     kotlin("plugin.jpa") version "1.9.22"
 }
+tasks.getByName<Jar>("jar") {
+    enabled = true
+}
 
 group = "com.example"
 version = "0.0.1-SNAPSHOT"
@@ -24,6 +27,9 @@ configurations {
 
 repositories {
     mavenCentral()
+}
+tasks.getByName<Jar>("jar") { // jar 파일 생성을 위한
+    enabled = true
 }
 
 dependencies {
