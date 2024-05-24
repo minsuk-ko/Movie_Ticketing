@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/css/splide.min.css">
     <style>
         .p1{font-family : "Black Han Sans", sans-serif;
             font-weight: 400;
@@ -17,15 +18,131 @@
             font-style: normal;}
         /* Custom height for carousel */
         .custom-height {
-            height: 100vh !important;
+            height: 85vh !important;
             /* Adjust this value as needed */
         }
-
+        .movie-poster {
+            border-radius: 10px;
+        }
+        .splide__slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .splide__slide p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+        .main_image_text {
+            position: absolute;
+            top: 35%;
+            left: 10%;
+            color: white;
+            font-size: 45px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .main_image_overview {
+            position: absolute;
+            top: 48%;
+            left: 10%;
+            color: white;
+            font-size: 18px;
+            max-width: 30%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #moreButton {
+            position: absolute;
+            top: 85%;
+            left: 10%;
+            padding: 8px 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            z-index: 3;
+        }
+        #moreButton2 {
+            position: absolute;
+            top: 85%;
+            left: 10%;
+            padding: 8px 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            z-index: 3;
+        }
+        #moreButton3 {
+            position: absolute;
+            top: 85%;
+            left: 10%;
+            padding: 8px 16px;
+            font-size: 12px;
+            border: none;
+            cursor: pointer;
+            z-index: 3;
+        }
+        @media screen and (max-width: 768px) {
+            .main_image_text, .main_image_overview {
+                left: 5%;
+                max-width: 90%;
+            }
+            .main_image_text {
+                font-size: 24px;
+            }
+            .main_image_overview {
+                font-size: 16px;
+            }
+            #moreButton {
+                top: 85%;
+                left: 10%;
+                font-size: 10px;
+                padding: 6px 12px;
+            }
+            #moreButton2 {
+                top: 85%;
+                left: 10%;
+                font-size: 10px;
+                padding: 6px 12px;
+            }
+            #moreButton3 {
+                top: 85%;
+                left: 10%;
+                font-size: 10px;
+                padding: 6px 12px;
+            }
+        }
+        [data-carousel-item] {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        [data-carousel-item]::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+            z-index: 2; /* 이미지 위에 그라데이션을 표시하기 위해 */
+        }
+        [data-carousel-item] img {
+            z-index: 1; /* 그라데이션 뒤에 이미지가 오도록 */
+        }
+        [data-carousel-item] .main_image_text , [data-carousel-item] .main_image_overview {
+            position: absolute;
+            z-index: 3; /* 텍스트가 그라데이션 위에 오도록 */
+        }
     </style>
 </head>
 <body>
 
-<nav  class="z-1 relative max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+<nav class="z-1 relative max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
     <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
         <a href="/"
@@ -105,33 +222,55 @@
 
 
 <div class="mx-auto container">
-
     <div id="default-carousel" class="relative" data-carousel="static">
         <!-- Carousel wrapper -->
         <div class="overflow-hidden relative rounded-lg sm:h-72 xl:h-96 2xl:h-128 custom-height">
-            <!-- Movie 1 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <span class="absolute top-1/2 left-1/2 text-2xl font-semibold text-white -translate-x-1/2 -translate-y-1/2 sm:text-3xl dark:text-gray-800">First Slide</span>
+                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
+                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
+                <h2 class="main_image_text">
+                    <span th:text="${movies[1].title}"></span>
+                </h2>
+                <h3 class="main_image_overview">
+                    <span th:text="${movies[1].overview}"></span>
+                </h3>
                 <a th:href="@{/movieInfo/{id}(id=${movies[1].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1"
-                    >
+                    <button id="moreButton" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
+                    disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
+                    shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                    >더보기..</button>
                 </a>
             </div>
-            <!-- Movie 2 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[2].backdropPath}}"
+                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
+                <h2 class="main_image_text">
+                    <span th:text="${movies[2].title}"></span>
+                </h2>
+                <h3 class="main_image_overview">
+                    <span th:text="${movies[2].overview}"></span>
+                </h3>
                 <a th:href="@{/movieInfo/{id}(id=${movies[2].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[2].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 2"
-                    >
+                    <button id="moreButton2" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
+                    disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
+                    shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                    >더보기..</button>
                 </a>
             </div>
-            <!-- Movie 3 -->
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
+                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
+                <h2 class="main_image_text">
+                    <span th:text="${movies[3].title}"></span>
+                </h2>
+                <h3 class="main_image_overview">
+                    <span th:text="${movies[3].overview}"></span>
+                </h3>
                 <a th:href="@{/movieInfo/{id}(id=${movies[3].id})}">
-                    <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
-                         class="block absolute top-1/2 left-1/2 w-full  h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 3"
-                    >
+                    <button id="moreButton3" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
+                    disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
+                    shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                    >더보기..</button>
                 </a>
             </div>
         </div>
@@ -169,24 +308,20 @@
     </div>
 </header>
 
-<section class="container mx-auto mt-8">
-    <div class="flex flex-wrap -mx-2">
-        <!-- Vertical posters for the next four movies -->
-        <div th:each="movie, stat : ${movies}" th:if="${stat.index > 0 and stat.index < 5}" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
-            <div class="bg-white rounded shadow-lg overflow-hidden">
+<!-- Splide HTML 구조 -->
+<div id="image-slider" class="splide max-w-screen-xl px-8 py-4 block w-full mx-auto">
+    <div class="splide__track">
+        <ul class="splide__list">
+            <li class="splide__slide" th:each="movie, stat : ${movies}" th:if="${stat.index > 0 and stat.index < 9}">
                 <a th:href="@{/movieInfo/{id}(id=${movie.id})}">
-                    <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="movie-poster" />
+                    <img th:src="|https://image.tmdb.org/t/p/w500${movie.posterPath}|" alt="Movie Poster" class="movie-poster"/>
+                    <p th:text="${movie.title}">Movie Title</p>
                 </a>
-                <div class="p-4">
-                    <div class="font-bold text-xl mb-2" th:text="${movie.title}">Movie Title</div>
-                    <button onclick="reserveMovie('${movie.title}')" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">
-                        예매
-                    </button>
-                </div>
-            </div>
-        </div>
+            </li>
+        </ul>
     </div>
-</section>
+</div>
+
 
 <footer class="bg-gray-800">
     <div class="container mx-auto text-center py-6">
@@ -201,11 +336,11 @@
     </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@3.6.9/dist/js/splide.min.js"></script>
 
 <script>
 
 
-    // JavaScript to handle movie chart and interactions
     document.addEventListener('DOMContentLoaded', function() {
         loadMovies();
     });
@@ -242,7 +377,29 @@
         }
     });
 
-
+    /**
+     * splide 다중 슬라이더 구문
+     * 옵션 수정 or 삭제 : https://splidejs.com/guides/options/
+     */
+    document.addEventListener('DOMContentLoaded', function() {
+        new Splide('#image-slider', {
+            type   : 'loop',    // 무한루프
+            perPage: 4,         // 한번에 보여지는 이미지의 개수
+            perMove: 4,         // 한번의 이동으로 움직이는 이미지의 개수
+            gap: '50px',        // 이미지 사이의 간격
+            breakpoints: {
+                1200: { // 화면 너비가 1200px 이하일 때
+                    gap: '30px',
+                },
+                768: { // 화면 너비가 768px 이하일 때
+                    gap: '20px',
+                },
+                480: { // 화면 너비가 480px 이하일 때
+                    gap: '10px',
+                },
+            }
+        }).mount();
+    });
 </script>
 </body>
 </html>
