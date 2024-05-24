@@ -28,9 +28,7 @@ configurations {
 repositories {
     mavenCentral()
 }
-tasks.getByName<Jar>("jar") { // jar 파일 생성을 위한
-    enabled = true
-}
+
 
 dependencies {
     implementation ("org.springframework.boot:spring-boot-starter-validation")
@@ -60,6 +58,7 @@ dependencies {
 }
 
 allOpen {
+
     annotation("javax.persistence.Entity")
     annotation("javax.persistence.Embeddable")
     annotation("javax.persistence.MappedSuperclass")
