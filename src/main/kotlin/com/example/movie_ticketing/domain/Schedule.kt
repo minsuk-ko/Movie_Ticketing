@@ -2,15 +2,16 @@ package com.example.movie_ticketing.domain
 
 import jakarta.persistence.*
 import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity
 class Schedule {
 
-    lateinit var start : String
-    lateinit var end : String
+    lateinit var start : LocalTime
+    lateinit var end : LocalTime
 
     // 영화 상영일
-    lateinit var date: String
+    lateinit var date: LocalDate
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")

@@ -82,61 +82,44 @@
 </nav>
 <div class="bg-gray-800 px-4 py-2 text-white">
   <h2 class="text-xl">예약내역조회</h2>
-  <h1>만약 영화 상영 후라면, 취소가 불가능합니다.</h1>
+  <h1>만약 영화 상영 당일날, 취소가 불가능합니다.</h1>
 </div>
-
-<!-- Table -->
 <div class="overflow-x-auto">
-  <table class="table-auto w-full">
-    <thead>
-    <tr class="bg-black">
-      <th class="px-4 py-2">예약번호</th>
-      <th class="px-4 py-2">상영시간</th>
-      <th class="px-4 py-2">영화명</th>
-      <th class="px-4 py-2">좌석번호</th>
-      <th class="px-4 py-2">취소</th>
-    </tr>
-    </thead>
-    <tbody class="bg-white text-black">
-    <tr>
-      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
-      <td class="border px-4 py-2">시간</td>
-      <td class="border px-4 py-2">영화명</td>
-      <td class="border px-4 py-2">좌석번호</td>
-      <td class="border px-4 py-2 text-center">
-        <i class="fas fa-edit">취소</i>
-      </td>
-    </tr>
-    <tr>
-      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
-      <td class="border px-4 py-2">시간</td>
-      <td class="border px-4 py-2">영화명</td>
-      <td class="border px-4 py-2">좌석번호</td>
-      <td class="border px-4 py-2 text-center">
-        <i class="fas fa-edit">취소불가</i>
-      </td>
-    </tr>
-    <!-- Repeat for each row based on data -->
-    </tbody>
-  </table>
+    <table class="table-auto w-full">
+        <thead>
+        <tr class="bg-black text-white">
+            <th class="px-4 py-2">예약날짜</th>
+            <th class="px-4 py-2">예약번호</th>
+            <th class="px-4 py-2">상영시간</th>
+            <th class="px-4 py-2">영화명</th>
+            <th class="px-4 py-2">좌석번호</th>
+            <th class="px-4 py-2">예약</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white text-black">
+        <tr th:each="entry : ${reservationTicketsMap}">
+            <td class="border px-4 py-2" th:text="${entry.key.date}">예약날짜</td>
+            <td class="border px-4 py-2" th:text="${entry.key.id}">예약번호</td>
+            <td class="border px-4 py-2" th:if="${entry.value.size() > 0}" th:text="${formattedTimesMap[entry.key]?.values?.iterator()?.next()}">상영시간</td>
+            <td class="border px-4 py-2" th:if="${entry.value.size() > 0}" th:text="${entry.value[0].schedule.movie.title}">영화명</td>
+            <td class="border px-4 py-2">
+               <span th:each="ticket, iter : ${entry.value}">
+                    <span th:text="${ticket.seat.seatNumber}+'번'"></span>
+                    <span th:if="${!iter.last}">, </span>
+                </span>
+            </td>
+            <td class="border px-4 py-2 text-center">
+                <button th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
+                        class="px-4 py-2 bg-red-500 text-white" th:text="'취소'" th:onclick="'location.href=\'/cancelReservation/'+entry.key.id+'\'"></button>
+                <span th:if="${entry.value.size() == 0 or (entry.value[0].schedule.date.isBefore(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isBefore(T(java.time.LocalTime).now())))}"
+                      class="text-gray-500" th:text="'취소불가'"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<!-- Pagination -->
-<div class="flex justify-center space-x-2 my-4">
-  <button class="px-4 py-2 bg-gray-600"><</button>
-  <button class="px-4 py-2 bg-gray-600">1</button>
-  <button class="px-4 py-2 bg-gray-600">2</button>
-  <button class="px-4 py-2 bg-gray-600">3</button>
-  <button class="px-4 py-2 bg-gray-600">></button>
-</div>
 <script>
-  function scrollFunction() {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      document.getElementById("navbar").style.padding = "1rem 0";
-    } else {
-      document.getElementById("navbar").style.padding = "2rem 0";
-    }
-  }
     // 마이페이지 메뉴 Dropdown
     document.getElementById("menuButton").addEventListener("click", function() {
         const dropdownMenu = document.getElementById("dropdownMenu");
