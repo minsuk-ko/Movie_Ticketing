@@ -90,10 +90,8 @@ fun mypage2(auth: Authentication,model: Model):String{
 
     val reservationTicketsMap = reservations.map { reservation ->
         val tickets = ticketRepository.findByReservation(reservation)
-        println("Reservation: $reservation")
-        println("Tickets: $tickets")
         reservation to tickets
-    }.toMap()
+    }.toMap() //Map<Reservation, List<Ticket>> 꼴로 변환시킴 즉 키가 reservation,값이 ticket
 
     println(reservationTicketsMap)
 
@@ -108,7 +106,7 @@ fun mypage2(auth: Authentication,model: Model):String{
             val formattedStartTime = ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
             ticket to formattedStartTime
         }.toMap()
-    }
+    }  //안그러면 10:00:00이런 방식으로 뜸
     model.addAttribute("formattedTimesMap", formattedTimesMap)
     return "mypage2"
 }

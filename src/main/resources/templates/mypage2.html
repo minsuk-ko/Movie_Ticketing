@@ -97,7 +97,8 @@
         </tr>
         </thead>
         <tbody class="bg-white text-black">
-        <tr th:each="entry : ${reservationTicketsMap}">
+        <tr th:each="entry : ${reservationTicketsMap}"> <!-- 키:reservation / map ticket이라
+                                                                 key.~ reservation 테이블값 / value.~~는 ticket의 값들 !-->
             <td class="border px-4 py-2" th:text="${entry.key.date}">예약날짜</td>
             <td class="border px-4 py-2" th:text="${entry.key.id}">예약번호</td>
             <td class="border px-4 py-2" th:if="${entry.value.size() > 0}" th:text="${formattedTimesMap[entry.key]?.values?.iterator()?.next()}">상영시간</td>
@@ -108,7 +109,8 @@
                     <span th:if="${!iter.last}">, </span>
                 </span>
             </td>
-            <td class="border px-4 py-2 text-center">
+            <td class="border px-4 py-2 text-center"><!-- 티켓리스트에서 null이 아니면 첫번째 값에서 날짜를 비교해 취소와 취소불가를 나뉨
+                                                            어차피 예약id하나에 똑같은 영화 / 다른 좌석이기에 첫번째 리스트만확인하면 됨!-->
                 <button th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
                         class="px-4 py-2 bg-red-500 text-white" th:text="'취소'" th:onclick="'location.href=\'/cancelReservation/'+entry.key.id+'\'"></button>
                 <span th:if="${entry.value.size() == 0 or (entry.value[0].schedule.date.isBefore(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isBefore(T(java.time.LocalTime).now())))}"
