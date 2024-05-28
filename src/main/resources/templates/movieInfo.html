@@ -7,6 +7,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="/css/movieInfo.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.1/dist/css/themes/splide-skyblue.min.css" rel="stylesheet">
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.0.1/dist/js/splide.min.js"></script>
   <style>
     .p1{font-family : "Black Han Sans", sans-serif;
       font-weight: 400;
@@ -18,6 +21,35 @@
     .disabled {
       background-color: gray !important;
       cursor: not-allowed !important;
+    }
+
+
+
+
+    .thumbnails {
+        display: flex;
+        margin: 1rem auto 0;
+        padding: 0;
+        justify-content: center;
+    }
+    .thumbnail {
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+        list-style: none;
+        margin: 0 0.2rem;
+        cursor: pointer;
+        opacity: 0.3;
+    }
+    .thumbnail img {
+        width: 100%;
+        height: auto;
+    }
+    .splide {
+        margin: 0 auto;
+    }
+    .thumbnail.is-active {
+        opacity: 1;
     }
   </style>
 </head>
@@ -96,9 +128,7 @@
                 </ul>
             </div>
         </div>
-
         </div>
-    </div>
 </nav>
 <div class="container mx-auto mt-4 max-w-screen-xl">
   <div class="flex">
@@ -151,11 +181,49 @@
                     !-->
     </div>
 
-
   </div>
   <div class="mt-4"> <!-- 새 요소: 기존 데이터 아래에 위치 -->
     <h1 th:text="${movieDetails.overview}"></h1>
   </div>
+
+    <section id="main-carousel" class="splide" aria-label="My Awesome Gallery">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide" th:each="image : ${movieDetails.images?.posters}" th:unless="${#lists.isEmpty(movieDetails.images.posters)}">
+                    <img th:src="@{|https://image.tmdb.org/t/p/w500/${image.filePath}|}" alt="${movieDetails.title} image">
+                </li>
+
+                <li class="splide__slide">
+                    <img src="http://placehold.it/300x300" alt="">
+                </li>
+                <li class="splide__slide">
+                    <img src="http://placehold.it/300x300" alt="">
+                </li>
+                <li class="splide__slide">
+                    <img src="http://placehold.it/300x300" alt="">
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <ul id="thumbnails" class="thumbnails">
+<!--        <li class="thumbnail" th:each="image : ${movieDetails.images.posters}" th:unless="${#lists.isEmpty(movieDetails.images.posters)}">-->
+<!--            <img th:src="@{|https://image.tmdb.org/t/p/w500${image.file_path}|}" alt="${movieDetails.title} image">-->
+<!--        </li>-->
+
+        <li class="thumbnail">
+            <img src="http://placehold.it/300x300" alt="">
+        </li>
+        <li class="thumbnail">
+            <img src="http://placehold.it/300x300" alt="">
+        </li>
+        <li class="thumbnail">
+            <img src="http://placehold.it/300x300" alt="">
+        </li>
+    </ul>
+
+
+
 
 </div>
 
@@ -185,6 +253,44 @@
           });
       }
   });
+
+
+
+
+  var splide = new Splide("#main-carousel", {
+      width: 600,
+      height: 300,
+      pagination: false,
+      cover: true
+  });
+
+  const thumbnails = document.getElementsByClassName("thumbnail");
+  let current;
+
+  for (let i = 0; i < thumbnails.length; i++) {
+      initThumbnail(thumbnails[i], i);
+  }
+
+  function initThumbnail(thumbnail, index) {
+      thumbnail.addEventListener("click", function () {
+          splide.go(index);
+      });
+  }
+
+  splide.on("mounted move", function () {
+      var thumbnail = thumbnails[splide.index];
+
+      if ( thumbnail ) {
+          if ( current ) {
+              current.classList.remove( 'is-active' );
+          }
+
+          thumbnail.classList.add( 'is-active' );
+          current = thumbnail;
+      }
+  });
+
+  splide.mount();
 </script>
 </body>
 </html>

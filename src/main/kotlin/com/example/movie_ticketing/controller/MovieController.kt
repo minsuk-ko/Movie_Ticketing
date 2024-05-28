@@ -23,7 +23,8 @@ class MovieController(private val movieService: MovieService,
 
     @GetMapping("/movieInfo/{id}")
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
-        try {val movie = movieRepository.findById(movieId)
+        try {
+            val movie = movieRepository.findById(movieId)
             var state = false
             val movieDetails = movieService.retrieveMovieDetails(movieId)
             val actors = movieService.getCast(movieId)
@@ -32,10 +33,12 @@ class MovieController(private val movieService: MovieService,
             model.addAttribute("state",state)
             model.addAttribute("movieDetails", movieDetails)
             model.addAttribute("actors", actors)
+            model.addAttribute("videos", movieDetails.videos?.results)
+            model.addAttribute("images", movieDetails.images)
             return "movieInfo" // Thymeleaf 뷰 파일 이름
         } catch (e: Exception) {
             model.addAttribute("error", "Movie not found")
-            return "errorView" // 에러 시 보여줄 뷰
+            return "error" // 에러 시 보여줄 뷰
         }
     }
 
@@ -49,7 +52,7 @@ class MovieController(private val movieService: MovieService,
         val movies = movieService.getBoxOffice(currentDate,page)
         model.addAttribute("movies", movies.movies)
         model.addAttribute("currentPage", page)
-        model.addAttribute("totalPages", movies.total_pages)
+        model.addAttribute("totalPages", movies.totalPages)
         return "movie"
     }
 
@@ -62,7 +65,7 @@ class MovieController(private val movieService: MovieService,
         val searchResult = movieService.searchMovies(query, page)
         model.addAttribute("movies", searchResult.movies)
         model.addAttribute("currentPage", page)
-        model.addAttribute("totalPages", searchResult.total_pages)
+        model.addAttribute("totalPages", searchResult.totalPages)
         return "searchResult"
     }
 

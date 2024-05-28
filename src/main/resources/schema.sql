@@ -11,9 +11,8 @@ CREATE TABLE IF NOT EXISTS theater (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS seat (
     id           INT    NOT NULL AUTO_INCREMENT,
-    seatNumber   INT    NOT NULL,
-    theater_id   INT    NOT NULL,
-    isSelected  BOOLEAN,
+    seat_number  INT    NOT NULL,
+    theater_id   INT   NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (theater_id)
     REFERENCES theater (id));
@@ -24,7 +23,7 @@ CREATE TABLE IF NOT EXISTS seat (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS movie (
     id             INT         NOT NULL ,
-    title          VARCHAR(45) NOT NULL,
+    title          TEXT NOT NULL,
     state           BOOLEAN,
     open_date DATE NOT NULL,
      popularity DOUBLE DEFAULT 0.0,
@@ -41,9 +40,9 @@ CREATE TABLE IF NOT EXISTS movie (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS schedule (
     id         INT         NOT NULL AUTO_INCREMENT,
-    start      VARCHAR(15) NOT NULL,
-    end        VARCHAR(15) NOT NULL,
-    date       VARCHAR(20) NOT NULL,
+    start      TIME        NOT NULL,
+    end        TIME        NOT NULL,
+    date       DATE        NOT NULL,
     movie_id            INT         NOT NULL,
     theater_id          INT         NOT NULL,
     PRIMARY KEY (id),
@@ -72,7 +71,7 @@ CREATE TABLE IF NOT EXISTS member (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS reservation (
     id           INT         NOT NULL AUTO_INCREMENT,
-    date         VARCHAR(10) NOT NULL,
+    date         DATE NOT NULL,
     member_id    INT         NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (member_id)
@@ -84,8 +83,7 @@ CREATE TABLE IF NOT EXISTS reservation (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS ticket (
     id           INT         NOT NULL AUTO_INCREMENT,
-    price        INT         NOT NULL,
-    schedule_id         INT         NOT NULL,
+    schedule_id         INT        NOT NULL,
     seat_id             INT         NOT NULL,
     reservation_id      INT         NOT NULL,
     PRIMARY KEY (id),
