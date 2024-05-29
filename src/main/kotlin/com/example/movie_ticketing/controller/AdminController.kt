@@ -1,14 +1,15 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
+import com.example.movie_ticketing.domain.Reservation
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.UserDetails
 
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
@@ -26,10 +27,11 @@ import java.time.format.DateTimeFormatter
 
 @Controller
 class AdminController(
-                      private val memberRepository: MemberRepository,
-                      private val passwordEncoder: PasswordEncoder,
-                      private val ticketRepository: TicketRepository,
-                      private val reservationRepository: ReservationRepository
+    private val memberRepository: MemberRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val ticketRepository: TicketRepository,
+    private val reservationRepository: ReservationRepository,
+    private val ticket: TicketRepository
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -128,6 +130,36 @@ class AdminController(
 
         return "redirect:/admin/member"
     }
+    /*@GetMapping("/admin/adminTheater")
+    fun adminTheater(auth: Authentication,model: Model):String{
+        val userDetails = auth.principal as UserDetails
+        val email = userDetails.username
+        val member = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("No member found with email: $email") }
+        val reservations = reservationRepository.findByMemberId(member.id)
+
+
+        val reservationTicketsMap = reservations.map { reservation ->
+            val tickets = ticketRepository.findByReservation(reservation)
+            reservation to tickets
+        }.toMap() //Map<Reservation, List<Ticket>> 꼴로 변환시킴 즉 키가 reservation,값이 ticket
+
+        println(reservationTicketsMap)
+
+
+        model.addAttribute("reservations", reservations)
+        model.addAttribute("reservationTicketsMap", reservationTicketsMap)
+        model.addAttribute("currentDate", LocalDate.now())
+
+        // 각 티켓의 상영 시간을 'HH:mm' 형식의 문자열로 변환하여 모델에 추가
+        val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
+            entry.value.map { ticket ->
+                val formattedStartTime = ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
+                ticket to formattedStartTime
+            }.toMap()
+        }  //안그러면 10:00:00이런 방식으로 뜸
+        model.addAttribute("formattedTimesMap", formattedTimesMap)
+        return "mypage2"
+    }*/
 
   @PostMapping("/admin/memberinfo/change-password")
   fun change(@RequestParam password:String,
@@ -147,6 +179,55 @@ class AdminController(
       return "redirect:/admin/member"
 
   }
+    @GetMapping("/admin/adminTheater")
+    fun getAdminTheater(auth: Authentication, model: Model): String {
+        val userDetails = auth.principal as UserDetails
+        val email = userDetails.username
+        val currentMember = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("해당 이메일을 가진 멤버를 찾을 수 없습니다: $email") }
+
+        // 모든 멤버를 가져옵니다
+        val allMembers = memberRepository.findAll()
+
+        // 모든 멤버의 모든 예약을 가져옵니다
+        val allReservations = allMembers.flatMap { member ->
+            reservationRepository.findByMemberId(member!!.id)
+        }.sortedBy { it.id } // 예약을 ID 기준으로 정렬합니다. 필요에 따라 다른 기준으로 변경할 수 있습니다.
+
+        // 예약과 티켓을 매핑하기 위한 맵
+        val reservationTicketsMap = allReservations.associateWith { reservation ->
+            ticketRepository.findByReservationId(reservation.id)
+        }
+
+        println(reservationTicketsMap)
+
+        model.addAttribute("allReservations", allReservations)
+        model.addAttribute("reservationTicketsMap", reservationTicketsMap)
+        model.addAttribute("currentDate", LocalDate.now())
+
+        // 각 티켓의 상영 시간을 포맷합니다
+        val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
+            entry.value.associateWith { ticket ->
+                ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
+            }
+        }
+        model.addAttribute("formattedTimesMap", formattedTimesMap)
+
+        // 관별 상영 일정을 구분하여 모델에 추가
+        val theaterSchedules = mutableMapOf<Int, List<Reservation>>()
+        for (i in 1..7) {
+            val theaterReservations = allReservations.filter { reservation ->
+                reservationTicketsMap[reservation]?.any { ticket -> ticket.schedule.theater.id == i } ?: false
+            }
+            theaterSchedules[i] = theaterReservations
+        }
+        model.addAttribute("theaterSchedules", theaterSchedules)
+
+        return "adminTheater"
+    }
+
+
+
+
 
     @Transactional
     @PostMapping("/admin/cancelReservation")
