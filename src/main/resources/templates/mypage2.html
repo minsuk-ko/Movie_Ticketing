@@ -118,7 +118,8 @@
             </td>
             <td class="border px-4 py-2 text-center">
                         <form th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
-                              method="post" th:action="@{/user/cancelReservation}">
+                              method="post" th:action="@{/user/cancelReservation}"
+                              onsubmit="return confirmCancel();">
                         <input type="hidden" name="reservationId" th:value="${entry.key.id}"/>
                     <button type="submit" class="px-4 py-2 bg-red-500 text-white">취소</button>
                 </form>
@@ -146,6 +147,10 @@
         if (selectedValue) {
             window.location.href = selectedValue;
         }
+    }
+
+    function confirmCancel() {
+        return confirm('정말로 예약을 취소하시겠습니까?');
     }
 </script>
 </body>

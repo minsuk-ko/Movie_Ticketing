@@ -188,7 +188,8 @@
                 </td>
                 <td class="border px-4 py-2 text-center">
                     <form th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
-                          method="post" th:action="@{/admin/cancelReservation}">
+                          method="post" th:action="@{/admin/cancelReservation}"
+                          onsubmit="return confirmCancel();">  <!-- 이거를 통해서 확인 누르면 취소되고 취소 누르면 취소x-->
                         <input type="hidden" name="reservationId" th:value="${entry.key.id}"/>
                         <input type="hidden" name="memberId" th:value="${member.id}">
                         <button type="submit" class="px-4 py-2 bg-red-500 text-white">취소</button>
@@ -203,22 +204,29 @@
 </div>
     <script>
 
-    // 마이페이지 메뉴 Dropdown2 관리자용
-    document.getElementById("menuButton2").addEventListener("click", function() {
-        const dropdownMenu = document.getElementById("dropdownMenu2");
-        if(dropdownMenu.classList.contains("hidden")) {
-            dropdownMenu.classList.remove("hidden");
-        } else {
-            dropdownMenu.classList.add("hidden");
+        // 마이페이지 메뉴 Dropdown2 관리자용
+        document.getElementById("menuButton2").addEventListener("click", function () {
+            const dropdownMenu = document.getElementById("dropdownMenu2");
+            if (dropdownMenu.classList.contains("hidden")) {
+                dropdownMenu.classList.remove("hidden");
+            } else {
+                dropdownMenu.classList.add("hidden");
+            }
+        });
+
+        function navigateToPage() {
+            const select = document.getElementById("pageSelect");
+            const selectedValue = select.value;
+            if (selectedValue) {
+                window.location.href = selectedValue;
+            }
         }
-    });
-    function navigateToPage() {
-        const select = document.getElementById("pageSelect");
-        const selectedValue = select.value;
-        if (selectedValue) {
-            window.location.href = selectedValue;
+
+
+            function confirmCancel() {
+            return confirm('정말로 예약을 취소하시겠습니까?');
         }
-    }
+
 </script>
 </body>
 </html>
