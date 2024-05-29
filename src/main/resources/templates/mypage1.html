@@ -91,7 +91,13 @@
 
   <!-- Modify Member Information Section -->
   <div class="w-1/2 flex flex-col items-center justify-center bg-white p-8">
-    <a href="mypage2">예매내역 조회</a>
+      <div class="sidebar mb-4">
+          <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+              <option value="#">페이지 선택</option>
+              <option value="/user/mypage1">회원 정보변경</option>
+              <option value="/user/mypage2">회원 예매내역</option>
+          </select>
+      </div>
     <h1 class="text-xl font-bold mb-8">회원정보변경</h1>
 
     <form action="update-password" method="post" id="modifyForm" class="w-full max-w-lg">
@@ -192,6 +198,13 @@
           dropdownMenu.classList.add("hidden");
       }
   });
+  function navigateToPage() {
+      const select = document.getElementById("pageSelect");
+      const selectedValue = select.value;
+      if (selectedValue) {
+          window.location.href = selectedValue;
+      }
+  }
 </script>
 
 </body>

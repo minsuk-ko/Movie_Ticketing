@@ -81,6 +81,13 @@
     </div>
 </nav>
 <div class="bg-gray-800 px-4 py-2 text-white">
+    <div class="sidebar mb-4">
+        <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+            <option value="#">페이지 선택</option>
+            <option value="/user/mypage1">회원 정보변경</option>
+            <option value="/user/mypage2">회원 예매내역</option>
+        </select>
+    </div>
   <h2 class="text-xl">예약내역조회</h2>
   <h1>만약 영화 상영 당일날, 취소가 불가능합니다.</h1>
 </div>
@@ -109,10 +116,12 @@
                     <span th:if="${!iter.last}">, </span>
                 </span>
             </td>
-            <td class="border px-4 py-2 text-center"><!-- 티켓리스트에서 null이 아니면 첫번째 값에서 날짜를 비교해 취소와 취소불가를 나뉨
-                                                            어차피 예약id하나에 똑같은 영화 / 다른 좌석이기에 첫번째 리스트만확인하면 됨!-->
-                <button th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
-                        class="px-4 py-2 bg-red-500 text-white" th:text="'취소'" th:onclick="'location.href=\'/cancelReservation/'+entry.key.id+'\'"></button>
+            <td class="border px-4 py-2 text-center">
+                        <form th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
+                              method="post" th:action="@{/user/cancelReservation}">
+                        <input type="hidden" name="reservationId" th:value="${entry.key.id}"/>
+                    <button type="submit" class="px-4 py-2 bg-red-500 text-white">취소</button>
+                </form>
                 <span th:if="${entry.value.size() == 0 or (entry.value[0].schedule.date.isBefore(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isBefore(T(java.time.LocalTime).now())))}"
                       class="text-gray-500" th:text="'취소불가'"></span>
             </td>
@@ -131,6 +140,13 @@
             dropdownMenu.classList.add("hidden");
         }
     });
+    function navigateToPage() {
+        const select = document.getElementById("pageSelect");
+        const selectedValue = select.value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
+    }
 </script>
 </body>
 </html>

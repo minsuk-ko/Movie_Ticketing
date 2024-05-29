@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
@@ -68,22 +69,31 @@ class ReservationController(
         return "redirect:/reservationComplete"
     }
 
-    @PostMapping("/cancelReservation")
-    fun cancelReservation(ticketId: Int, result: BindingResult): String {
+    @Transactional
+    @PostMapping("/user/cancelReservation")
+    fun cancelReservation(@RequestParam reservationId: Int,@AuthenticationPrincipal user: User): String {
+        val email = user.username
+        val member = memberRepository.findByEmail(email)
+        if (member.isPresent) {
+            val reservation = reservationRepository.findById(reservationId)
+            if (reservation.isPresent) {
+                val tickets= ticketRepository.findByReservationId(reservationId)
+                tickets.forEach { ticket ->
+                    ticketRepository.delete(ticket)
+                }
+                reservationRepository.deleteById(reservationId)
+            }
 
-        if (result.hasErrors()) {
-            return "redirect:/reservation"
-        }
 
-        val ticket = ticketRepository.findById(ticketId)
-            .orElseThrow { IllegalArgumentException("error") }
 
-        ticketRepository.delete(ticket)
-
-        return "redirect:/mypage2"
+        return "redirect:/user/mypage2"}
+        return "redirect:/reservation"
     }
     @GetMapping("/reservationComplete")
-    fun complete(model: Model):String{
+    fun complete(model: Model, @AuthenticationPrincipal user: User):String{
+        val email = user.username
+        val member = memberRepository.findByEmail(email).orElseThrow()
+        model.addAttribute("member",member)
         return "reservationComplete"
     }
 }

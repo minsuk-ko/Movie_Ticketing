@@ -57,7 +57,7 @@ fun viewReservation(model: Model):String{
         }
     )
 
-    // LocalTime을 HH:mm 형식으로 변환하기 위한 포매터
+    // LocalTime을 HH:mm 형식으로 변환하기 위한 포매터 우리 눈에는 HH:MM으로 보임
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     val formattedSchedules = schedules.map { schedule ->
         mapOf(
