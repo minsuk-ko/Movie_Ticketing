@@ -145,7 +145,13 @@
                     <li role="menuitem"
                         class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
             transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/??">미정</a>
+                        <a href="/admin/??">상영관 관리</a>
+                    </li>
+
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/??">영화 관리</a>
                     </li>
                 </ul>
             </div>
@@ -183,10 +189,8 @@
             <td th:text="${member.name}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">Name</td>
             <td th:text="${member.role}" style="border: 1px solid #ddd; max-width: 500px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">role</td>
             <td class = "last-column"><!--    js함수를 통해서 id전달 및 팝업뜨게하기  !-->
-            <button class="delete-button no-border" style="white-space: nowrap" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
-            <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
-                th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
-                사실상 onclick="deleteMember(-->
+            <button class="delete-button no-border" style="white-space: nowrap" th:onclick="'memberinfo(\'' + ${member.id} + '\');'">회원 상세정보</button>
+
             </td>
           </tr>
 
@@ -245,14 +249,16 @@
 </div>
 
 <script>
-  function deleteMember(memberId) {
-    // confirm 함수를 사용하여 사용자에게 확인 요청
-    //
-    if (confirm('해당 회원을 탈퇴시키겠습니까?')) {
-      // 사용자가 '예'를 선택한 경우, 회원 탈퇴 처리를 위해 URL로 요청을 보냄 =>GETMAPPING
-      window.location.href = '/admin/member/' + memberId;
+    /*
+
+
+     */
+
+    function memberinfo(memberId) {
+            window.location.href = '/admin/memberinfo/' + memberId;
+        // member info로 보냄
     }
-  }
+
   // 마이페이지 메뉴 Dropdown2 관리자용
   document.getElementById("menuButton2").addEventListener("click", function() {
       const dropdownMenu = document.getElementById("dropdownMenu2");

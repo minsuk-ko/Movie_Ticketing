@@ -70,9 +70,9 @@ class ScheduleService(private val movieRepository: MovieRepository,
                     if (movie != null )
                         {
                             val schedule = Schedule().apply {
-                                this.start = startTime.toString()
-                                this.end = startTime.plusHours(2).toString()//일단 2시간으로고정
-                                this.date = scheduleDate.toString()
+                                this.start = startTime
+                                this.end = startTime.plusHours(2)//일단 2시간으로고정
+                                this.date = scheduleDate
                                 this.movie = movie
                                 this.theater = theater
                             }

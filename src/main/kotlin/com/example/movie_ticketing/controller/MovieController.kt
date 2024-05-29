@@ -21,7 +21,7 @@ class MovieController(private val movieService: MovieService,
         return "home"
     }
 
-    @GetMapping("/movieInfo/{id}")
+     @GetMapping("/movieInfo/{id}")
     fun showMovieDetails(@PathVariable("id") movieId: Int, model: Model): String {
         try {val movie = movieRepository.findById(movieId)
             var state = false

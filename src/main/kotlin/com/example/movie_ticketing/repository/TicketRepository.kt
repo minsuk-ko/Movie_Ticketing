@@ -22,4 +22,5 @@ interface TicketRepository : JpaRepository<Ticket, Int> {
     //where reservation_id IN (?,?,?.....)형식
     //각각의 예약에 따른 티켓들을 모두 가져올 수있음
     fun findByReservationIn(reservations:List<Reservation>):List<Ticket>
+    fun findByReservationId(reservationId:Int):List<Ticket>
 }

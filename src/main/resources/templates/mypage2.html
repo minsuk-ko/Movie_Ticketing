@@ -81,62 +81,57 @@
     </div>
 </nav>
 <div class="bg-gray-800 px-4 py-2 text-white">
+    <div class="sidebar mb-4">
+        <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+            <option value="#">페이지 선택</option>
+            <option value="/user/mypage1">회원 정보변경</option>
+            <option value="/user/mypage2">회원 예매내역</option>
+        </select>
+    </div>
   <h2 class="text-xl">예약내역조회</h2>
-  <h1>만약 영화 상영 후라면, 취소가 불가능합니다.</h1>
+  <h1>만약 영화 상영 당일날, 취소가 불가능합니다.</h1>
 </div>
-
-<!-- Table -->
 <div class="overflow-x-auto">
-  <table class="table-auto w-full">
-    <thead>
-    <tr class="bg-black">
-      <th class="px-4 py-2">예약번호</th>
-      <th class="px-4 py-2">상영시간</th>
-      <th class="px-4 py-2">영화명</th>
-      <th class="px-4 py-2">좌석번호</th>
-      <th class="px-4 py-2">취소</th>
-    </tr>
-    </thead>
-    <tbody class="bg-white text-black">
-    <tr>
-      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
-      <td class="border px-4 py-2">시간</td>
-      <td class="border px-4 py-2">영화명</td>
-      <td class="border px-4 py-2">좌석번호</td>
-      <td class="border px-4 py-2 text-center">
-        <i class="fas fa-edit">취소</i>
-      </td>
-    </tr>
-    <tr>
-      <td class="border px-4 py-2">xxxx-xxxx-xxxx</td>
-      <td class="border px-4 py-2">시간</td>
-      <td class="border px-4 py-2">영화명</td>
-      <td class="border px-4 py-2">좌석번호</td>
-      <td class="border px-4 py-2 text-center">
-        <i class="fas fa-edit">취소불가</i>
-      </td>
-    </tr>
-    <!-- Repeat for each row based on data -->
-    </tbody>
-  </table>
+    <table class="table-auto w-full">
+        <thead>
+        <tr class="bg-black text-white">
+            <th class="px-4 py-2">예약날짜</th>
+            <th class="px-4 py-2">예약번호</th>
+            <th class="px-4 py-2">상영시간</th>
+            <th class="px-4 py-2">영화명</th>
+            <th class="px-4 py-2">좌석번호</th>
+            <th class="px-4 py-2">예약</th>
+        </tr>
+        </thead>
+        <tbody class="bg-white text-black">
+        <tr th:each="entry : ${reservationTicketsMap}"> <!-- 키:reservation / map ticket이라
+                                                                 key.~ reservation 테이블값 / value.~~는 ticket의 값들 !-->
+            <td class="border px-4 py-2" th:text="${entry.key.date}">예약날짜</td>
+            <td class="border px-4 py-2" th:text="${entry.key.id}">예약번호</td>
+            <td class="border px-4 py-2" th:if="${entry.value.size() > 0}" th:text="${formattedTimesMap[entry.key]?.values?.iterator()?.next()}">상영시간</td>
+            <td class="border px-4 py-2" th:if="${entry.value.size() > 0}" th:text="${entry.value[0].schedule.movie.title}">영화명</td>
+            <td class="border px-4 py-2">
+               <span th:each="ticket, iter : ${entry.value}">
+                    <span th:text="${ticket.seat.seatNumber}+'번'"></span>
+                    <span th:if="${!iter.last}">, </span>
+                </span>
+            </td>
+            <td class="border px-4 py-2 text-center">
+                        <form th:if="${entry.value.size() > 0 and (entry.value[0].schedule.date.isAfter(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isAfter(T(java.time.LocalTime).now())))}"
+                              method="post" th:action="@{/user/cancelReservation}"
+                              onsubmit="return confirmCancel();">
+                        <input type="hidden" name="reservationId" th:value="${entry.key.id}"/>
+                    <button type="submit" class="px-4 py-2 bg-red-500 text-white">취소</button>
+                </form>
+                <span th:if="${entry.value.size() == 0 or (entry.value[0].schedule.date.isBefore(currentDate) or (entry.value[0].schedule.date.isEqual(currentDate) and entry.value[0].schedule.start.isBefore(T(java.time.LocalTime).now())))}"
+                      class="text-gray-500" th:text="'취소불가'"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
-<!-- Pagination -->
-<div class="flex justify-center space-x-2 my-4">
-  <button class="px-4 py-2 bg-gray-600"><</button>
-  <button class="px-4 py-2 bg-gray-600">1</button>
-  <button class="px-4 py-2 bg-gray-600">2</button>
-  <button class="px-4 py-2 bg-gray-600">3</button>
-  <button class="px-4 py-2 bg-gray-600">></button>
-</div>
 <script>
-  function scrollFunction() {
-    if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
-      document.getElementById("navbar").style.padding = "1rem 0";
-    } else {
-      document.getElementById("navbar").style.padding = "2rem 0";
-    }
-  }
     // 마이페이지 메뉴 Dropdown
     document.getElementById("menuButton").addEventListener("click", function() {
         const dropdownMenu = document.getElementById("dropdownMenu");
@@ -146,6 +141,17 @@
             dropdownMenu.classList.add("hidden");
         }
     });
+    function navigateToPage() {
+        const select = document.getElementById("pageSelect");
+        const selectedValue = select.value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
+    }
+
+    function confirmCancel() {
+        return confirm('정말로 예약을 취소하시겠습니까?');
+    }
 </script>
 </body>
 </html>
