@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>회원 정보</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -38,16 +40,6 @@
             box-sizing: border-box; /* Ensures padding does not add to width */
         }
 
-        .red-button {
-            background-color: red;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            width: 100%; /* Button width matches input fields */
-            box-sizing: border-box; /* Ensures padding does not add to width */
-            border-radius: 4px; /* Adds slight rounding to the button */
-        }
 
         form {
             display: flex;
@@ -66,7 +58,19 @@
             }
         }
 
+        #cinema_main {
+            margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
+            display: flex;
+            flex-direction: row;
 
+            overflow: hidden; /* 내용이 테두리를 넘어갈 경우를 방지합니다. */
+        }
+        .p1{font-family : "Black Han Sans", sans-serif;
+            font-weight: 400;
+            font-style: normal;}
+        .p2{font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;}
         #navbar a {
             font-weight: bold;
             font-size: 18px;
@@ -82,69 +86,171 @@
         nav ul ul{display: none; background: #1f2937}
         nav ul li:hover ul{display:block; position:absolute;}
         nav ul ul li{width:100px; height:30px;}
+
     </style>
 </head>
 <body>
 
-<nav id="navbar" class="bg-gray-800 p-2 mt-0 w-full">
-    <div class="container mx-auto flex justify-between">
-        <div class="text-white font-bold text-2xl">
+<nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+        bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
+    <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
+        <a href="/"
+           class="mr-4 block cursor-pointer py-1 p1 font-medium text-2xl">
             CINE
-        </div>
-        <div class="flex mt-2">
-            <ul>
-                <li>
-                    <a href="movie" class="text-gray-200 text-sm hover:text-white mr-4">영화</a>
+        </a>
+        <div class="black justify-end ">
+            <ul class="flex flex-row gap-2 mb-0 mt-0 flex-row items-center gap-6">
+                <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
+                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                    </svg>
+                    <a href="/movie" class="flex items-center p2 text-xl">
+                        영화
+                    </a>
                 </li>
-                <li>
-                    <a href="#" class="text-gray-200 text-sm hover:text-white mr-4">예매</a>
-                </li>
-                <li>
-                    <a href="logout" class="text-gray-200 text-sm hover:text-white mr-4">로그아웃</a>
-                </li>
-                <li>
-                    <a href="adminMember" class="text-gray-200 text-sm hover:text-white">관리자페이지</a>
-
+                <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+                        <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                        <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+                    </svg>
+                    <a href="/reservation" class="flex items-center p2 text-xl">
+                        예매
+                    </a>
                 </li>
             </ul>
         </div>
-    </div>
-</nav>
-<div id="cinema_main">
-    <div class="container1">
-        <div class="userinfo">
-            <div class = main-content>
-                <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
-                    회원 정보
-                </div>
-                <form id="user-form">
-                <label for="user_id">회원id</label>
-                <input type="text" id="user_id" value="3">
+        <div class="flex items-center gap-x-1">
+            <a href="/login" sec:authorize="isAnonymous"
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>로그인</span>
+            </a>
+            <a href="/logout" sec:authorize="isAuthenticated"
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>로그아웃</span>
+            </a>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <button id="menuButton2" data-ripple-light="true" data-popover-target="menu"
+                        class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
+            shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                    관리자페이지
+                </button>
+                <ul id="dropdownMenu2" role="menu" data-popover="menu" data-popover-placement="bottom"
+                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
+        text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/member">회원관리</a>
+                    </li>
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/??">상영관 관리</a>
+                    </li>
 
-                <label for="name">이름</label>
-                <input type="text" id="name" value="정주현">
-
-                <label for="age">나이</label>
-                <input type="text" id="age" value="20">
-
-                <label for="role">권한</label>
-                <input type="text" id="role" value="ROLE_USER">
-
-                <label for="email">Email</label>
-                <input type="email" id="email" value="wngusqt@naver.com">
-
-
-
-                    <button class="delete-button" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
-                    <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
-                        th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
-                        사실상 onclick="deleteMember(-->
-
-                </form>
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/??">영화 관리</a>
+                    </li>
+                </ul>
             </div>
+
         </div>
     </div>
-    </div>
+</nav>
+    <div class="main-content">
+<div class="container mx-auto mt-4 ">
 
+        <div class="sidebar mb-4">
+            <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+                <option value="#">페이지 선택</option>
+                <option th:value="@{/admin/memberinfo/{id}(id=${member.id})}">회원 상세정보</option>
+                <option th:value="@{/admin/memberinfo2/{id}(id=${member.id})}">회원 예매정보</option>
+            </select>
+        </div>
+
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+        <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+            회원 정보
+        </div>
+        <form id="user-form" action="/admin/memberinfo/change-password" method="post">
+            <label for="user_id">회원id</label>
+            <input type="text" id="user_id" name="id" th:value="${member.id}" readonly class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <label for="name">이름</label>
+            <input type="text" th:value="${member.name}" id="name" readonly class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <label for="age">나이</label>
+            <input type="text" id="age" th:value="${member.age}" readonly class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" th:value="${member.email}" readonly class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <label for="role">권한</label>
+            <input type="text" id="role" th:value="${member.role}" readonly class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <label for="password">비밀번호 변경</label>
+            <input type="text" id="password" name="password" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+
+            <div class="flex items-center justify-between">
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button" th:onclick="'changePw(\'' + ${member.id} + '\');'">
+                    변경
+                </button>
+            </div>
+
+        </form>
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+        <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
+th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
+사실상 onclick="deleteMember(-->
+    </div>
+    </div>
+    </div>
+</div>
+<script>
+    function changePw(memberId) {
+        const password = document.getElementById('password').value;
+        const form = document.getElementById('user-form');
+
+        if (password) {
+            if (confirm('비밀번호를 변경시키겠습니까?')) {
+                form.action = `/admin/memberinfo/change-password`;
+                form.method = 'post';
+                alert('비밀번호 변경 완료');
+                form.submit(); // 폼 제출
+            }
+        } else { alert('비밀번호를 입력하세요')
+        }
+    }
+        function deleteMember(memberId) {
+            // confirm 함수를 사용하여 사용자에게 확인 요청
+            //
+            if (confirm('해당 회원을 탈퇴시키겠습니까?')) {
+                // 사용자가 '예'를 선택한 경우, 회원 탈퇴 처리를 위해 URL로 요청을 보냄 =>GETMAPPING
+              alert('회원 탈퇴 완료')
+                window.location.href = '/admin/member/delete/' + memberId;
+            }
+        }
+
+    // 마이페이지 메뉴 Dropdown2 관리자용
+    document.getElementById("menuButton2").addEventListener("click", function() {
+        const dropdownMenu = document.getElementById("dropdownMenu2");
+        if(dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.remove("hidden");
+        } else {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
+    function navigateToPage() {
+        const select = document.getElementById("pageSelect");
+        const selectedValue = select.value;
+        if (selectedValue) {
+            window.location.href = selectedValue;
+        }
+    }
+</script>
 </body>
 </html>

@@ -3,6 +3,7 @@ package com.example.movie_ticketing.controller
 import MemberForm
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
+import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
 import com.example.movie_ticketing.service.CustomUserDetailsService
 import com.example.movie_ticketing.service.EmailService
@@ -27,6 +28,8 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.security.Principal
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Controller
 class MemberController(
@@ -34,7 +37,9 @@ class MemberController(
     private val memberRepository: MemberRepository,
     private val passwordEncoder: PasswordEncoder,
     private val userDetailsService: CustomUserDetailsService,
-    private val emailService: EmailService
+    private val emailService: EmailService,
+    private val reservationRepository: ReservationRepository,
+    private val ticketRepository: TicketRepository
 ) {
 
     /**
@@ -80,7 +85,29 @@ fun mypage2(auth: Authentication,model: Model):String{
     val userDetails = auth.principal as UserDetails
     val email = userDetails.username
     val member = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("No member found with email: $email") }
-    model.addAttribute("member",member)
+    val reservations = reservationRepository.findByMemberId(member.id)
+
+
+    val reservationTicketsMap = reservations.map { reservation ->
+        val tickets = ticketRepository.findByReservation(reservation)
+        reservation to tickets
+    }.toMap() //Map<Reservation, List<Ticket>> 꼴로 변환시킴 즉 키가 reservation,값이 ticket
+
+    println(reservationTicketsMap)
+
+
+    model.addAttribute("reservations", reservations)
+    model.addAttribute("reservationTicketsMap", reservationTicketsMap)
+    model.addAttribute("currentDate", LocalDate.now())
+
+    // 각 티켓의 상영 시간을 'HH:mm' 형식의 문자열로 변환하여 모델에 추가
+    val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
+        entry.value.map { ticket ->
+            val formattedStartTime = ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
+            ticket to formattedStartTime
+        }.toMap()
+    }  //안그러면 10:00:00이런 방식으로 뜸
+    model.addAttribute("formattedTimesMap", formattedTimesMap)
     return "mypage2"
 }
     @PostMapping("/update-password")
@@ -97,6 +124,9 @@ fun mypage2(auth: Authentication,model: Model):String{
         println("이메일로 멤버 찾기")
         memberRepository.updatePassword(member.id,newPw)
         println("비밀번호 업데이트 완료")
+
+
+
 
         /**
          * return "mypage1"

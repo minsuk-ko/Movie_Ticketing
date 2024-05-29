@@ -7,7 +7,7 @@ import java.time.LocalDate
 class Reservation{
 
     // 예약 날짜
-    lateinit var date : String
+    lateinit var date : LocalDate
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")

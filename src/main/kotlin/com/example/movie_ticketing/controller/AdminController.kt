@@ -4,26 +4,30 @@ import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
-import com.example.movie_ticketing.service.CustomUserDetailsService
-import com.example.movie_ticketing.service.MemberService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
+import org.springframework.security.core.userdetails.User
+
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
+import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @Controller
-class AdminController(private val memberService: MemberService,
+class AdminController(
                       private val memberRepository: MemberRepository,
                       private val passwordEncoder: PasswordEncoder,
-                      private val userDetailsService: CustomUserDetailsService,
                       private val ticketRepository: TicketRepository,
                       private val reservationRepository: ReservationRepository
 ) {
@@ -47,11 +51,42 @@ class AdminController(private val memberService: MemberService,
     //임시 페이지 회원 누르면 여기링크 들어감
     @GetMapping("/admin/memberinfo/{id}")
     fun memberInfo(@PathVariable id :Int,model: Model) : String{
-        val member = memberRepository.findById(id)
+        val member = memberRepository.findById(id).orElseThrow { IllegalArgumentException("Invalid member Id: $id") }
 
         model.addAttribute("member",member)
 
-        return "adminMeberInfo"
+        return "adminMemberInfo"
+    }
+    @GetMapping("/admin/memberinfo2/{id}")
+    fun memberInfo2(@PathVariable id :Int,model: Model) : String{
+        val member = memberRepository.findById(id)
+        if(member.isPresent)
+        { val reservations =reservationRepository.findByMemberId(id)
+
+            val reservationTicketsMap = reservations.map { reservation ->
+                val tickets = ticketRepository.findByReservation(reservation)
+                reservation to tickets
+            }.toMap() //Map<Reservation, List<Ticket>> 꼴로 변환시킴 즉 키가 reservation,값이 ticket
+
+            println(reservationTicketsMap)
+
+
+            model.addAttribute("reservations", reservations)
+            model.addAttribute("reservationTicketsMap", reservationTicketsMap)
+            model.addAttribute("currentDate", LocalDate.now())
+            model.addAttribute("member", member.get()) // 멤버 id쉽게꺼낼려고
+
+            // 각 티켓의 상영 시간을 'HH:mm' 형식의 문자열로 변환하여 모델에 추가
+            val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
+                entry.value.map { ticket ->
+                    val formattedStartTime = ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    ticket to formattedStartTime
+                }.toMap()
+            }  //안그러면 10:00:00이런 방식으로 뜸
+            model.addAttribute("formattedTimesMap", formattedTimesMap)
+        }else{
+            return "/admin/member"}
+        return "adminMemberInfo2"
     }
 
     /**
@@ -59,7 +94,7 @@ class AdminController(private val memberService: MemberService,
      */
     @Transactional // 2개이상의 쿼리를 묶어서 db에 전송해야하므로 사용
     //만약 에러가 발생할 경우 자동으로 모든과정을 원래대로 되돌려 놓음
-    @GetMapping("/admin/member/{id}")
+    @GetMapping("/admin/member/delete/{id}")
     fun deleteMember(@PathVariable id : Int) : String {
 
         /**
@@ -94,5 +129,40 @@ class AdminController(private val memberService: MemberService,
         return "redirect:/admin/member"
     }
 
+  @PostMapping("/admin/memberinfo/change-password")
+  fun change(@RequestParam password:String,
+             @RequestParam id:Int,
+             redirectAttributes:RedirectAttributes):String{
+
+      val member=memberRepository.findById(id)
+    //멤버 상세보기 버튼을 눌러서 들어가므로 직접 url에 치지않는 이상 null이 아님
+      if(member.isPresent) {
+          val newPw = passwordEncoder.encode(password)
+
+
+          memberRepository.updatePassword(id,newPw)//어차피 멤버 id랑 같은 id
+          redirectAttributes.addAttribute("id", id)
+          return "redirect:/admin/memberinfo/{id}"
+      }
+      return "redirect:/admin/member"
+
+  }
+
+    @Transactional
+    @PostMapping("/admin/cancelReservation")
+    fun cancelReservation(@RequestParam reservationId: Int,@RequestParam memberId: Int): String {
+        val reservation = reservationRepository.findById(reservationId)
+        if (reservation.isPresent) {
+
+
+
+                val tickets= ticketRepository.findByReservationId(reservationId)
+                 tickets.forEach { ticket ->
+                     ticketRepository.delete(ticket)
+                 }
+                reservationRepository.deleteById(reservationId)
+            }
+
+        return "redirect:/admin/memberinfo2/$memberId"}
 
 }

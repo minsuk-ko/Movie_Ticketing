@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS seat (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS movie (
     id             INT         NOT NULL ,
-    title          VARCHAR(45) NOT NULL,
-    state           BOOLEAN,
+    title          TEXT        NOT NULL,
+    state          BOOLEAN,
     open_date DATE NOT NULL,
      popularity DOUBLE DEFAULT 0.0,
     role       TEXT     NOT NULL,
@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS movie (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS schedule (
     id         INT         NOT NULL AUTO_INCREMENT,
-    start      VARCHAR(15) NOT NULL,
-    end        VARCHAR(15) NOT NULL,
-    date       VARCHAR(20) NOT NULL,
+    start      TIME        NOT NULL,
+    end        TIME        NOT NULL,
+    date       DATE        NOT NULL,
     movie_id            INT         NOT NULL,
     theater_id          INT         NOT NULL,
     PRIMARY KEY (id),
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS member (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS reservation (
     id           INT         NOT NULL AUTO_INCREMENT,
-    date         VARCHAR(10) NOT NULL,
+    date         DATE NOT NULL,
     member_id    INT         NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (member_id)

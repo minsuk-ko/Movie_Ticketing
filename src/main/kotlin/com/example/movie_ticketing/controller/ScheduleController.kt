@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 
 @Controller
@@ -44,7 +45,7 @@ fun viewReservation(model: Model):String{
 
     val currentDate = LocalDate.now()
     val endDate = currentDate.plusWeeks(2)  // 현재로부터 2주 후의 날짜
-    val schedules =  scheduleRepository.findByDateBetween(currentDate.toString(),endDate.toString())// 리포지토리에서 2주치 꺼내오기
+    val schedules =  scheduleRepository.findByDateBetween(currentDate,endDate)// 리포지토리에서 2주치 꺼내오기
     // 영화별로 중복을 제거한 리스트 생성
     val uniqueMovies = schedules.map { it.movie }.distinctBy { it.id } //이래야지 리스트에는 상영하는 영화만 보임
 
@@ -55,10 +56,23 @@ fun viewReservation(model: Model):String{
             ticketRepository.findBySchedule(schedule).map { it.seat.seatNumber }
         }
     )
+
+    // LocalTime을 HH:mm 형식으로 변환하기 위한 포매터 우리 눈에는 HH:MM으로 보임
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
+    val formattedSchedules = schedules.map { schedule ->
+        mapOf(
+            "id" to schedule.id,
+            "date" to schedule.date,
+            "start" to schedule.start.format(timeFormatter),
+            "end" to schedule.end.format(timeFormatter),
+            "movie" to schedule.movie,
+            "theater" to schedule.theater
+        )
+    }
     println(occupiedSeatsMap)
     model.addAttribute("occupiedSeatsMap", occupiedSeatsMap) // 예약된 좌석 정보 추가
     model.addAttribute("uniqueMovies",uniqueMovies)
-    model.addAttribute("schedules", schedules)  // 모델에 스케줄 리스트 추가
+    model.addAttribute("schedules", formattedSchedules)  // 모델에 스케줄 리스트 추가
     return "reservation"  // 타임리프를 사용하는 뷰의 이름
 
 }
