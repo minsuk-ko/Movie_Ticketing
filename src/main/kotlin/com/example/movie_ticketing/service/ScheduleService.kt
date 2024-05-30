@@ -5,6 +5,7 @@ import com.example.movie_ticketing.domain.Theater
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ScheduleRepository
 import com.example.movie_ticketing.repository.TheaterRepository
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate
@@ -32,6 +33,7 @@ class ScheduleService(private val movieRepository: MovieRepository,
             }
         }
     }
+
 
 
 
@@ -99,6 +101,11 @@ class ScheduleService(private val movieRepository: MovieRepository,
         return movie!!.openDate.isBefore(reservationDate) //movie를 찾았으면 무조건 null이아님
         //오픈데이트가 현재 날짜보다 이전일경우 트루를 반환 if문안에 넣으면 될듯
     }
+
+    fun getSchedulesByTheaterId(theaterId: Int): List<Schedule> {
+        return scheduleRepository.findByTheaterId(theaterId)
+    }
+
 
 
 

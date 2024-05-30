@@ -168,218 +168,166 @@
             <label for="calendar">날짜: </label>
             <input type="date" id="calendar" name="calendar" value="2024" />
         </div>
-        <div class="tabs">
-            <button class="tab-button" onclick="changeTab(1)">1관</button>
-            <button class="tab-button" onclick="changeTab(2)">2관</button>
-            <button class="tab-button" onclick="changeTab(3)">3관</button>
-            <button class="tab-button" onclick="changeTab(4)">4관</button>
-            <button class="tab-button" onclick="changeTab(5)">5관</button>
-            <button class="tab-button" onclick="changeTab(6)">6관</button>
-            <button class="tab-button" onclick="changeTab(7)">7관</button>
-        </div>
+        <div class="container mx-auto my-8">
+            <h1 class="text-2xl font-bold mb-4">상영관 정보</h1>
+            <div class="tabs">
+                <a th:href="@{/admin/adminTheater/1}" class="tab-button" th:classappend="${theaterId == 1} ? 'active' : ''">1관</a>
+                <a th:href="@{/admin/adminTheater/2}" class="tab-button" th:classappend="${theaterId == 2} ? 'active' : ''">2관</a>
+                <a th:href="@{/admin/adminTheater/3}" class="tab-button" th:classappend="${theaterId == 3} ? 'active' : ''">3관</a>
+                <a th:href="@{/admin/adminTheater/4}" class="tab-button" th:classappend="${theaterId == 4} ? 'active' : ''">4관</a>
+                <a th:href="@{/admin/adminTheater/5}" class="tab-button" th:classappend="${theaterId == 5} ? 'active' : ''">5관</a>
+                <a th:href="@{/admin/adminTheater/6}" class="tab-button" th:classappend="${theaterId == 6} ? 'active' : ''">6관</a>
+                <a th:href="@{/admin/adminTheater/7}" class="tab-button" th:classappend="${theaterId == 7} ? 'active' : ''">7관</a>
+            </div>
 
-        <div id="tab-content-1" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[1]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+            <!-- 특정 상영관의 스케줄을 출력 -->
+            <div class="tab-content active">
+                <h2 th:text="'상영관 ' + ${theaterId} + ' 정보'"></h2>
+                <table class="min-w-full bg-white">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="py-3 px-6">상영관 id</th>
+                        <th scope="col" class="py-3 px-6">영화 이름</th>
+                        <th scope="col" class="py-3 px-6">예약된 좌석 수</th>
+                        <th scope="col" class="py-3 px-6">상영 시작 시간</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="schedule : ${schedules}">
+                    <tr>
+                        <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>
+                        <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>
+                        <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>
+                        <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <div id="tab-content-2" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[2]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div id="tab-content-2" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules2}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
 
-        <div id="tab-content-3" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[3]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--                    <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
-        <div id="tab-content-4" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[4]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div id="tab-content-3" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules3}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
+<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
+<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
-        <div id="tab-content-5" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[5]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div id="tab-content-4" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules4}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
+<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
+<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
-        <div id="tab-content-6" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[6]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div id="tab-content-5" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules5}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
+<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
+<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
 
-        <div id="tab-content-7" class="tab-content">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="py-3 px-6">예약 ID</th>
-                    <th scope="col" class="py-3 px-6">회원 이메일</th>
-                    <th scope="col" class="py-3 px-6">티켓 정보</th>
-                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="reservation : ${theaterSchedules[7]}" class="bg-white border-b">
-                    <td class="py-4 px-6" th:text="${reservation.id}">1</td>
-                    <td class="py-4 px-6" th:text="${reservation.member.email}">example@example.com</td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket : ${reservationTicketsMap[reservation]}" th:text="${ticket.movieTitle}">영화 제목</li>
-                        </ul>
-                    </td>
-                    <td class="py-4 px-6">
-                        <ul>
-                            <li th:each="ticket, formattedTime : ${formattedTimesMap[reservation]}" th:text="${formattedTime}">08:00</li>
-                        </ul>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+<!--        <div id="tab-content-6" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules6}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
+<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
+<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        <div id="tab-content-7" class="tab-content">-->
+<!--            <table class="w-full text-sm text-left text-gray-500">-->
+<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
+<!--                <tr>-->
+<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
+<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
+<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
+<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody th:each="schedule : ${schedules7}">-->
+<!--                <tr>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
+<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
+<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
+<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
     </div>
 </div>
 <footer class="bg-gray-800">
@@ -394,6 +342,16 @@
     </div>
 </footer>
 <script>
+    function changeTab(tabNumber) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active'));
+        document.getElementById('tab-' + tabNumber).classList.add('active');
+    }
+
+    // Initialize the first tab as active
+    document.addEventListener('DOMContentLoaded', () => {
+        changeTab(1);
+    });
     function changeTab(tabNumber) {
         // 모든 탭 컨텐츠를 숨깁니다.
         var tabs = document.getElementsByClassName('tab-content');

@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 interface TheaterRepository :JpaRepository<Theater, Int> {
     fun existsByName(name:String) :Boolean
     fun findByName(name: String):Theater
+
 }

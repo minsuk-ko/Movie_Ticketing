@@ -5,6 +5,8 @@ import com.example.movie_ticketing.domain.Reservation
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
+import com.example.movie_ticketing.service.ScheduleService
+import com.example.movie_ticketing.service.TicketService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -31,7 +33,8 @@ class AdminController(
     private val passwordEncoder: PasswordEncoder,
     private val ticketRepository: TicketRepository,
     private val reservationRepository: ReservationRepository,
-    private val ticket: TicketRepository
+    private val scheduleService: ScheduleService,
+    private val ticketService: TicketService
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -179,51 +182,7 @@ class AdminController(
       return "redirect:/admin/member"
 
   }
-    @GetMapping("/admin/adminTheater")
-    fun getAdminTheater(auth: Authentication, model: Model): String {
-        val userDetails = auth.principal as UserDetails
-        val email = userDetails.username
-        val currentMember = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("해당 이메일을 가진 멤버를 찾을 수 없습니다: $email") }
 
-        // 모든 멤버를 가져옵니다
-        val allMembers = memberRepository.findAll()
-
-        // 모든 멤버의 모든 예약을 가져옵니다
-        val allReservations = allMembers.flatMap { member ->
-            reservationRepository.findByMemberId(member!!.id)
-        }.sortedBy { it.id } // 예약을 ID 기준으로 정렬합니다. 필요에 따라 다른 기준으로 변경할 수 있습니다.
-
-        // 예약과 티켓을 매핑하기 위한 맵
-        val reservationTicketsMap = allReservations.associateWith { reservation ->
-            ticketRepository.findByReservationId(reservation.id)
-        }
-
-        println(reservationTicketsMap)
-
-        model.addAttribute("allReservations", allReservations)
-        model.addAttribute("reservationTicketsMap", reservationTicketsMap)
-        model.addAttribute("currentDate", LocalDate.now())
-
-        // 각 티켓의 상영 시간을 포맷합니다
-        val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
-            entry.value.associateWith { ticket ->
-                ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
-            }
-        }
-        model.addAttribute("formattedTimesMap", formattedTimesMap)
-
-        // 관별 상영 일정을 구분하여 모델에 추가
-        val theaterSchedules = mutableMapOf<Int, List<Reservation>>()
-        for (i in 1..7) {
-            val theaterReservations = allReservations.filter { reservation ->
-                reservationTicketsMap[reservation]?.any { ticket -> ticket.schedule.theater.id == i } ?: false
-            }
-            theaterSchedules[i] = theaterReservations
-        }
-        model.addAttribute("theaterSchedules", theaterSchedules)
-
-        return "adminTheater"
-    }
 
 
 
@@ -231,19 +190,33 @@ class AdminController(
 
     @Transactional
     @PostMapping("/admin/cancelReservation")
-    fun cancelReservation(@RequestParam reservationId: Int,@RequestParam memberId: Int): String {
+    fun cancelReservation(@RequestParam reservationId: Int, @RequestParam memberId: Int): String {
         val reservation = reservationRepository.findById(reservationId)
         if (reservation.isPresent) {
-
-
-
-                val tickets= ticketRepository.findByReservationId(reservationId)
-                 tickets.forEach { ticket ->
-                     ticketRepository.delete(ticket)
-                 }
-                reservationRepository.deleteById(reservationId)
+            val tickets = ticketRepository.findByReservationId(reservationId)
+            tickets.forEach { ticket ->
+                ticketRepository.delete(ticket)
             }
+            reservationRepository.deleteById(reservationId)
+        }
+        return "redirect:/admin/memberinfo2/$memberId"
+    }
 
-        return "redirect:/admin/memberinfo2/$memberId"}
 
+    @GetMapping("/admin/adminTheater/{id}")
+    fun getAdminTheater(@PathVariable id: Int, model: Model): String {
+        // 특정 상영관의 스케줄을 모델에 추가
+        val schedules = scheduleService.getSchedulesByTheaterId(id)
+        model.addAttribute("schedules", schedules)
+        model.addAttribute("theaterId", id)
+
+        // 특정 상영관의 티켓 데이터를 가져와서 그룹화하고 겹치는 수를 계산
+        val tickets = ticketService.getTicketsByTheaterId(id)
+        val groupedTickets = tickets.groupBy { it.schedule.id }
+        val overlapCounts = groupedTickets.mapValues { it.value.size }
+
+        model.addAttribute("groupedTickets", groupedTickets)
+        model.addAttribute("overlapCounts", overlapCounts)
+        return "adminTheater"
+    }
 }

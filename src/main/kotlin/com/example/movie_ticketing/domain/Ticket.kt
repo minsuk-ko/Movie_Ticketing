@@ -13,6 +13,10 @@ class Ticket {
     lateinit var seat: Seat
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "theater_id")
+    lateinit var theater: Theater
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id")
     lateinit var reservation: Reservation
 
