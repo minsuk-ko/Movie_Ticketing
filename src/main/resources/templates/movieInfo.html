@@ -137,11 +137,13 @@
 
         / 개봉일자 : <span th:text="${movieDetails.openDate}"></span>
       </div>
-      <button th:attr="disabled=${!state}" th:text="${state} ? '예매하기' : '예매 불가'"
-              th:classappend="${!state} ? 'disabled' : ''"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        예매하기
-      </button>  <!--th:attr: html요소의 속성을 동적으로 설정 즉 버튼의 속성을 state값으로 조정가능 state가 false일때 동작
+        <a th:href="${state} ? '/reservation' : '#'">
+            <button th:attr="disabled=${!state}" th:text="${state} ? '예매하기' : '예매 불가'"
+                    th:classappend="${!state} ? 'disabled' : ''"
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                예매하기
+            </button>
+        </a>  <!--th:attr: html요소의 속성을 동적으로 설정 즉 버튼의 속성을 state값으로 조정가능 state가 false일때 동작
                     이유: state가 false이면 disabled =1이어서 이게 동작함
                     th: classappend html 클래스를 추가함 -> ${!state} 가 1이면 'disabled' 아니면 ''
                     => disabled 클래스를 덧붙여서 state가 false일 때 disabled 클래스 속성을 가짐

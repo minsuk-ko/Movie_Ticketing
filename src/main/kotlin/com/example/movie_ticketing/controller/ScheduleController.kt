@@ -44,7 +44,7 @@ fun viewReservation(model: Model):String{
     }
 
     val currentDate = LocalDate.now()
-    val endDate = currentDate.plusWeeks(2)  // 현재로부터 2주 후의 날짜
+    val endDate = currentDate.plusDays(30)  // 현재로부터 30일 후의 날짜
     val schedules =  scheduleRepository.findByDateBetween(currentDate,endDate)// 리포지토리에서 2주치 꺼내오기
     // 영화별로 중복을 제거한 리스트 생성
     val uniqueMovies = schedules.map { it.movie }.distinctBy { it.id } //이래야지 리스트에는 상영하는 영화만 보임

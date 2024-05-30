@@ -5,6 +5,7 @@ import com.example.movie_ticketing.dto.MovieSearchResult
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ScheduleRepository
 import com.example.movie_ticketing.repository.TheaterRepository
+import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.client.RestTemplate
@@ -27,6 +28,7 @@ class SchedulerExcuteService (private val scheduleRepository: ScheduleRepository
 
     private val scheduler = Executors.newScheduledThreadPool(1)
 
+    @PostConstruct//
     fun startDailyTask() {
         val initialDelay = calculateInitialDelay()
         val period = TimeUnit.DAYS.toMillis(1) // 24시간을 밀리초로 계산
