@@ -5,19 +5,17 @@ import jakarta.persistence.*
 @Entity
 class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
+    @JoinColumn(name = "schedule_id", nullable = false)
     lateinit var schedule: Schedule
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
+    @JoinColumn(name = "seat_id", nullable = false)
     lateinit var seat: Seat
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
-    lateinit var theater: Theater
+
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reservation_id")
+    @JoinColumn(name = "reservation_id", nullable = false)
     lateinit var reservation: Reservation
 
     @Id

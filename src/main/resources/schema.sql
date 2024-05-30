@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS ticket (
     theater_id          INT         NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (schedule_id)
+
     REFERENCES schedule (id),
     CONSTRAINT fk_ticket_seat1
     FOREIGN KEY (seat_id)

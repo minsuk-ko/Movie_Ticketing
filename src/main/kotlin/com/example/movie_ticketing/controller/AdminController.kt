@@ -213,10 +213,8 @@ class AdminController(
         // 특정 상영관의 티켓 데이터를 가져와서 그룹화하고 겹치는 수를 계산
         val tickets = ticketService.getTicketsByTheaterId(id)
         val groupedTickets = tickets.groupBy { it.schedule.id }
-        val overlapCounts = groupedTickets.mapValues { it.value.size }
 
         model.addAttribute("groupedTickets", groupedTickets)
-        model.addAttribute("overlapCounts", overlapCounts)
         return "adminTheater"
     }
 }
