@@ -18,7 +18,7 @@ class Schedule {
     lateinit var movie : Movie
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id", nullable = false)
+    @JoinColumn(name = "theater_id",nullable = false)
     lateinit var theater: Theater
 
     @Id

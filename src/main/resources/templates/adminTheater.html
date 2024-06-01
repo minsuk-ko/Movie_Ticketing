@@ -34,7 +34,7 @@
         }
         nav ul ul {
             display: none;
-            background: #1f2937
+            background: #1f2937;
         }
         nav ul li:hover ul {
             display: block;
@@ -54,6 +54,17 @@
             border: 1px solid black; /* 검은색 경계선 */
             padding: 10px 15px; /* 버튼 내부의 여백 */
             cursor: pointer; /* 마우스 오버 시 커서 모양 변경 */
+            border-radius: 10px; /* 모서리 둥글게 */
+            margin-right: 5px; /* 버튼 간 간격 */
+            transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
+        }
+        .tab-button:hover {
+            background-color: #f0f0f0; /* 마우스 오버 시 배경색 */
+        }
+
+        .active-tab-button {
+            background-color: #007bff; /* 선택된 탭 배경색 */
+            color: white; /* 선택된 탭 글자색 */
         }
 
         .tab-content {
@@ -80,10 +91,12 @@
         .sidebar,
         .main-content {
             border: 2px solid black; /* 테두리 스타일과 색상 설정 */
-            width: 700px;
+            width: 100%;
             display: flex;
             flex-direction: column;
             padding: 20px;
+            overflow-y: auto; /* 스크롤바 추가 */
+            height: 700px; /* 고정 높이 설정 */
         }
 
         .sidebar {
@@ -95,6 +108,16 @@
         }
         tr, td {
             white-space: nowrap;
+        }
+        table {
+            border-collapse: collapse; /* 테이블 셀 간의 경계선 중복 제거 */
+            width: 100%; /* 테이블 너비를 100%로 설정 */
+        }
+
+        th, td {
+            border: 1px solid black; /* 각 셀의 경계선을 검은색으로 설정 */
+            padding: 8px; /* 셀 내부 여백 설정 */
+            text-align: left; /* 텍스트 정렬 설정 */
         }
 
         .link {
@@ -120,7 +143,7 @@
                 <li class="flex items-center p-1 font-sans text-sm font-medium leading-normal gap-x-2 text-blue-gray-900">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid"
                          viewBox="0 0 16 16">
-                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                        <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                     </svg>
                     <a href="movie" class="flex items-center p2 text-xl">
                         영화
@@ -171,17 +194,17 @@
         <div class="container mx-auto my-8">
             <h1 class="text-2xl font-bold mb-4">상영관 정보</h1>
             <div class="tabs">
-                <a th:href="@{/admin/adminTheater/1}" class="tab-button" th:classappend="${theaterId == 1} ? 'active' : ''">1관</a>
-                <a th:href="@{/admin/adminTheater/2}" class="tab-button" th:classappend="${theaterId == 2} ? 'active' : ''">2관</a>
-                <a th:href="@{/admin/adminTheater/3}" class="tab-button" th:classappend="${theaterId == 3} ? 'active' : ''">3관</a>
-                <a th:href="@{/admin/adminTheater/4}" class="tab-button" th:classappend="${theaterId == 4} ? 'active' : ''">4관</a>
-                <a th:href="@{/admin/adminTheater/5}" class="tab-button" th:classappend="${theaterId == 5} ? 'active' : ''">5관</a>
-                <a th:href="@{/admin/adminTheater/6}" class="tab-button" th:classappend="${theaterId == 6} ? 'active' : ''">6관</a>
-                <a th:href="@{/admin/adminTheater/7}" class="tab-button" th:classappend="${theaterId == 7} ? 'active' : ''">7관</a>
+                <a href="/admin/adminTheater/1" class="tab-button" data-tab="1">1관</a>
+                <a href="/admin/adminTheater/2" class="tab-button" data-tab="2">2관</a>
+                <a href="/admin/adminTheater/3" class="tab-button" data-tab="3">3관</a>
+                <a href="/admin/adminTheater/4" class="tab-button" data-tab="4">4관</a>
+                <a href="/admin/adminTheater/5" class="tab-button" data-tab="5">5관</a>
+                <a href="/admin/adminTheater/6" class="tab-button" data-tab="6">6관</a>
+                <a href="/admin/adminTheater/7" class="tab-button" data-tab="7">7관</a>
             </div>
 
             <!-- 특정 상영관의 스케줄을 출력 -->
-            <div class="tab-content active">
+            <div id="tab-content-1" class="tab-content active-tab">
                 <h2 th:text="'상영관 ' + ${theaterId} + ' 정보'"></h2>
                 <table class="min-w-full bg-white">
                     <thead>
@@ -192,142 +215,17 @@
                         <th scope="col" class="py-3 px-6">상영 시작 시간</th>
                     </tr>
                     </thead>
-                    <tbody th:each="schedule : ${schedules}">
-                    <tr>
-                        <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>
-                        <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>
-                        <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>
-                        <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>
+                    <tbody>
+                    <tr th:each="schedule : ${schedules}">
+                        <td th:text="${schedule.id}">Movie Title</td>
+                        <td th:text="${schedule.movie.title}">Movie Title</td>
+                        <td th:text="${groupedTickets.containsKey(schedule.id) ? #lists.size(groupedTickets[schedule.id]) : 0}">Tickets Count</td>
+                        <td th:text="${schedule.start}">Start Time</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-
-<!--        <div id="tab-content-2" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules2}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-
-<!--                    <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="tab-content-3" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules3}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
-<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="tab-content-4" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules4}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
-<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="tab-content-5" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules5}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
-<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="tab-content-6" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules6}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
-<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
-
-<!--        <div id="tab-content-7" class="tab-content">-->
-<!--            <table class="w-full text-sm text-left text-gray-500">-->
-<!--                <thead class="text-xs text-gray-700 uppercase bg-gray-50">-->
-<!--                <tr>-->
-<!--                    <th scope="col" class="py-3 px-6">예약 ID</th>-->
-<!--                    <th scope="col" class="py-3 px-6">회원 이메일</th>-->
-<!--                    <th scope="col" class="py-3 px-6">티켓 정보</th>-->
-<!--                    <th scope="col" class="py-3 px-6">상영 시작 시간</th>-->
-<!--                </tr>-->
-<!--                </thead>-->
-<!--                <tbody th:each="schedule : ${schedules7}">-->
-<!--                <tr>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.theater.id}">1</td>-->
-<!--                    <td class="py-3 px-6" th:text="${schedule.movie.title}">영화 이름</td>-->
-<!--                    <td class="py-3 px-6" th:text="${#lists.size(groupedTickets[schedule.id])}">예약된 좌석 수</td>-->
-<!--                <td class="py-3 px-6" th:text="${schedule.start}">상영 시작 시간</td>-->
-<!--                </tr>-->
-<!--                </tbody>-->
-<!--            </table>-->
-<!--        </div>-->
+        </div>
     </div>
 </div>
 <footer class="bg-gray-800">
@@ -344,28 +242,25 @@
 <script>
     function changeTab(tabNumber) {
         const contents = document.querySelectorAll('.tab-content');
-        contents.forEach(content => content.classList.remove('active'));
-        document.getElementById('tab-' + tabNumber).classList.add('active');
+        contents.forEach(content => content.classList.remove('active-tab'));
+        document.getElementById('tab-content-' + tabNumber).classList.add('active-tab');
     }
 
     // Initialize the first tab as active
     document.addEventListener('DOMContentLoaded', () => {
-        changeTab(1);
-    });
-    function changeTab(tabNumber) {
-        // 모든 탭 컨텐츠를 숨깁니다.
-        var tabs = document.getElementsByClassName('tab-content');
-        for (var i = 0; i < tabs.length; i++) {
-            tabs[i].classList.remove('active-tab');
+        const defaultTab = document.querySelector('.tabs .tab-button[data-tab="1"]');
+        if (defaultTab) {
+            changeTab(defaultTab.getAttribute('data-tab'));
         }
+    });
 
-        // 선택한 탭의 내용을 보여줍니다.
-        document.getElementById('tab-content-' + tabNumber).classList.add('active-tab');
-    }
-
-    // 기본적으로 첫 번째 탭을 활성화합니다.
-    document.addEventListener('DOMContentLoaded', function() {
-        changeTab(1);
+    // Add event listeners to tab buttons
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            const tabNumber = event.currentTarget.getAttribute('data-tab');
+            window.location.href = event.currentTarget.href;
+        });
     });
 </script>
 </body>

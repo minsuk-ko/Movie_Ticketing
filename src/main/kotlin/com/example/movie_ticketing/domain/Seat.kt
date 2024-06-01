@@ -8,7 +8,7 @@ class Seat {
     var seatNumber : Int = 0
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
+    @JoinColumn(name = "theater_id" , nullable = false)
     lateinit var theater: Theater
 
     @Id

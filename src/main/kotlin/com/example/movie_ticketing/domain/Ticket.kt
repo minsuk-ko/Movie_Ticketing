@@ -12,11 +12,10 @@ class Ticket {
     @JoinColumn(name = "seat_id", nullable = false)
     lateinit var seat: Seat
 
-
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "reservation_id", nullable = false)
     lateinit var reservation: Reservation
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +23,6 @@ class Ticket {
 
     // ReservationController 의 오류 해결을 위해 constructor 가 아닌 toString 으로 바꾸었음
     override fun toString(): String {
-        return "Ticket(schedule=$schedule, seat=$seat, reservation=$reservation, id=$id)"
+        return "Ticket(schedule=$schedule, seat=$seat, reservation=$reservation,  id=$id)"
     }
 }

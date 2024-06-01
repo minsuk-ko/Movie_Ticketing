@@ -2,6 +2,7 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
 import com.example.movie_ticketing.domain.Reservation
+import com.example.movie_ticketing.domain.Ticket
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
@@ -92,6 +93,23 @@ class AdminController(
         }else{
             return "/admin/member"}
         return "adminMemberInfo2"
+    }
+    @GetMapping("/admin/adminTheater/{id}")
+    fun getAdminTheater(@PathVariable id: Int, model: Model): String {
+        // 특정 상영관의 스케줄을 모델에 추가
+        val schedules = scheduleService.getSchedulesByTheaterId(id)
+        model.addAttribute("schedules", schedules)
+        model.addAttribute("theaterId", id)
+
+        // 특정 상영관의 티켓 데이터를 가져와서 그룹화하고 겹치는 수를 계산
+        val tickets = ticketService.getTicketsByTheaterId(id)
+        val groupedTickets = tickets.groupBy { it.schedule.id }
+
+        // Null 체크 후 처리
+        val safeGroupedTickets = groupedTickets ?: emptyMap<Int, List<Ticket>>()
+
+        model.addAttribute("groupedTickets", safeGroupedTickets)
+        return "adminTheater"
     }
 
     /**
@@ -203,18 +221,7 @@ class AdminController(
     }
 
 
-    @GetMapping("/admin/adminTheater/{id}")
-    fun getAdminTheater(@PathVariable id: Int, model: Model): String {
-        // 특정 상영관의 스케줄을 모델에 추가
-        val schedules = scheduleService.getSchedulesByTheaterId(id)
-        model.addAttribute("schedules", schedules)
-        model.addAttribute("theaterId", id)
 
-        // 특정 상영관의 티켓 데이터를 가져와서 그룹화하고 겹치는 수를 계산
-        val tickets = ticketService.getTicketsByTheaterId(id)
-        val groupedTickets = tickets.groupBy { it.schedule.id }
 
-        model.addAttribute("groupedTickets", groupedTickets)
-        return "adminTheater"
-    }
+
 }

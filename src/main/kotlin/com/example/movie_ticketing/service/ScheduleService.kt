@@ -109,5 +109,4 @@ class ScheduleService(private val movieRepository: MovieRepository,
 
 
 
-
 }
