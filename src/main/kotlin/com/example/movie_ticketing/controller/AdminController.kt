@@ -19,10 +19,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -94,23 +91,26 @@ class AdminController(
             return "/admin/member"}
         return "adminMemberInfo2"
     }
-    @GetMapping("/admin/adminTheater/{id}")
+
+    @GetMapping("admin/adminTheater")
+    fun redirectToDefaultTheater(): String {
+        return "redirect:/admin/adminTheater/1"
+    }
+
+    @GetMapping("admin/adminTheater/{id}")
     fun getAdminTheater(@PathVariable id: Int, model: Model): String {
-        // 특정 상영관의 스케줄을 모델에 추가
         val schedules = scheduleService.getSchedulesByTheaterId(id)
         model.addAttribute("schedules", schedules)
         model.addAttribute("theaterId", id)
 
-        // 특정 상영관의 티켓 데이터를 가져와서 그룹화하고 겹치는 수를 계산
         val tickets = ticketService.getTicketsByTheaterId(id)
         val groupedTickets = tickets.groupBy { it.schedule.id }
-
-        // Null 체크 후 처리
         val safeGroupedTickets = groupedTickets ?: emptyMap<Int, List<Ticket>>()
 
         model.addAttribute("groupedTickets", safeGroupedTickets)
         return "adminTheater"
     }
+
 
     /**
      * 관리자 페이지에서 회원 탈퇴시키기
@@ -219,6 +219,7 @@ class AdminController(
         }
         return "redirect:/admin/memberinfo2/$memberId"
     }
+
 
 
 
