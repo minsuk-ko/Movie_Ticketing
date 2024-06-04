@@ -14,16 +14,16 @@ class Schedule {
     lateinit var date: LocalDate
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "movie_id")
+    @JoinColumn(name = "movie_id", nullable = false)
     lateinit var movie : Movie
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
-    lateinit var theater : Theater
+    @JoinColumn(name = "theater_id",nullable = false)
+    lateinit var theater: Theater
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val id : Int = 0
+    val id : Int =0
 
     override fun toString(): String {
         return "Schedule(start=$start, end=$end, date=$date, movie=$movie, theater=$theater, id=$id)"

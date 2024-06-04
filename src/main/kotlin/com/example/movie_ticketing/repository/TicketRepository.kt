@@ -5,12 +5,17 @@ import com.example.movie_ticketing.domain.Schedule
 import com.example.movie_ticketing.domain.Seat
 import com.example.movie_ticketing.domain.Ticket
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 
 @Repository
 interface TicketRepository : JpaRepository<Ticket, Int> {
-    fun deleteByReservation(reservation: Reservation){
-    }
+    @Query("SELECT t FROM Ticket t WHERE t.schedule.theater.id = :theaterId")
+    fun findByScheduleTheaterId(theaterId: Int): List<Ticket>
+
+    fun deleteByReservation(reservation: Reservation)
+
 
     //단일 reservation을 통해서 티켓을가져옴
     //where reservation_id =?
@@ -21,6 +26,9 @@ interface TicketRepository : JpaRepository<Ticket, Int> {
     //reservation객체들의 리스트
     //where reservation_id IN (?,?,?.....)형식
     //각각의 예약에 따른 티켓들을 모두 가져올 수있음
-    fun findByReservationIn(reservations:List<Reservation>):List<Ticket>
-    fun findByReservationId(reservationId:Int):List<Ticket>
+    fun findByReservationIn(reservations: List<Reservation>): List<Ticket>
+
+    fun findByReservationId(reservationId: Int): List<Ticket>
+
+
 }
