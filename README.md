@@ -35,7 +35,7 @@ __마이페이지__  -  [__상세보기__](https://github.com/minsuk-ko/Movie_Ti
 __메인페이지__
   - 영화정보확인
     
-__영화 예매__
+__영화 예매__  -  [__상세보기__](https://github.com/minsuk-ko/Movie_Ticketing/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C-(%EC%98%81%ED%99%94-%EC%98%88%EB%A7%A4))   
   - 영화 선택 -> 날짜 선택 -> 시간 선택
   - 좌석 선택
   - 예매 완료
