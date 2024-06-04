@@ -1,24 +1,17 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
-import com.example.movie_ticketing.domain.Reservation
 import com.example.movie_ticketing.domain.Ticket
-import com.example.movie_ticketing.repository.MemberRepository
-import com.example.movie_ticketing.repository.ReservationRepository
-import com.example.movie_ticketing.repository.TicketRepository
+import com.example.movie_ticketing.repository.*
 import com.example.movie_ticketing.service.ScheduleService
 import com.example.movie_ticketing.service.TicketService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.UserDetails
-
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
@@ -32,7 +25,9 @@ class AdminController(
     private val ticketRepository: TicketRepository,
     private val reservationRepository: ReservationRepository,
     private val scheduleService: ScheduleService,
-    private val ticketService: TicketService
+    private val ticketService: TicketService,
+    private val movieRepository: MovieRepository,
+    private val scheduleRepository: ScheduleRepository
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -151,36 +146,6 @@ class AdminController(
 
         return "redirect:/admin/member"
     }
-    /*@GetMapping("/admin/adminTheater")
-    fun adminTheater(auth: Authentication,model: Model):String{
-        val userDetails = auth.principal as UserDetails
-        val email = userDetails.username
-        val member = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("No member found with email: $email") }
-        val reservations = reservationRepository.findByMemberId(member.id)
-
-
-        val reservationTicketsMap = reservations.map { reservation ->
-            val tickets = ticketRepository.findByReservation(reservation)
-            reservation to tickets
-        }.toMap() //Map<Reservation, List<Ticket>> 꼴로 변환시킴 즉 키가 reservation,값이 ticket
-
-        println(reservationTicketsMap)
-
-
-        model.addAttribute("reservations", reservations)
-        model.addAttribute("reservationTicketsMap", reservationTicketsMap)
-        model.addAttribute("currentDate", LocalDate.now())
-
-        // 각 티켓의 상영 시간을 'HH:mm' 형식의 문자열로 변환하여 모델에 추가
-        val formattedTimesMap = reservationTicketsMap.mapValues { entry ->
-            entry.value.map { ticket ->
-                val formattedStartTime = ticket.schedule.start.format(DateTimeFormatter.ofPattern("HH:mm"))
-                ticket to formattedStartTime
-            }.toMap()
-        }  //안그러면 10:00:00이런 방식으로 뜸
-        model.addAttribute("formattedTimesMap", formattedTimesMap)
-        return "mypage2"
-    }*/
 
   @PostMapping("/admin/memberinfo/change-password")
   fun change(@RequestParam password:String,
@@ -220,8 +185,16 @@ class AdminController(
         return "redirect:/admin/memberinfo2/$memberId"
     }
 
-
-
+    @GetMapping("/admin/adminMovie")
+    fun getMovies(model: Model): String {
+        val movies = movieRepository.findAll()
+        val moviesWithScheduleStatus = movies.associate { movie ->
+            val hasSchedule = scheduleRepository.existsByMovieId(movie!!.id)
+            movie to hasSchedule
+        }
+        model.addAttribute("moviesWithScheduleStatus", moviesWithScheduleStatus)
+        return "adminMovie"
+    }
 
 
 

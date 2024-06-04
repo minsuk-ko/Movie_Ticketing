@@ -16,7 +16,9 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         globally_quoted_identifiers: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
+      # 이렇게하면 테이블을 자동생성하고 바로 init함수 실행 + 기존테이블이 있을경우 테이블의 컬럼을 변경시킴
+      # 모든 사항을 변경하는 것이 아닌 새로운 컬럼이 추가되는 변경사항만 반영
     defer-datasource-initialization: true
   thymeleaf:
     prefix: classpath:/templates/

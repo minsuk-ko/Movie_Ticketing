@@ -95,10 +95,11 @@
             display: flex;
             flex-direction: column;
             padding: 20px;
-            overflow-y: auto; /* 스크롤바 추가 */
             height: 700px; /* 고정 높이 설정 */
         }
-
+        .main-content{
+            overflow-y: auto; /* 스크롤바 추가 */
+        }
         .sidebar {
             width: 200px;
             height: 225px;
@@ -203,7 +204,7 @@
 <div id="cinema_main">
     <div class="sidebar">
         <a href="/admin/member" class="link">회원 관리</a>
-        <a href="/admin/adminTheater" class="link">영화 관리</a>
+        <a href="/admin/adminMovie" class="link">영화 관리</a>
         <a id="selected" href="#" class="link">상영관 관리</a>
     </div>
     <div class="main-content">
@@ -230,16 +231,20 @@
                     <tr>
                         <th scope="col" class="py-3 px-6">상영관 id</th>
                         <th scope="col" class="py-3 px-6">영화 이름</th>
-                        <th scope="col" class="py-3 px-6">예약된 좌석 수</th>
+                        <th scope="col" class="py-3 px-6">상영 날짜</th>
                         <th scope="col" class="py-3 px-6">상영 시작 시간</th>
+                        <th scope="col" class="py-3 px-6">예약된 좌석 수</th>
+
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="schedule : ${schedules}">
                         <td th:text="${schedule.id}">Movie Title</td>
                         <td th:text="${schedule.movie.title}">Movie Title</td>
-                        <td th:text="${groupedTickets.containsKey(schedule.id) ? #lists.size(groupedTickets[schedule.id]) : 0}">Tickets Count</td>
+                        <td th:text="${schedule.date}">Start Date</td>
                         <td th:text="${schedule.start}">Start Time</td>
+                        <td th:text="${groupedTickets.containsKey(schedule.id) ? #lists.size(groupedTickets[schedule.id]) : 0}">Tickets Count</td>
+
                     </tr>
                     </tbody>
                 </table>

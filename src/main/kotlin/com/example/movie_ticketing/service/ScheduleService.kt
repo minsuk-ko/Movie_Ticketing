@@ -5,7 +5,6 @@ import com.example.movie_ticketing.domain.Theater
 import com.example.movie_ticketing.repository.MovieRepository
 import com.example.movie_ticketing.repository.ScheduleRepository
 import com.example.movie_ticketing.repository.TheaterRepository
-import com.fasterxml.jackson.annotation.JsonTypeInfo
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDate

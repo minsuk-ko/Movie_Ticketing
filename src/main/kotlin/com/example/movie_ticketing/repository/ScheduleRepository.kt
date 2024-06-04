@@ -1,6 +1,5 @@
 package com.example.movie_ticketing.repository
 
-import com.example.movie_ticketing.domain.Movie
 import com.example.movie_ticketing.domain.Schedule
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -17,5 +16,7 @@ interface ScheduleRepository : JpaRepository<Schedule, Int> {
     @Query("SELECT s FROM Schedule s WHERE s.theater.id = :theaterId")
     fun findByTheaterId(@Param("theaterId") theaterId: Int): List<Schedule>
 
-    fun getSchedulesByTheaterId(theaterId: Int): List<Schedule>
+    fun findByDate(startDate: LocalDate) : List<Schedule>
+    fun existsByMovieId(movieId: Int):Boolean
+
 }

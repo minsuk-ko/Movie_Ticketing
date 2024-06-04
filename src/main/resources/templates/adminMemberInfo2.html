@@ -149,7 +149,7 @@
 </nav>
 <div class="container1">
     <div class="sidebar mb-4">
-        <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+        <select id="pageSelect" class="block w-full bg-gray-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none " onchange="navigateToPage()">
             <option value="#">페이지 선택</option>
             <option th:value="@{/admin/memberinfo/{id}(id=${member.id})}">회원 상세정보</option>
             <option th:value="@{/admin/memberinfo2/{id}(id=${member.id})}">회원 예매정보</option>

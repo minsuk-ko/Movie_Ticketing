@@ -110,7 +110,7 @@ fun mypage2(auth: Authentication,model: Model):String{
     model.addAttribute("formattedTimesMap", formattedTimesMap)
     return "mypage2"
 }
-    @PostMapping("/update-password")
+    @PostMapping("/user/update-password")
     fun changePw(auth: Authentication,@RequestParam password:String) :String{
         // RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
         // 패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
