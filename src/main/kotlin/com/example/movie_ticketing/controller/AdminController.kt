@@ -6,6 +6,7 @@ import com.example.movie_ticketing.domain.Ticket
 import com.example.movie_ticketing.repository.MemberRepository
 import com.example.movie_ticketing.repository.ReservationRepository
 import com.example.movie_ticketing.repository.TicketRepository
+import com.example.movie_ticketing.service.MovieService
 import com.example.movie_ticketing.service.ScheduleService
 import com.example.movie_ticketing.service.TicketService
 import org.springframework.data.domain.Page
@@ -32,7 +33,8 @@ class AdminController(
     private val ticketRepository: TicketRepository,
     private val reservationRepository: ReservationRepository,
     private val scheduleService: ScheduleService,
-    private val ticketService: TicketService
+    private val ticketService: TicketService,
+    private val movieService: MovieService
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -219,6 +221,18 @@ class AdminController(
         }
         return "redirect:/admin/memberinfo2/$memberId"
     }
+
+
+
+    @GetMapping("/admin/adminMovie")
+    fun getMovies(@RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+        val current = LocalDate.now()
+        val movies = movieService.getBoxOfficeForMovie(current, page)
+        model.addAttribute("movies", movies)
+        model.addAttribute("page", page)
+        return "adminMovie"
+    }
+
 
 
 

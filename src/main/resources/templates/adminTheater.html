@@ -212,7 +212,9 @@
                         <th scope="col" class="py-3 px-6">상영관 id</th>
                         <th scope="col" class="py-3 px-6">영화 이름</th>
                         <th scope="col" class="py-3 px-6">예약된 좌석 수</th>
+                        <th scope="col" class="py-3 px-6">상영 날짜</th>
                         <th scope="col" class="py-3 px-6">상영 시작 시간</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -220,6 +222,7 @@
                         <td th:text="${schedule.id}">Movie Title</td>
                         <td th:text="${schedule.movie.title}">Movie Title</td>
                         <td th:text="${groupedTickets.containsKey(schedule.id) ? #lists.size(groupedTickets[schedule.id]) : 0}">Tickets Count</td>
+                        <td th:text="${schedule.date}">Start Time</td>
                         <td th:text="${schedule.start}">Start Time</td>
                     </tr>
                     </tbody>

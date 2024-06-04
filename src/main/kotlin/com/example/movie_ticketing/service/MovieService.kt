@@ -6,10 +6,7 @@ import com.example.movie_ticketing.repository.MovieRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.core.io.ClassPathResource
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
@@ -65,7 +62,7 @@ class MovieService(private val restTemplate: RestTemplate,
                     //인기무비 10개씩만 저장! //현재 날짜 기준으로 한달씩 -> 매일매일 업로드 가능
     fun getBoxOffice(currentDate: LocalDate,page: Int) : MovieSearchResult {
         val monthDate  =currentDate.plusMonths(1)
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&vote_average.gte=1&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page"
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page&include_adult=false&vote_average.gte=1"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
         if(page ==1) { //1 페이지 인기순위만 가져옴 다른거 필요 x
             val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
@@ -76,6 +73,8 @@ class MovieService(private val restTemplate: RestTemplate,
         }
         return sortMoviesByPopularity(result)
     }
+
+
 
     fun getMoviesFromJson(): List<MovieDetails> {
         val jsonInputStream: InputStream = ClassPathResource("movies.json").inputStream
@@ -112,6 +111,7 @@ class MovieService(private val restTemplate: RestTemplate,
         if(movieRepository.findById(tmdbid).isEmpty) {
             //제목이 없을경우 리스트들 저장 실행
             val movie = convertmovie(movieDetails)
+
             println(movieDetails.id)
             val credits=findCreditList(movieDetails.id)
             val castlist = mutableListOf<String>()
@@ -177,4 +177,13 @@ class MovieService(private val restTemplate: RestTemplate,
 
         return movie
     }
+    fun getBoxOfficeForMovie(currentDate: LocalDate, page: Int): List<MovieDetails> {
+        val monthDate = currentDate.plusMonths(1)
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&vote_average.gte=1&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page"
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
+        val top10Movies = result.movies.sortedByDescending { it.popularity }.take(10)
+        return top10Movies.map { movieSummary -> retrieveMovieDetails(movieSummary.id) }
+    }
+
+
 }
