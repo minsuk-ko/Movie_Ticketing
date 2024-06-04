@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mariadb://localhost:3306/ticketing
     username: root
-    password: xxxxxxxx
+    password: xxxx
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
