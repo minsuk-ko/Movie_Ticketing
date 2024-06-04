@@ -286,6 +286,16 @@
             window.location.href = event.currentTarget.href;
         });
     });
+
+    // 마이페이지 메뉴 Dropdown2 관리자용
+    document.getElementById("menuButton2").addEventListener("click", function () {
+        const dropdownMenu = document.getElementById("dropdownMenu2");
+        if (dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.remove("hidden");
+        } else {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
 </script>
 </body>
 </html>
