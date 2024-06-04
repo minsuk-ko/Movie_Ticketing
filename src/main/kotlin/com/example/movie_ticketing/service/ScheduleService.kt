@@ -36,6 +36,7 @@ class ScheduleService(private val movieRepository: MovieRepository,
 
 
 
+
     fun createSchedule(){
         val currentDate = LocalDate.now() //현재날짜꺼내기
         val theaters = theaterRepository.findAll() //theaters 리스트 반환 => 1에서 7관 있겠죠~ 인정? ㅇㅇㅈ
@@ -98,6 +99,10 @@ class ScheduleService(private val movieRepository: MovieRepository,
         val movie = optionalmovie.orElseThrow{Exception("Movie not found")} //optinal검증
         return movie!!.openDate.isBefore(reservationDate) //movie를 찾았으면 무조건 null이아님
         //오픈데이트가 현재 날짜보다 이전일경우 트루를 반환 if문안에 넣으면 될듯
+    }
+
+    fun getSchedulesByTheaterId(theaterId: Int): List<Schedule> {
+        return scheduleRepository.findByTheaterId(theaterId)
     }
 
 

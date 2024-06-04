@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS seat (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS movie (
     id             INT         NOT NULL ,
-    title          TEXT        NOT NULL,
-    state          BOOLEAN,
+    title          TEXT NOT NULL,
+    state           BOOLEAN,
     open_date DATE NOT NULL,
      popularity DOUBLE DEFAULT 0.0,
     role       TEXT     NOT NULL,

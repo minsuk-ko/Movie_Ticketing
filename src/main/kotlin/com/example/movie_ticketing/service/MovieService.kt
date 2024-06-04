@@ -6,22 +6,17 @@ import com.example.movie_ticketing.repository.MovieRepository
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.configurationprocessor.json.JSONObject
 import org.springframework.core.io.ClassPathResource
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.client.RestTemplate
-import org.springframework.web.reactive.function.client.WebClient
 import java.io.InputStream
 import java.time.LocalDate
-import java.util.*
+
 
 
 @Service
 class MovieService(private val restTemplate: RestTemplate,
-                   private val webClient: WebClient,
                    val movieRepository: MovieRepository,
                    private val objectMapper: ObjectMapper
 ) {
@@ -58,14 +53,12 @@ class MovieService(private val restTemplate: RestTemplate,
             total_results = result.total_results
         )
     }
-
-    // 개봉일이 2024-05-01 ~ 2024-06-01일 사이이면서 지역이 한국인 영화를 찾아옴.
     // MovieSearchResult 의 반환값이 List<MovieDetails> 이기 때문에 thymeleaf 문법으로 ${movie.posterPath} 할 수 있음
     @Transactional //앞으로도 개봉일 따라서 가져올거기에 db에 저장해야함 (유저용/admin용 나눠서 해야할지도)
                     //인기무비 10개씩만 저장! //현재 날짜 기준으로 한달씩 -> 매일매일 업로드 가능
     fun getBoxOffice(currentDate: LocalDate,page: Int) : MovieSearchResult {
         val monthDate  =currentDate.plusMonths(1)
-        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&vote_average.gte=1&release_date.gte=2024-05-01&release_date.lte=${monthDate}&page=$page&include_adult=false&vote_average.gte=1"
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&include_adult=false&release_date.gte=2024-05-08&release_date.lte=${monthDate}&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
         if(page ==1) { //1 페이지 인기순위만 가져옴 다른거 필요 x
             val top10movie = result.movies.sortedByDescending { it.popularity }.take(10)
@@ -151,6 +144,13 @@ class MovieService(private val restTemplate: RestTemplate,
           movieRepository.saveAll(movies)
     }
 
+    fun getBoxOfficeForMovie(currentDate: LocalDate, page: Int): List<MovieDetails> {
+        val monthDate = currentDate.plusMonths(1)
+        val url = "https://api.themoviedb.org/3/discover/movie?api_key=$apiKey&language=ko-KR&region=KR&vote_average.gte=1&release_date.gte=2024-05-08&release_date.lte=${monthDate}&page=$page"
+        val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("API 영화 호출 실패")
+        val top10Movies = result.movies.sortedByDescending { it.popularity }.take(10)
+        return top10Movies.map { movieSummary -> retrieveMovieDetails(movieSummary.id) }
+    }
 
 
 

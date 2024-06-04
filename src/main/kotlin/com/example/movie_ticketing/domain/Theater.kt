@@ -11,6 +11,7 @@ class Theater {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Int = 0
 
+
     override fun toString(): String {
         return "Theater(name=$name, id=$id)"
     }

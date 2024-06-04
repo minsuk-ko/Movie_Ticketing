@@ -18,14 +18,6 @@ interface MemberRepository : JpaRepository<Member?, Int?> {
     // 또한 CustomUserDetailService에서 email/password를 접근해야하는데
     //Mutable이라 List로 반환되기에 직접 접근을 못함
     fun findByEmail(email: String) : Optional<Member>
-
-
-    fun findByName(member: Member)
-
-    fun findByNameAndEmail(name: String, email: String)
-
-    fun existsByEmail(email: String); //email 존재여부(Db에 있으면 참)
-
     @Modifying
     @Transactional
     @Query("update Member set password=:password where id=:id")

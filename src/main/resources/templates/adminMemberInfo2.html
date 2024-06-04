@@ -133,13 +133,13 @@
                     <li role="menuitem"
                         class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
             transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/??">상영관 관리</a>
+                        <a href="/admin/adminTheater">상영관 관리</a>
                     </li>
 
                     <li role="menuitem"
                         class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
             transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
-                        <a href="/admin/??">영화 관리</a>
+                        <a href="/admin/adminMovie">영화 관리</a>
                     </li>
                 </ul>
             </div>
@@ -147,10 +147,9 @@
         </div>
     </div>
 </nav>
-
 <div class="container1">
     <div class="sidebar mb-4">
-        <select id="pageSelect" class="block w-full bg-gray-200 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" onchange="navigateToPage()">
+        <select id="pageSelect" class="block w-full bg-gray-400 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none " onchange="navigateToPage()">
             <option value="#">페이지 선택</option>
             <option th:value="@{/admin/memberinfo/{id}(id=${member.id})}">회원 상세정보</option>
             <option th:value="@{/admin/memberinfo2/{id}(id=${member.id})}">회원 예매정보</option>

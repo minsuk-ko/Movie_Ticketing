@@ -2,8 +2,6 @@ package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.*
 import com.example.movie_ticketing.repository.*
-import com.example.movie_ticketing.service.MovieService
-import com.example.movie_ticketing.service.SeatService
 import jakarta.validation.Valid
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.core.userdetails.User
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.ui.Model
-import org.springframework.validation.BindingResult
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import java.time.LocalDate

@@ -1,97 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin_Mainpage</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../styles.css">
-  <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
-  <style>
-    .p1{font-family : "Black Han Sans", sans-serif;
-      font-weight: 400;
-      font-style: normal;}
-    .p2{font-family: "Jua", sans-serif;
-      font-weight: 400;
-      font-style: normal;}
-    #navbar a {
-      font-weight: bold;
-      font-size: 18px;
-    }
-    #navbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      transition: padding 0.3s;
-      background-color: #1f2937; /* Added for visibility on scroll */
-    }
-    nav ul li{display: inline-block;list-style-type: none;}
-    nav ul ul{display: none; background: #1f2937}
-    nav ul li:hover ul{display:block; position:absolute;}
-    nav ul ul li{width:100px; height:30px;}
+    <meta charset="UTF-8">
+    <title>Admin_Mainpage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Jua&display=swap" rel="stylesheet">
+    <style>
+        .p1 {
+            font-family: "Black Han Sans", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        .p2 {
+            font-family: "Jua", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+        #navbar a {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        #navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: padding 0.3s;
+            background-color: #1f2937; /* Added for visibility on scroll */
+        }
+        nav ul li {
+            display: inline-block;
+            list-style-type: none;
+        }
+        nav ul ul {
+            display: none;
+            background: #1f2937;
+        }
+        nav ul li:hover ul {
+            display: block;
+            position: absolute;
+        }
+        nav ul ul li {
+            width: 100px;
+            height: 30px;
+        }
 
-    .tabs {
-      margin-bottom: 20px;
-    }
+        .tabs {
+            margin-bottom: 20px;
+        }
 
-    .tab-button {
-      background-color: white; /* 기본 배경색 */
-      border: 1px solid black; /* 검은색 경계선 */
-      padding: 10px 15px; /* 버튼 내부의 여백 */
-      cursor: pointer; /* 마우스 오버 시 커서 모양 변경 */
-    }
+        .tab-button {
+            background-color: white; /* 기본 배경색 */
+            border: 1px solid black; /* 검은색 경계선 */
+            padding: 10px 15px; /* 버튼 내부의 여백 */
+            cursor: pointer; /* 마우스 오버 시 커서 모양 변경 */
+            border-radius: 10px; /* 모서리 둥글게 */
+            margin-right: 5px; /* 버튼 간 간격 */
+            transition: background-color 0.3s; /* 배경색 전환 애니메이션 */
+        }
+        .tab-button:hover {
+            background-color: #f0f0f0; /* 마우스 오버 시 배경색 */
+        }
 
-    .tab-content {
-      display: none;
-    }
+        .active-tab-button {
+            background-color: #007bff; /* 선택된 탭 배경색 */
+            color: white; /* 선택된 탭 글자색 */
+        }
 
-    #selected{
-      background: #007bff;
-    }
-    #cinema_main {
-      margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
-      display: flex;
-      width: 1100px;
-      height: 800px;
-      flex-direction: row;
+        .tab-content {
+            display: none;
+        }
 
-      overflow: hidden; /* 내용이 테두리를 넘어갈 경우를 방지합니다. */
-    }
+        .active-tab {
+            display: block;
+        }
 
-    .sidebar,
-    .main-content {
-      border: 2px solid black; /* 테두리 스타일과 색상 설정 */
-      width: 700px;
-      display: flex;
-      flex-direction: column;
-      padding: 20px;
+        #selected {
+            background: #007bff;
+        }
+        #cinema_main {
+            margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
+            display: flex;
+            width: 1100px;
+            height: 800px;
+            flex-direction: row;
 
+            overflow: hidden; /* 내용이 테두리를 넘어갈 경우를 방지합니다. */
+        }
 
-    }
+        .sidebar,
+        .main-content {
+            border: 2px solid black; /* 테두리 스타일과 색상 설정 */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            height: 700px; /* 고정 높이 설정 */
+        }
+        .main-content{
+            overflow-y: auto; /* 스크롤바 추가 */
+        }
+        .sidebar {
+            width: 200px;
+            height: 225px;
+            text-align: center;
+            background: #444444;
+            color: white;
+        }
+        tr, td {
+            white-space: nowrap;
+        }
+        table {
+            border-collapse: collapse; /* 테이블 셀 간의 경계선 중복 제거 */
+            width: 100%; /* 테이블 너비를 100%로 설정 */
+        }
 
-    .sidebar {
-      width: 200px;
-      height: 225px;
-      text-align: center;
-      background: #444444;
-      color: white;
+        th, td {
+            border: 1px solid black; /* 각 셀의 경계선을 검은색으로 설정 */
+            padding: 8px; /* 셀 내부 여백 설정 */
+            text-align: left; /* 텍스트 정렬 설정 */
+        }
 
-    }
-    tr,td{
-      white-space: nowrap;
-    }
-
-    .link {
-      padding: 20px;
-      border-bottom: 1px solid #444;
-      text-decoration: none;
-      color: white;
-      transition: background 0.3s;
-    }
-  </style>
+        .link {
+            padding: 20px;
+            border-bottom: 1px solid #444;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s;
+        }
+    </style>
 </head>
 
-<body>
-<nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+<body><nav class="max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
     <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
         <a href="/"
@@ -104,7 +144,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-grid" viewBox="0 0 16 16">
                         <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                     </svg>
-                    <a href="movie" class="flex items-center p2 text-xl">
+                    <a href="/movie" class="flex items-center p2 text-xl">
                         영화
                     </a>
                 </li>
@@ -113,184 +153,149 @@
                         <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
                         <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
                     </svg>
-                    <a href="reservation" class="flex items-center p2 text-xl">
+                    <a href="/reservation" class="flex items-center p2 text-xl">
                         예매
                     </a>
                 </li>
             </ul>
         </div>
         <div class="flex items-center gap-x-1">
-            <a href="login"
+            <a href="/login" sec:authorize="isAnonymous"
                class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
          hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
                 <span>로그인</span>
             </a>
-            <button id="menuButton" data-ripple-light="true" data-popover-target="menu"
-                    class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-        shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
-                관리자페이지
-            </button>
+            <a href="/logout" sec:authorize="isAuthenticated"
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
+         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+                <span>로그아웃</span>
+            </a>
+            <div sec:authorize="hasRole('ROLE_ADMIN')">
+                <button id="menuButton2" data-ripple-light="true" data-popover-target="menu"
+                        class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
+            shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                    관리자페이지
+                </button>
+                <ul id="dropdownMenu2" role="menu" data-popover="menu" data-popover-placement="bottom"
+                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
+        text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/member">회원관리</a>
+                    </li>
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/adminTheater">상영관 관리</a>
+                    </li>
+
+                    <li role="menuitem"
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
+            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        <a href="/admin/adminMovie">영화 관리</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
     </div>
 </nav>
-
-
 <div id="cinema_main">
-
-  <div class="sidebar">
-
-    <a href="admin_Member.html" class="link">회원 관리</a>
-    <a href="admin_Movie.html" class="link">영화 관리</a>
-    <a id="selected" href="#" class="link">상영관 관리</a>
-
-  </div>
-  <div class = main-content>
-    <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
-      상영관 관리
+    <div class="sidebar">
+        <a href="/admin/member" class="link">회원 관리</a>
+        <a href="/admin/adminMovie" class="link">영화 관리</a>
+        <a id="selected" href="#" class="link">상영관 관리</a>
     </div>
+    <div class="main-content">
+        <div class="content-box bg-blue-500 text-white p-4" style="width: 200px; height: 50px;">
+            상영관 관리
+        </div>
+        <div class="container mx-auto my-8">
+            <h1 class="text-2xl font-bold mb-4">상영관 정보</h1>
+            <div class="tabs">
+                <a href="/admin/adminTheater/1" class="tab-button" data-tab="1">1관</a>
+                <a href="/admin/adminTheater/2" class="tab-button" data-tab="2">2관</a>
+                <a href="/admin/adminTheater/3" class="tab-button" data-tab="3">3관</a>
+                <a href="/admin/adminTheater/4" class="tab-button" data-tab="4">4관</a>
+                <a href="/admin/adminTheater/5" class="tab-button" data-tab="5">5관</a>
+                <a href="/admin/adminTheater/6" class="tab-button" data-tab="6">6관</a>
+                <a href="/admin/adminTheater/7" class="tab-button" data-tab="7">7관</a>
+            </div>
 
-    <div id="date-picker" class="text-right">
-      <label for="calendar">날짜: </label>
-      <input type="date" id="calendar" name="calendar" value="2024" />
+            <!-- 특정 상영관의 스케줄을 출력 -->
+            <div id="tab-content-1" class="tab-content active-tab">
+                <h2 th:text="'상영관 ' + ${theaterId} + ' 정보'"></h2>
+                <table class="min-w-full bg-white">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="py-3 px-6">상영관 id</th>
+                        <th scope="col" class="py-3 px-6">영화 이름</th>
+                        <th scope="col" class="py-3 px-6">상영 날짜</th>
+                        <th scope="col" class="py-3 px-6">상영 시작 시간</th>
+                        <th scope="col" class="py-3 px-6">예약된 좌석 수</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="schedule : ${schedules}">
+                        <td th:text="${schedule.id}">Movie Title</td>
+                        <td th:text="${schedule.movie.title}">Movie Title</td>
+                        <td th:text="${schedule.date}">Start Date</td>
+                        <td th:text="${schedule.start}">Start Time</td>
+                        <td th:text="${groupedTickets.containsKey(schedule.id) ? #lists.size(groupedTickets[schedule.id]) : 0}">Tickets Count</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="tabs">
-      <button class="tab-button" onclick="changeTab(1)">1관</button>
-      <button class="tab-button" onclick="changeTab(2)">2관</button>
-      <button class="tab-button" onclick="changeTab(3)">3관</button>
-      <button class="tab-button" onclick="changeTab(4)">4관</button>
-      <button class="tab-button" onclick="changeTab(5)">5관</button>
-      <button class="tab-button" onclick="changeTab(6)">6관</button>
-      <button class="tab-button" onclick="changeTab(7)">7관</button>
-    </div>
-
-    <div id="tab-content-1" class="tab-content">
-      <!-- 여기에 첫 번째 탭의 내용과 테이블 구조를 추가합니다. -->
-      <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-          <th scope="col" class="py-3 px-6">시간표id</th>
-          <th scope="col" class="py-3 px-6">영화 제목</th>
-          <th scope="col" class="py-3 px-6">영화 시작시간</th>
-          <th scope="col" class="py-3 px-6">영화 종료시간</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Repeat for each row -->
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">1</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">08:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">2</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">12:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">3</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">16:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">4</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">20:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-
-
-        <!-- Repeat above tr for the number of rows you need -->
-        </tbody>
-      </table>
-    </div>
-
-    <div id="tab-content-2" class="tab-content">
-      <!-- 여기에 두 번째 탭의 내용과 테이블 구조를 추가합니다. -->
-      <table class="w-full text-sm text-left text-gray-500">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-          <th scope="col" class="py-3 px-6">시간표id</th>
-          <th scope="col" class="py-3 px-6">영화 제목</th>
-          <th scope="col" class="py-3 px-6">영화 시작시간</th>
-          <th scope="col" class="py-3 px-6">영화 종료시간</th>
-        </tr>
-        </thead>
-        <tbody>
-        <!-- Repeat for each row -->
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">5</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">08:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">6</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">11:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">7</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">14:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">8</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">17:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-        <tr class="bg-white border-b">
-          <td class="py-4 px-6">9</td>
-          <td class="py-4 px-6"></td>
-          <td class="py-4 px-6">20:00</td>
-          <td class="py-4 px-6"></td>
-        </tr>
-
-
-        <!-- Repeat above tr for the number of rows you need -->
-        </tbody>
-      </table>
-    </div>
-
-
-  </div>
 </div>
 <footer class="bg-gray-800">
-  <div class="container mx-auto text-center py-6">
-    <div class="text-sm text-gray-200 font-bold mb-2">
-      <!-- Team members' names -->
-      <div class="mb-2">
-        TEAM
-        오건 | 정주현 | 고민석
-      </div>
-
+    <div class="container mx-auto text-center py-6">
+        <div class="text-sm text-gray-200 font-bold mb-2">
+            <!-- 팀 멤버 이름 -->
+            <div class="mb-2">
+                TEAM
+                오건 | 정주현 | 고민석
+            </div>
+        </div>
     </div>
-  </div>
 </footer>
 <script>
-  function changeTab(tabNumber) {
-    // 모든 탭 컨텐츠를 숨깁니다.
-    var tabs = document.getElementsByClassName('tab-content');
-    for (var i = 0; i < tabs.length; i++) {
-      tabs[i].style.display = 'none';
+    function changeTab(tabNumber) {
+        const contents = document.querySelectorAll('.tab-content');
+        contents.forEach(content => content.classList.remove('active-tab'));
+        document.getElementById('tab-content-' + tabNumber).classList.add('active-tab');
     }
 
-    // 모든 버튼에서 'active' 클래스를 제거합니다.
-    var tabButtons = document.getElementsByClassName('tab-button');
-    for (var i = 0; i < tabButtons.length; i++) {
-      tabButtons[i].classList.remove('active');
-    }
+    // Initialize the first tab as active
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultTab = document.querySelector('.tabs .tab-button[data-tab="1"]');
+        if (defaultTab) {
+            changeTab(defaultTab.getAttribute('data-tab'));
+        }
+    });
 
-    // 선택한 탭의 내용을 보여주고, 해당 탭 버튼에 'active' 클래스를 추가합니다.
-    document.getElementById('tab-content-' + tabNumber).style.display = 'block';}
+    // Add event listeners to tab buttons
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault();
+            const tabNumber = event.currentTarget.getAttribute('data-tab');
+            window.location.href = event.currentTarget.href;
+        });
+    });
 
-
-
+    // 마이페이지 메뉴 Dropdown2 관리자용
+    document.getElementById("menuButton2").addEventListener("click", function () {
+        const dropdownMenu = document.getElementById("dropdownMenu2");
+        if (dropdownMenu.classList.contains("hidden")) {
+            dropdownMenu.classList.remove("hidden");
+        } else {
+            dropdownMenu.classList.add("hidden");
+        }
+    });
 </script>
 </body>
 </html>

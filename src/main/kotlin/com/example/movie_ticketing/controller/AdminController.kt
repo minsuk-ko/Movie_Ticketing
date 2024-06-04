@@ -1,24 +1,18 @@
 package com.example.movie_ticketing.controller
 
 import com.example.movie_ticketing.domain.Member
-import com.example.movie_ticketing.repository.MemberRepository
-import com.example.movie_ticketing.repository.ReservationRepository
-import com.example.movie_ticketing.repository.TicketRepository
+import com.example.movie_ticketing.domain.Ticket
+import com.example.movie_ticketing.repository.*
+import com.example.movie_ticketing.service.ScheduleService
+import com.example.movie_ticketing.service.TicketService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.security.core.userdetails.User
-
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
-import org.springframework.validation.BindingResult
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -26,10 +20,14 @@ import java.time.format.DateTimeFormatter
 
 @Controller
 class AdminController(
-                      private val memberRepository: MemberRepository,
-                      private val passwordEncoder: PasswordEncoder,
-                      private val ticketRepository: TicketRepository,
-                      private val reservationRepository: ReservationRepository
+    private val memberRepository: MemberRepository,
+    private val passwordEncoder: PasswordEncoder,
+    private val ticketRepository: TicketRepository,
+    private val reservationRepository: ReservationRepository,
+    private val scheduleService: ScheduleService,
+    private val ticketService: TicketService,
+    private val movieRepository: MovieRepository,
+    private val scheduleRepository: ScheduleRepository
 ) {
     //어드민 설정방법 Mariadb 들어가서 직접 설정하는 거로
     // update member set role = 'ROLE_ADMIN' where id =?;
@@ -88,6 +86,26 @@ class AdminController(
             return "/admin/member"}
         return "adminMemberInfo2"
     }
+
+    @GetMapping("admin/adminTheater")
+    fun redirectToDefaultTheater(): String {
+        return "redirect:/admin/adminTheater/1"
+    }
+
+    @GetMapping("admin/adminTheater/{id}")
+    fun getAdminTheater(@PathVariable id: Int, model: Model): String {
+        val schedules = scheduleService.getSchedulesByTheaterId(id)
+        model.addAttribute("schedules", schedules)
+        model.addAttribute("theaterId", id)
+
+        val tickets = ticketService.getTicketsByTheaterId(id)
+        val groupedTickets = tickets.groupBy { it.schedule.id }
+        val safeGroupedTickets = groupedTickets ?: emptyMap<Int, List<Ticket>>()
+
+        model.addAttribute("groupedTickets", safeGroupedTickets)
+        return "adminTheater"
+    }
+
 
     /**
      * 관리자 페이지에서 회원 탈퇴시키기
@@ -148,21 +166,36 @@ class AdminController(
 
   }
 
+
+
+
+
+
     @Transactional
     @PostMapping("/admin/cancelReservation")
-    fun cancelReservation(@RequestParam reservationId: Int,@RequestParam memberId: Int): String {
+    fun cancelReservation(@RequestParam reservationId: Int, @RequestParam memberId: Int): String {
         val reservation = reservationRepository.findById(reservationId)
         if (reservation.isPresent) {
-
-
-
-                val tickets= ticketRepository.findByReservationId(reservationId)
-                 tickets.forEach { ticket ->
-                     ticketRepository.delete(ticket)
-                 }
-                reservationRepository.deleteById(reservationId)
+            val tickets = ticketRepository.findByReservationId(reservationId)
+            tickets.forEach { ticket ->
+                ticketRepository.delete(ticket)
             }
+            reservationRepository.deleteById(reservationId)
+        }
+        return "redirect:/admin/memberinfo2/$memberId"
+    }
 
-        return "redirect:/admin/memberinfo2/$memberId"}
+    @GetMapping("/admin/adminMovie")
+    fun getMovies(model: Model): String {
+        val movies = movieRepository.findAll()
+        val moviesWithScheduleStatus = movies.associate { movie ->
+            val hasSchedule = scheduleRepository.existsByMovieId(movie!!.id)
+            movie to hasSchedule
+        }
+        model.addAttribute("moviesWithScheduleStatus", moviesWithScheduleStatus)
+        return "adminMovie"
+    }
+
+
 
 }
