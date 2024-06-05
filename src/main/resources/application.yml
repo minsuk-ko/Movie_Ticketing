@@ -4,7 +4,7 @@ spring:
     name : Movie Ticketing
 
   datasource:
-    url: jdbc:mariadb://43.203.250.127:3306/ticketing
+    url: jdbc:mariadb://54.180.237.252:3306/ticketing
     username: root
     password: xxxx
     driver-class-name: org.mariadb.jdbc.Driver
