@@ -15,6 +15,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
@@ -48,18 +49,19 @@ class AdminController(
 
     //임시 페이지 회원 누르면 여기링크 들어감
     @GetMapping("/admin/memberinfo/{id}")
-    fun memberInfo(@PathVariable id :Int,model: Model) : String{
+    fun memberInfo(@PathVariable id: Int, model: Model): String {
         val member = memberRepository.findById(id).orElseThrow { IllegalArgumentException("Invalid member Id: $id") }
 
-        model.addAttribute("member",member)
+        model.addAttribute("member", member)
 
         return "adminMemberInfo"
     }
+
     @GetMapping("/admin/memberinfo2/{id}")
-    fun memberInfo2(@PathVariable id :Int,model: Model) : String{
+    fun memberInfo2(@PathVariable id: Int, model: Model): String {
         val member = memberRepository.findById(id)
-        if(member.isPresent)
-        { val reservations =reservationRepository.findByMemberId(id)
+        if (member.isPresent) {
+            val reservations = reservationRepository.findByMemberId(id)
 
             val reservationTicketsMap = reservations.map { reservation ->
                 val tickets = ticketRepository.findByReservation(reservation)
@@ -82,8 +84,9 @@ class AdminController(
                 }.toMap()
             }  //안그러면 10:00:00이런 방식으로 뜸
             model.addAttribute("formattedTimesMap", formattedTimesMap)
-        }else{
-            return "/admin/member"}
+        } else {
+            return "/admin/member"
+        }
         return "adminMemberInfo2"
     }
 
@@ -113,7 +116,7 @@ class AdminController(
     @Transactional // 2개이상의 쿼리를 묶어서 db에 전송해야하므로 사용
     //만약 에러가 발생할 경우 자동으로 모든과정을 원래대로 되돌려 놓음
     @GetMapping("/admin/member/delete/{id}")
-    fun deleteMember(@PathVariable id : Int) : String {
+    fun deleteMember(@PathVariable id: Int): String {
 
         /**
          * 회원이 예약했던 정보가 있다면(회원이 티켓을 가지고 있었다면)
@@ -133,7 +136,7 @@ class AdminController(
 
         //deleteByreservation => delete from tikets where reservation_id =?
         // 예약 정보에 따른 티켓들 삭제
-        if(reservations.isNotEmpty()) {  //예매 내용이 있을경우 삭제
+        if (reservations.isNotEmpty()) {  //예매 내용이 있을경우 삭제
             reservations.forEach { reservation ->
                 ticketRepository.deleteByReservation(reservation)
                 reservationRepository.delete(reservation)
@@ -147,28 +150,26 @@ class AdminController(
         return "redirect:/admin/member"
     }
 
-  @PostMapping("/admin/memberinfo/change-password")
-  fun change(@RequestParam password:String,
-             @RequestParam id:Int,
-             redirectAttributes:RedirectAttributes):String{
+    @PostMapping("/admin/memberinfo/change-password")
+    fun change(
+        @RequestParam password: String,
+        @RequestParam id: Int,
+        redirectAttributes: RedirectAttributes
+    ): String {
 
-      val member=memberRepository.findById(id)
-    //멤버 상세보기 버튼을 눌러서 들어가므로 직접 url에 치지않는 이상 null이 아님
-      if(member.isPresent) {
-          val newPw = passwordEncoder.encode(password)
-
-
-          memberRepository.updatePassword(id,newPw)//어차피 멤버 id랑 같은 id
-          redirectAttributes.addAttribute("id", id)
-          return "redirect:/admin/memberinfo/{id}"
-      }
-      return "redirect:/admin/member"
-
-  }
+        val member = memberRepository.findById(id)
+        //멤버 상세보기 버튼을 눌러서 들어가므로 직접 url에 치지않는 이상 null이 아님
+        if (member.isPresent) {
+            val newPw = passwordEncoder.encode(password)
 
 
+            memberRepository.updatePassword(id, newPw)//어차피 멤버 id랑 같은 id
+            redirectAttributes.addAttribute("id", id)
+            return "redirect:/admin/memberinfo/{id}"
+        }
+        return "redirect:/admin/member"
 
-
+    }
 
 
     @Transactional
@@ -187,15 +188,24 @@ class AdminController(
 
     @GetMapping("/admin/adminMovie")
     fun getMovies(model: Model): String {
+        val currentDate = LocalDate.now()
+        val currentTime = LocalTime.now()
         val movies = movieRepository.findAll()
+
         val moviesWithScheduleStatus = movies.associate { movie ->
-            val hasSchedule = scheduleRepository.existsByMovieId(movie!!.id)
-            movie to hasSchedule
+            val schedules = scheduleRepository.findByMovieId(movie!!.id)
+            val hasUpcomingSchedule = schedules.any { schedule ->
+                val scheduleDate = schedule.date
+                val scheduleTime = schedule.start
+                (scheduleDate.isAfter(currentDate)) ||
+                        (scheduleDate.isEqual(currentDate) && scheduleTime.isAfter(currentTime))
+            }
+            movie to hasUpcomingSchedule
         }
+
         model.addAttribute("moviesWithScheduleStatus", moviesWithScheduleStatus)
         return "adminMovie"
+
+
     }
-
-
-
 }

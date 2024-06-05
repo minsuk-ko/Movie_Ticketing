@@ -32,7 +32,7 @@
 
 
 
-<nav class=" z-50 max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
+<nav class=" relative z-50 max-w-screen-xl px-8 py-4 block w-full mx-auto text-black bg-white border shadow-md rounded-xl border-white/80
         bg-opacity-80 backdrop-blur-2xl backdrop-saturate-200">
     <div class="container flex items-center justify-between mx-auto text-blue-gray-900">
         <a href="/"
@@ -164,7 +164,7 @@
 </div>
 
 <!-- 영화 LIST 보여주기 -->
-<div class="max-w-screen-xl mx-auto">
+<div class="max-w-screen-xl mx-auto " style=" height: 100vh; overflow: hidden;">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
         <div th:each="movie : ${movies}">
