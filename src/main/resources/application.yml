@@ -4,9 +4,9 @@ spring:
     name : Movie Ticketing
 
   datasource:
-    url: jdbc:mariadb://localhost:3306/ticketing
-    username: root
-    password: xxxx
+    url : jdbc:mariadb://ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com:3306/ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    username: admin
+    password: xxxxxxxx
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
