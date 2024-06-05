@@ -22,7 +22,7 @@ class SecurityConfig {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
-        http.csrf { csrf -> csrf.disable() } //csrf토큰 비활성화
+        http.csrf { csrf -> csrf.disable() } // csrf 토큰 비활성화
         http.authorizeHttpRequests { authorize -> authorize
             .requestMatchers("/user/**").authenticated()
             .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -31,13 +31,13 @@ class SecurityConfig {
         }
         http.formLogin { formLogin ->
             formLogin.loginPage("/login") //로그인 페이지
-                .usernameParameter("email") //username이 원래 로그인할때 쓰는 필드?
+                .usernameParameter("email")
                 .failureUrl("/login?error=true") //로그인 실패시 url
                 .defaultSuccessUrl("/") //로그인 성공시 메인페이지
         }
         http.logout { logout ->
             logout.logoutUrl("/logout") //로그아웃 url
-                .logoutSuccessUrl("/") //로그아웃성공시 이동할url
+                .logoutSuccessUrl("/") //로그아웃성공시 이동할 url
         }
         return http.build()
     }

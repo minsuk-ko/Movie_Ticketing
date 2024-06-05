@@ -172,55 +172,40 @@
         </div>
         <div class="flex items-center gap-x-1">
             <a href="/login" sec:authorize="isAnonymous"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
                 <span>로그인</span>
             </a>
             <a href="/logout" sec:authorize="isAuthenticated"
-               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none
-         hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
+               class="px-4 p2 py-2 text-xl text-center text-gray-900 uppercase align-middle transition-all rounded-lg select-none hover:bg-gray-900/10 active:bg-gray-900/20 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none inline-block">
                 <span>로그아웃</span>
             </a>
             <div id="userSection" data-role="USER" sec:authorize="!hasRole('ROLE_ADMIN')">
-                <button id="menuButton" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-                shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                <button id="menuButton" class="rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
                     마이페이지
                 </button>
-                <ul id="dropdownMenu" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-            text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                <ul id="dropdownMenu" role="menu" class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
                         <a href="/user/mypage1">개인정보수정</a>
                     </li>
-                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-                transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
                         <a href="/user/mypage2">예매내역확인</a>
                     </li>
                 </ul>
             </div>
             <div id="adminSection" data-role="ADMIN" sec:authorize="hasRole('ROLE_ADMIN')">
-                <button id="menuButton2" data-ripple-light="true" data-popover-target="menu"
-                        class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white
-            shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
+                <button id="menuButton2" data-ripple-light="true" data-popover-target="menu" class=" rounded-lg bg-gray-900 py-3 px-4 text-center align-middle font-sans text-lg font-bold uppercase text-white shadow-md shadow-gray-900/10 active:shadow-none disabled:pointer-events-none">
                     관리자페이지
                 </button>
                 <ul id="dropdownMenu2" role="menu" data-popover="menu" data-popover-placement="bottom"
-                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans
-        text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
-                    <li role="menuitem"
-                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                    class="hidden absolute z-10 min-w-[120px] rounded-md border border-blue-gray-50 bg-white p-3 font-sans text-sm font-normal text-blue-gray-500 shadow-lg shadow-blue-gray-500/10 focus:outline-none">
+                    <li role="menuitem"  class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
                         <a href="/admin/member">회원관리</a>
                     </li>
                     <li role="menuitem"
-                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
                         <a href="/admin/adminTheater">상영관 관리</a>
                     </li>
-
-                    <li role="menuitem"
-                        class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight
-            transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
+                    <li role="menuitem" class="block w-full cursor-pointer select-none rounded-md px-3 pt-[9px] pb-2 text-start leading-tight transition-all hover:bg-blue-gray-50 hover:bg-opacity-80 hover:bg-gray-500/20">
                         <a href="/admin/adminMovie">영화 관리</a>
                     </li>
                 </ul>
@@ -236,6 +221,22 @@
         <!-- Carousel wrapper -->
         <div class="overflow-hidden relative rounded-lg sm:h-72 xl:h-96 2xl:h-128 custom-height">
             <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[0].backdropPath}}"
+                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
+                <h2 class="main_image_text">
+                    <span th:text="${movies[0].title}"></span>
+                </h2>
+                <h3 class="main_image_overview">
+                    <span th:text="${movies[0].overview}"></span>
+                </h3>
+                <a th:href="@{/movieInfo/{id}(id=${movies[0].id})}">
+                    <button id="moreButton" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
+                    disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
+                    shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                    >더보기..</button>
+                </a>
+            </div>
+            <div class="hidden duration-700 ease-in-out" data-carousel-item>
                 <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[1].backdropPath}}"
                      class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
                 <h2 class="main_image_text">
@@ -245,7 +246,7 @@
                     <span th:text="${movies[1].overview}"></span>
                 </h3>
                 <a th:href="@{/movieInfo/{id}(id=${movies[1].id})}">
-                    <button id="moreButton" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
+                    <button id="moreButton2" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
                     disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
                     shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                     >더보기..</button>
@@ -261,22 +262,6 @@
                     <span th:text="${movies[2].overview}"></span>
                 </h3>
                 <a th:href="@{/movieInfo/{id}(id=${movies[2].id})}">
-                    <button id="moreButton2" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
-                    disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
-                    shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                    >더보기..</button>
-                </a>
-            </div>
-            <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                <img th:if="${movies.size() > 0}" th:src="@{'https://image.tmdb.org/t/p/w1280' + ${movies[3].backdropPath}}"
-                     class="block absolute top-1/2 left-1/2 w-full h-full -translate-x-1/2 -translate-y-1/2 object-cover" alt="Main Movie Poster 1">
-                <h2 class="main_image_text">
-                    <span th:text="${movies[3].title}"></span>
-                </h2>
-                <h3 class="main_image_overview">
-                    <span th:text="${movies[3].overview}"></span>
-                </h3>
-                <a th:href="@{/movieInfo/{id}(id=${movies[3].id})}">
                     <button id="moreButton3" class="align-middle select-none font-sans font-bold text-center uppercase transition-all
                     disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs rounded-lg bg-white text-black
                     shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
