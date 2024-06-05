@@ -8,7 +8,10 @@ import java.util.Date
 @Entity
 class Movie {
 //나머지값들은 api에서 가져오자!
+
+    @Lob
     lateinit var role:String
+    @Lob
     lateinit var cast: String
     lateinit var title: String
 
@@ -20,13 +23,4 @@ class Movie {
     lateinit var openDate:LocalDate
     @Id
     var id: Int = 0
-
-    /*
-    override fun toString(): String {
-        return "Movie(actor='$actor', director='$director', openDate=$openDate, posterUrl='$posterUrl'," +
-                " runtime='$runtime', state=$state, story='$story', title='$title', isAdult=$isAdult, id=$id)"
-    }
-
-     */
-    //rating=$rating,
 }

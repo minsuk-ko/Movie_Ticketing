@@ -27,8 +27,8 @@ CREATE TABLE IF NOT EXISTS movie (
     state           BOOLEAN,
     open_date DATE NOT NULL,
      popularity DOUBLE DEFAULT 0.0,
-    role       TEXT     NOT NULL,
-    cast          TEXT     NOT NULL,
+    role       LONGTEXT     NOT NULL,
+    cast          LONGTEXT     NOT NULL,
 
     PRIMARY KEY (id),
     UNIQUE KEY movie_title (title));
