@@ -6,7 +6,7 @@ spring:
   datasource:
     url : jdbc:mariadb://ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com:3306/ticketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: admin
-    password: xxxxxxxx
+    password: 21321
     driver-class-name: org.mariadb.jdbc.Driver
 
   jpa:
