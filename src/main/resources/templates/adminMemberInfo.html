@@ -57,7 +57,10 @@
                 width: 95%; /* More width on smaller screens */
             }
         }
-
+        .disabled {
+            background-color: gray !important;
+            cursor: not-allowed !important;
+        }
         #cinema_main {
             margin: 100px; /* 네비게이션 바와의 간격을 조정합니다. */
             display: flex;
@@ -202,7 +205,10 @@
             </div>
 
         </form>
-        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4" th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
+        <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4"
+                th:attr="disabled=${member.role == 'ROLE_ADMIN'}"
+                th:classappend="${member.role == 'ROLE_ADMIN'} ? 'disabled' : ''"
+                th:onclick="'deleteMember(\'' + ${member.id} + '\');'">회원 탈퇴</button>
         <!--  deleteMember('' + ${member.id} + ''); 자바스크립트 deleteMember불러오기 위한 함수
 th문법으로 member.id를 가져와서 전달하기위해 이렇게 사용
 사실상 onclick="deleteMember(-->

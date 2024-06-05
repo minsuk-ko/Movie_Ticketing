@@ -13,10 +13,10 @@ interface ScheduleRepository : JpaRepository<Schedule, Int> {
     fun findByMovieIdAndDateAndStartAndTheaterId(movieId: Int, date: LocalDate, start: LocalTime,theaterId:Int): Schedule
     fun save(schedule: Schedule)
     fun findByDateBetween(startDate:LocalDate,endDate: LocalDate):List<Schedule>
+
     @Query("SELECT s FROM Schedule s WHERE s.theater.id = :theaterId")
     fun findByTheaterId(@Param("theaterId") theaterId: Int): List<Schedule>
-
     fun findByDate(startDate: LocalDate) : List<Schedule>
-    fun existsByMovieId(movieId: Int):Boolean
+    fun findByMovieId(movieId: Int):List<Schedule>
 
 }

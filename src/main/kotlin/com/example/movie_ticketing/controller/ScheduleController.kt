@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.time.LocalDate
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
@@ -18,6 +19,7 @@ class ScheduleController( private val scheduleRepository: ScheduleRepository,
 fun viewReservation(model: Model):String{
 
     val currentDate = LocalDate.now()
+    val currentTime = LocalTime.now()
     val endDate = currentDate.plusDays(30)
     val schedules =  scheduleRepository.findByDateBetween(currentDate,endDate)// 한달치 계속 꺼냄
     // 영화별로 중복을 제거한 리스트 생성
@@ -33,7 +35,13 @@ fun viewReservation(model: Model):String{
 
     // LocalTime을 HH:mm 형식으로 변환하기 위한 포매터 우리 눈에는 HH:MM으로 보임
     val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    val formattedSchedules = schedules.map { schedule ->
+    val filteredSchedules = schedules.filter { schedule ->
+        val scheduleDate = schedule.date
+        val scheduleTime = schedule.start
+        (scheduleDate.isAfter(currentDate)) ||
+                (scheduleDate.isEqual(currentDate) && scheduleTime.isAfter(currentTime))
+    } //현재 날짜 +시간이후의 영화들을 보여주게끔 필터링함
+    val formattedSchedules = filteredSchedules.map { schedule ->
         mapOf(
             "id" to schedule.id,
             "date" to schedule.date,
