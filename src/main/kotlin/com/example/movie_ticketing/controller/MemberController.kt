@@ -44,9 +44,7 @@ class MemberController(
 
     /**
      * 멤버 로그인
-     * 조금 더 수정해야함
      */
-
     @GetMapping("/login")
     fun login(): String = "login.html"
 
@@ -60,7 +58,6 @@ class MemberController(
     /**
      * 마이페이지 (내정보 / 비밀번호 변경 / 탈퇴)
      */
-
     @GetMapping("/user/mypage1")
     fun mypage(auth: Authentication,model: Model): String {
         // Authentication 객체에서 UserDetails를 추출하고
@@ -80,8 +77,8 @@ class MemberController(
         model.addAttribute("member",member)
         return "mypage1"
     }
-@GetMapping("/user/mypage2")
-fun mypage2(auth: Authentication,model: Model):String{
+    @GetMapping("/user/mypage2")
+    fun mypage2(auth: Authentication,model: Model):String{
     val userDetails = auth.principal as UserDetails
     val email = userDetails.username
     val member = memberRepository.findByEmail(email).orElseThrow { IllegalArgumentException("No member found with email: $email") }
@@ -109,11 +106,10 @@ fun mypage2(auth: Authentication,model: Model):String{
     }  //안그러면 10:00:00이런 방식으로 뜸
     model.addAttribute("formattedTimesMap", formattedTimesMap)
     return "mypage2"
-}
+    }
     @PostMapping("/user/update-password")
-    fun changePw(auth: Authentication,@RequestParam password:String) :String{
+    fun changePw(auth: Authentication,@RequestParam password:String) :String {
         // RequestParam 을이용해서 form태그에서 제출한 것중 name이 password인것을 가져옴
-        // 패스워드 변수에 저장되어있기에 업데이트 하거나 저장하면될듯?
         // UserDetails를 바로 파라미터로 받고 하려고했는데 UserDetails는 인터페이스여서 불가
         // principal은 userdetails를 구현한 객체!!
         val newPw = passwordEncoder.encode(password)
