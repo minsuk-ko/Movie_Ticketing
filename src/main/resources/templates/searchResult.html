@@ -185,7 +185,7 @@
     </div>
     <br>
     <div class="flex justify-center mt-4">
-        <nav class="pagination inline-flex space-x-2">
+        <nav class="pagination space-x-2">
             <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
             <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a th:href="@{/movie(page=${i})}"

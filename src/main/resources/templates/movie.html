@@ -164,7 +164,7 @@
 </div>
 
 <!-- 영화 LIST 보여주기 -->
-<div class="max-w-screen-xl mx-auto " style=" height: 100vh; overflow: hidden;">
+<div class="max-w-screen-xl mx-auto ">
     <div class="grid grid-cols-1 gap-4 md:grid-cols-4 max-w-screen-xl">
 
         <div th:each="movie : ${movies}">
@@ -196,7 +196,7 @@
 <!-- Paging 처리 -->
 <br>
 <div class="flex justify-center mt-4">
-    <nav class="pagination inline-flex space-x-2">
+    <nav class="pagination space-x-2">
         <a th:if="${currentPage > 1}" th:href="@{/movie(page=${currentPage - 1})}" class="px-4 py-2 text-gray-700 bg-white border rounded-md">Previous</a>
         <span th:each="i : ${#numbers.sequence(1, totalPages)}">
                     <a th:href="@{/movie(page=${i})}"
