@@ -4,10 +4,10 @@ spring:
     name : Movie Ticketing
 
   datasource:
-    url : jdbc:mariadb://<EndpointAddress>:3306/<username>?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
-    username: admin
-    password: password
-    driver-class-name: org.mariadb.jdbc.Driver
+   url : jdbc:mariadb://<EndpointAddress>:3306/<username>?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+   username: admin
+   password: password
+
 
   jpa:
     properties:

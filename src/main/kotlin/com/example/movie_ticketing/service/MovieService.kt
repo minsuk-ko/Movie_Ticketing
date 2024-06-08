@@ -34,10 +34,10 @@ class MovieService(private val restTemplate: RestTemplate,
      * MovieSearchResult::class.java : restTemplate.getForObject 메소드가 TMDB API로부터 반환된 JSON 응답을
      * MovieSearchResult 타입의 객체로 변환하도록 함.
      */
-    fun searchMovies(query: String,page:Int): MovieSearchResult {
-        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR"
+    fun searchMovies(query: String, page: Int): MovieSearchResult {
+        val url = "https://api.themoviedb.org/3/search/movie?api_key=$apiKey&query=$query&language=ko-KR&sort_by=popularity.desc&page=$page"
         val result = restTemplate.getForObject(url, MovieSearchResult::class.java) ?: throw Exception("Movie not found")
-        return sortMoviesByPopularity(result)
+        return result
     }
 
 

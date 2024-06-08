@@ -58,11 +58,16 @@ class MovieController(private val movieService: MovieService,
      * 검색 결과 MovieSearchResult 의 movies 를 view 로 보냄 (List 형식)
      */
     @GetMapping("/search")
-    fun searchMovie(@RequestParam("query") query: String, @RequestParam(value = "page", defaultValue = "1") page: Int, model: Model): String {
+    fun searchMovie(
+        @RequestParam("query") query: String,
+        @RequestParam(value = "page", defaultValue = "1") page: Int,
+        model: Model
+    ): String {
         val searchResult = movieService.searchMovies(query, page)
         model.addAttribute("movies", searchResult.movies)
         model.addAttribute("currentPage", page)
         model.addAttribute("totalPages", searchResult.total_pages)
+        model.addAttribute("query", query)
         return "searchResult"
     }
 
