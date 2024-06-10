@@ -4,9 +4,9 @@ spring:
     name : Movie Ticketing
 
   datasource:
-    url: jdbc:mariadb://ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com:3306/ticketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
-    username: admin
-    password: xxxxxxxx
+    url: jdbc:mariadb://<host>:3306/<schema>
+    username: username
+    password: password
 
 
   jpa:
@@ -33,8 +33,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 465
-    username: neko2nu@gmail.com
-    password: jbcj cwgq rwbn jtkl
+    username: email
+    password: password
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
