@@ -4,10 +4,10 @@ spring:
     name : Movie Ticketing
 
   datasource:
-    url : jdbc:mariadb://<EndpointAddress>:3306/<username>?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mariadb://ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com:3306/ticketing?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=UTC
     username: admin
-    password: password
-    driver-class-name: org.mariadb.jdbc.Driver
+    password: xxxxxxxx
+
 
   jpa:
     properties:
@@ -34,7 +34,7 @@ spring:
     host: smtp.gmail.com
     port: 465
     username: neko2nu@gmail.com
-    password: password
+    password: jbcj cwgq rwbn jtkl
     properties:
       mail.smtp.auth: true
       mail.smtp.ssl.enable: true
