@@ -1,5 +1,12 @@
 # Movie_Ticketing
 
+### 3.36.67.211:8080
+
+### DB 주소 : ticketing.ctu2c6iu8z3h.ap-northeast-2.rds.amazonaws.com:3036/ticketing
+### ID : admin 
+### PW : xxxxxxxx
+
+
 ## 🖥️: 프로젝트 소개
 Spring Boot 를 사용한 영화 예매 사이트 입니다.
  
