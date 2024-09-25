@@ -26,7 +26,7 @@ class EmailService(private val javaMailSender: JavaMailSender) {
 
         val message = SimpleMailMessage()
         message.setTo(toEmail)
-        message.setFrom("neko2nu.gmail.com")
+        message.setFrom("neko2nu@gmail.com")
         message.setSubject("이메일 인증 이메일입니다.")
         message.setText("인증 코드 : $randomString")
 
